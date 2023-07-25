@@ -7,11 +7,15 @@ namespace Tests\Feature\User;
 use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class UserFeatureTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @var User */
+    private $user;
 
     /**
      * @return void
@@ -19,6 +23,8 @@ class UserFeatureTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->user = User::factory()->create();
+        Passport::actingAs($this->user);
     }
 
     /**
@@ -28,9 +34,8 @@ class UserFeatureTest extends TestCase
      */
     public function test_index_users()
     {
-        $user = User::factory()->create(['name' => 'test']);
         User::factory()->create(['name' => 'xpto']);
-        $this->get('api/users')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name])->assertJsonCount(2);
+        $this->get('api/users')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $this->user->name])->assertJsonCount(2);
     }
 
     /**

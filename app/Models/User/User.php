@@ -6,6 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -32,4 +33,9 @@ class User extends Model implements AuthAuthenticatable
         'email',
         'password'
     ];
+
+    public function setPasswordAttribute($attribute)
+    {
+        $this->attributes['password'] = Hash::make($attribute);
+    }
 }
