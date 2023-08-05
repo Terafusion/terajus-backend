@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
-use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
@@ -22,6 +22,7 @@ class User extends Model implements AuthAuthenticatable
     use HasFactory;
     use HasApiTokens;
     use Authenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\LegalCase\LegalCaseController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
     Route::apiResource('users', UserController::class);
+    Route::apiResource('legal-cases', LegalCaseController::class);
 });
 
 Route::post('/oauth/signup', [AuthController::class, 'signUp']);
