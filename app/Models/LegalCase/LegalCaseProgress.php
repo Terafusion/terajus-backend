@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class LegalCaseStatus.
+ * Class LegalCaseProgress.
  *
  * @package namespace App\Models\LegalCase;
  */
-class LegalCaseStatus extends Model implements Transformable
+class LegalCaseProgress extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -21,7 +21,7 @@ class LegalCaseStatus extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'status',
+        'description',
         'legal_case_id'
     ];
 }

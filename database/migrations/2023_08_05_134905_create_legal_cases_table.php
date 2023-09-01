@@ -16,15 +16,17 @@ return new class extends Migration
         Schema::create('legal_cases', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('plaintiff_id')->nullable();
+            $table->string('status')->nullable();
             $table->string('case_type')->nullable();
             $table->string('case_matter')->nullable();
             $table->text('case_description')->nullable();
             $table->text('case_requests')->nullable();
 
-            $table->string('complaint_status')->nullable();
             $table->boolean('pending_protocol')->default(false);
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('plaintiff_id')->references('id')->on('users');
 
             $table->timestamps();
             $table->softDeletes();

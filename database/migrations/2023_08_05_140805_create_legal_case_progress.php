@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('legal_case_statuses', function (Blueprint $table) {
+        Schema::create('legal_case_progress', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->string('description');
             $table->unsignedBigInteger('legal_case_id');
             $table->foreign('legal_case_id')->references('id')->on('legal_cases');
             $table->timestamps();

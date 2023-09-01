@@ -2,6 +2,7 @@
 
 namespace App\Models\LegalCase;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -13,7 +14,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class LegalCase extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,7 @@ class LegalCase extends Model implements Transformable
         'complaint_status',
         'pending_protocol',
         'case_description',
-        'case_requests'
+        'case_requests',
+        'plaintiff_id'
     ];
 }

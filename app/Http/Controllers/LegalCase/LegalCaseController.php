@@ -4,6 +4,7 @@ namespace App\Http\Controllers\LegalCase;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LegalCase\LegalCaseStoreRequest;
+use App\Http\Requests\LegalCase\LegalCaseUpdateRequest;
 use App\Http\Resources\LegalCase\LegalCaseResource;
 use App\Models\LegalCase\LegalCase;
 use App\Services\LegalCase\LegalCaseService;
@@ -55,13 +56,13 @@ class LegalCaseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  LegalCaseUpdateRequest  $request
      * @param  \App\Models\LegalCase\LegalCase  $legalCase
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LegalCase $legalCase)
+    public function update(LegalCaseUpdateRequest $request, LegalCase $legalCase)
     {
-        //
+        return $this->showOne($this->legalCaseService->update($request->validated(), $request->user()), Response::HTTP_CREATED, LegalCaseResource::class);
     }
 
     /**
