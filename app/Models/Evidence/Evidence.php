@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models\LegalCase;
+namespace App\Models\Evidence;
 
+use App\Models\Document\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,24 +10,30 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class LegalCasesParticipant.
+ * Class Evidence.
  *
- * @package namespace App\Models\LegalCase;
+ * @package namespace App\Models\Evidence;
  */
-class LegalCasesParticipant extends Model implements Transformable
+class Evidence extends Model implements Transformable
 {
     use TransformableTrait;
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
+    protected $table = 'evidences';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'legal_case_id',
-        'participant_type_id'
+        'description',
+        'legal_case_reference',
+        'legal_case_id'
     ];
+
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'model');
+    }
 }

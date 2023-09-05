@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('legal_cases', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('plaintiff_id')->nullable();
+            $table->string('court')->nullable();
+            $table->string('fields_of_law')->nullable();
             $table->string('status')->nullable();
             $table->string('case_type')->nullable();
             $table->string('case_matter')->nullable();
@@ -26,7 +27,6 @@ return new class extends Migration
             $table->boolean('pending_protocol')->default(false);
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('plaintiff_id')->references('id')->on('users');
 
             $table->timestamps();
             $table->softDeletes();

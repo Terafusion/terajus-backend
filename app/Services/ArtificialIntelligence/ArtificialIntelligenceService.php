@@ -2,6 +2,8 @@
 
 namespace App\Services\ArtificialIntelligence;
 
+use App\Models\Document\Document;
+use App\Models\Evidence\Evidence;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
@@ -31,11 +33,18 @@ class ArtificialIntelligenceService
      */
     public function getPrompt(LegalCase $legalCase = null)
     {
-        $legalCase = LegalCase::factory()->laborLawCase()->create();
+
+        $legalCase = LegalCase::factory()->laborlawCase()->create();
+        $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
+        $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
+        Document::factory()->create(['model_id' => $evidence->id]);
         return $this->promptService
             ->setCaseType($legalCase->case_type)
             ->setCaseMatter($legalCase->case_matter)
             ->setDescription($legalCase->case_description)
+            ->setCourt($legalCase->court)
+            ->setFieldsOfLaw($legalCase->fields_of_law)
+            ->setEvidences($legalCase->evidences)
             ->build();
     }
 }

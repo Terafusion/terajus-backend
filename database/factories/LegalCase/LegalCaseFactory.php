@@ -2,6 +2,8 @@
 
 namespace Database\Factories\LegalCase;
 
+use App\Models\Document\Document;
+use App\Models\Evidence\Evidence;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -20,7 +22,8 @@ class LegalCaseFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create(['name' => 'Law Test'])->id,
-            'plaintiff_id' => User::factory()->create(['name' => 'Plaintiff Test'])->id,
+            'court' => 'Tribunal Federal da 1 Região',
+            'fields_of_law' => 'Direito do Trabalho',
             'case_matter' => 'Test Case Matter',
             'case_type' => 'Test Case Type',
             'status' => 'DRAFT',

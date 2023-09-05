@@ -7,22 +7,41 @@ class PromptService
 {
     private $data = [];
 
-    public function setCaseType($value)
+    public function setCaseType(string $value)
     {
         $this->data['case_type'] = $value;
         return $this;
     }
-    public function setCaseMatter($value)
+    public function setCaseMatter(string $value)
     {
         $this->data['case_matter'] = $value;
         return $this;
     }
 
-    public function setDescription($value)
+    public function setDescription(string $value)
     {
         $this->data['case_description'] = $value;
         return $this;
     }
+
+    public function setCourt(string $value)
+    {
+        $this->data['court'] = $value;
+        return $this;
+    }
+
+    public function setFieldsOfLaw(string $value)
+    {
+        $this->data['fields_of_law'] = $value;
+        return $this;
+    }
+
+    public function setEvidences(mixed $value)
+    {
+        $this->data['evidences'] = $value;
+        return $this;
+    }
+
 
     public function build()
     {
@@ -34,22 +53,19 @@ class PromptService
         Abaixo seguem as especificações da petição inicial:\n
         Como você deve se referenciar à parte ativa: #2654\n
         Como você deve se referenciar à parte passiva: #1598\n
-        Tribunal: Tribunal Regional Federal da 1ª Região\n
-        Área do direito: Direito do Trabalho\n";
+        Tribunal: {$this->data['court']}\n
+        Área do direito: {$this->data['fields_of_law']}\n";
 
 
         $text .= "Classe: {$this->data['case_matter']}\n";
         $text .= "Assunto: {$this->data['case_type']}\n";
         $text .= "Descrição: {$this->data['case_description']}\n";
-
         $text .= "Na seção de provas, deve-se fazer referência a provas e anexos:\n";
-        $text.= "anexo-1 refere-se ao contrato assinado entre as partes\n
-        anexo-2 refere-se a imagens comprovando a atuação da parte passiva na empresa\n
-        anexo-3 refere-se a um audio onde a parte passiva fala para outro colega de trabalho que está copiando o projeto de software para fontes externas.";
 
-        //foreach($)
-        // Adicione outros campos aqui, se necessário
+        foreach ($this->data['evidences'] as $k => $evidence) {
+            $text .= "ID#{$evidence['legal_case_reference']} - {$evidence['description']}\n";
+        }
 
-        return $text;
+        dd($text);
     }
 }
