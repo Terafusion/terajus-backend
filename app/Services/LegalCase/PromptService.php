@@ -2,6 +2,8 @@
 
 namespace App\Services\LegalCase;
 
+use App\Models\LegalCase\LegalCaseParticipant;
+use App\Models\User\User;
 
 class PromptService
 {
@@ -42,6 +44,17 @@ class PromptService
         return $this;
     }
 
+    public function setPlaintiff(LegalCaseParticipant $value)
+    {
+        $this->data['plaintiff'] = $value->user;
+        return $this;
+    }
+
+    public function setDefendant(LegalCaseParticipant $value)
+    {
+        $this->data['defendant'] = $value->user;
+        return $this;
+    }
 
     public function build()
     {
@@ -51,8 +64,12 @@ class PromptService
         No final do texto NÃO adicione um espaço para assinatura.\n
         
         Abaixo seguem as especificações da petição inicial:\n
-        Como você deve se referenciar à parte ativa: #2654\n
+        Como você deve se referenciar à parte ativa:\n
+        Nome: {$this->data['plaintiff']->name}\n
+
         Como você deve se referenciar à parte passiva: #1598\n
+        Nome: {$this->data['defendant']->name}\n
+
         Tribunal: {$this->data['court']}\n
         Área do direito: {$this->data['fields_of_law']}\n";
 
@@ -66,6 +83,6 @@ class PromptService
             $text .= "ID#{$evidence['legal_case_reference']} - {$evidence['description']}\n";
         }
 
-        dd($text);
+        return $text;
     }
 }

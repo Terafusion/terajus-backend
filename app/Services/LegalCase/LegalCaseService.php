@@ -2,7 +2,6 @@
 
 namespace App\Services\LegalCase;
 
-use App\Enums\LegalCaseStatus;
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
@@ -70,6 +69,7 @@ class LegalCaseService
     {
         if ($data['status'] === LegalCaseStatusEnum::COMPLAINT_GENERATION) {
             $complaint = $this->artificialIntelligenceService->getComplaint($legalCase);
+            dd($complaint);
         }
         return $this->legalCaseRepository->update($data, $legalCase->id);
     }

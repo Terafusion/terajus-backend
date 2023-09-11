@@ -1,0 +1,53 @@
+<?php
+
+namespace Database\Factories\LegalCase;
+
+use App\Enums\LegalCaseParticipantTypeEnum;
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LegalCaseParticipant>
+ */
+class LegalCaseParticipantFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::factory()->create(['name' => 'Plaintiff Test'])->id,
+            'legal_case_id' => 1,
+            'participant_type_id' => 1
+        ];
+    }
+
+    /**
+     * Create plaintiff participant
+     *
+     * @return static
+     */
+    public function plaintiff()
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_id' => User::factory()->create(['name' => 'Plaintiff Test'])->id,
+            'participant_type_id' => LegalCaseParticipantTypeEnum::PLAINTIFF_ID
+        ]);
+    }
+
+    /**
+     * Create defendant participant
+     *
+     * @return static
+     */
+    public function defendant()
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_id' => User::factory()->create(['name' => 'Defendant'])->id,
+            'participant_type_id' => LegalCaseParticipantTypeEnum::DEFENDANT_ID
+        ]);
+    }
+}
