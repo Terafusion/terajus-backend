@@ -24,9 +24,12 @@ class LegalCaseUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'case_description' => ['required'],
+            'case_description' => ['nullable'],
             'case_requests' => ['nullable'],
             'status' => ['nullable'],
+            'complaint' => ['nullable'],
+            'court' => ['nullable'],
+            'fields_of_law' => ['nullable'],
         ];
     }
 }

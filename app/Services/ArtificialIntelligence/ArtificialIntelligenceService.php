@@ -24,44 +24,19 @@ class ArtificialIntelligenceService
         $this->promptService = $promptService;
     }
 
-    public function getComplaint(LegalCase $legalCase = null)
+    public function getComplaint(LegalCase $legalCase)
     {
-        $legalCase = LegalCase::factory()->laborlawCase()->create();
-        $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
-        $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
-        Document::factory()->create(['model_id' => $evidence->id]);
-
-        LegalCaseParticipant::factory()->plaintiff()->create(['legal_case_id' => $legalCase->id]);
-        LegalCaseParticipant::factory()->defendant()->create(['legal_case_id' => $legalCase->id]);
-
-        $prompt = $this->getPrompt($legalCase);
         $response = $this->client->chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
                 [
                     'role' => 'user',
-                    'content' => $prompt
+                    'content' => $this->getPrompt($legalCase)
                 ],
             ],
         ]);
 
-        $response->id; // 'chatcmpl-6pMyfj1HF4QXnfvjtfzvufZSQq6Eq'
-        $response->object; // 'chat.completion'
-        $response->created; // 1677701073
-        $response->model; // 'gpt-3.5-turbo-0301'
-
-        foreach ($response->choices as $result) {
-            $result->index; // 0
-            $result->message->role; // 'assistant'
-            $result->message->content; // '\n\nHello there! How can I assist you today?'
-            $result->finishReason; // 'stop'
-        }
-
-        $response->usage->promptTokens; // 9,
-        $response->usage->completionTokens; // 12,
-        $response->usage->totalTokens; // 21
-
-        return json_encode($response->toArray());
+        return $response->choices[0]->message->content;
     }
 
     /**

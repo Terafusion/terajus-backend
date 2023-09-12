@@ -24,13 +24,14 @@ class LegalCaseStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'plaintiff_id' => ['required', 'exists:users,id'],
-            'defendant_id' => ['required', 'exists:users,id'],
             'case_type' => ['required'],
             'case_matter' => ['required'],
-            'case_description' => ['required'],
+            'case_description' => ['nullable'],
             'case_requests' => ['nullable'],
-            'status' => ['nullable']
+            'status' => ['nullable'],
+            'court' => ['nullable'],
+            'fields_of_law' => ['nullable'],
+            'complaint' => ['nullable'],
         ];
     }
 }

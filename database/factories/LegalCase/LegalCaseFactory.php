@@ -2,6 +2,7 @@
 
 namespace Database\Factories\LegalCase;
 
+use App\Enums\LegalCaseStatusEnum;
 use App\Models\Document\Document;
 use App\Models\Evidence\Evidence;
 use App\Models\User\User;
@@ -26,7 +27,7 @@ class LegalCaseFactory extends Factory
             'fields_of_law' => 'Direito do Trabalho',
             'case_matter' => 'Test Case Matter',
             'case_type' => 'Test Case Type',
-            'status' => 'DRAFT',
+            'status' => LegalCaseStatusEnum::DRAFT,
             'pending_protocol' => true,
             'case_description' => 'Test case description',
             'case_requests' => 'Test request',

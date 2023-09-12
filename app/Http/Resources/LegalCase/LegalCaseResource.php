@@ -18,10 +18,11 @@ class LegalCaseResource extends JsonResource
             'id' => $this->id,
             'case_type' => $this->case_type,
             'case_matter' => $this->case_matter,
-            'complaint_status' => $this->complaint_status,
+            'status' => $this->status,
             'pending_protocol' => $this->pending_protocol,
             'case_description' => $this->case_description,
-            'case_requests' => $this->case_requests
+            'case_requests' => $this->case_requests,
+            'complaint' => $this->complaint
         ];
     }
 }

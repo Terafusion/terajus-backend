@@ -62,7 +62,7 @@ class LegalCaseController extends Controller
      */
     public function update(LegalCaseUpdateRequest $request, LegalCase $legalCase)
     {
-        return $this->showOne($this->legalCaseService->update($request->validated(), $request->user()), Response::HTTP_CREATED, LegalCaseResource::class);
+        return $this->showOne($this->legalCaseService->update($request->validated(), $legalCase), Response::HTTP_OK, LegalCaseResource::class);
     }
 
     /**

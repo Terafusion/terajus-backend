@@ -68,9 +68,9 @@ class LegalCaseService
     public function update(array $data, LegalCase $legalCase)
     {
         if ($data['status'] === LegalCaseStatusEnum::COMPLAINT_GENERATION) {
-            $complaint = $this->artificialIntelligenceService->getComplaint($legalCase);
-            dd($complaint);
+            $data['complaint'] = $this->artificialIntelligenceService->getComplaint($legalCase);
         }
+
         return $this->legalCaseRepository->update($data, $legalCase->id);
     }
 }

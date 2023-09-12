@@ -199,6 +199,260 @@
                 }
             }
         },
+        "/legal-cases": {
+            "get": {
+                "tags": [
+                    "Legal Cases"
+                ],
+                "summary": "Get all Legal Cases",
+                "operationId": "20ff6517bb03ffc38a4e9675ed13c7cc",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalCaseResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Legal Cases"
+                ],
+                "summary": "Add a new Legal Case register",
+                "operationId": "c6a57e99c7513010fd32ae1b80aa3f26",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LegalCaseCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalCaseResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/legal-cases/{legal_case_id}": {
+            "get": {
+                "tags": [
+                    "Legal Cases"
+                ],
+                "summary": "Get a Legal Case",
+                "operationId": "b3b50045188c1c900f72e2457c0e5df1",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "legal_case_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalCase"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Legal Cases"
+                ],
+                "summary": "Update a Legal Case",
+                "operationId": "ce2b533fbe78faaab3cb0f221b5e70cb",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "legal_case_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LegalCaseUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalCaseResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -587,6 +841,104 @@
                         "type": "string"
                     },
                     "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalCase": {
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "court": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "complaint": {
+                        "type": "string"
+                    },
+                    "fields_of_law": {
+                        "type": "string"
+                    },
+                    "case_matter": {
+                        "type": "string"
+                    },
+                    "case_type": {
+                        "type": "string"
+                    },
+                    "case_description": {
+                        "type": "string"
+                    },
+                    "case_requests": {
+                        "type": "string"
+                    },
+                    "pending_protocol": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalCaseCreate": {
+                "required": [
+                    "case_type",
+                    "case_matter",
+                    "case_description"
+                ],
+                "properties": {
+                    "court": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "fields_of_law": {
+                        "type": "string"
+                    },
+                    "case_matter": {
+                        "type": "string"
+                    },
+                    "case_type": {
+                        "type": "string"
+                    },
+                    "case_description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalCaseResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/LegalCase"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalCaseUpdate": {
+                "properties": {
+                    "court": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "fields_of_law": {
+                        "type": "string"
+                    },
+                    "case_matter": {
+                        "type": "string"
+                    },
+                    "case_type": {
+                        "type": "string"
+                    },
+                    "case_description": {
                         "type": "string"
                     }
                 },

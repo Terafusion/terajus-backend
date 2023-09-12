@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('case_matter')->nullable();
             $table->text('case_description')->nullable();
             $table->text('case_requests')->nullable();
+            $table->longText('complaint')->nullable();
 
             $table->boolean('pending_protocol')->default(false);
 
