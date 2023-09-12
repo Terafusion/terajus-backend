@@ -33,7 +33,7 @@ class LegalCaseParticipantFactory extends Factory
     public function plaintiff()
     {
         return $this->state(fn (array $attributes) => [
-            'user_id' => User::factory()->create(['name' => 'Plaintiff Test'])->id,
+            'user_id' => User::factory()->create(['name' => 'Parte Ativa Teste de Britto'])->id,
             'participant_type_id' => LegalCaseParticipantTypeEnum::PLAINTIFF_ID
         ]);
     }
@@ -46,7 +46,7 @@ class LegalCaseParticipantFactory extends Factory
     public function defendant()
     {
         return $this->state(fn (array $attributes) => [
-            'user_id' => User::factory()->create(['name' => 'Defendant'])->id,
+            'user_id' => User::factory()->create(['name' => 'Parte Passiva Teste da Silva'])->id,
             'participant_type_id' => LegalCaseParticipantTypeEnum::DEFENDANT_ID
         ]);
     }

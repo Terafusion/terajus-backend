@@ -60,15 +60,27 @@ class PromptService
     {
         $text = "Você é um assistente de advogado designado para escrever petições de alta qualidade:\n
 
-        Gere um texto de petição inicial, onde as informações variáveis, como parte passiva, parte ativa, valor da causa, etc, venham todas entre colchetes e as palavras separadas em snake_case (com underline), as palavras das variaviais devem estar em uppercase. 
-        No final do texto NÃO adicione um espaço para assinatura.\n
-        
-        Abaixo seguem as especificações da petição inicial:\n
-        Como você deve se referenciar à parte ativa:\n
-        Nome: {$this->data['plaintiff']->name}\n
+        Gere um texto de petição inicial, com as seguintes especificações:\n
 
-        Como você deve se referenciar à parte passiva: #1598\n
+        Qualificação da parte ativa:\n
+        Nome: {$this->data['plaintiff']->name}\n
+        Tipo de pessoa: {$this->data['plaintiff']->person_type}\n
+        Endereço: {$this->data['plaintiff']->address}\n
+        CPF se for pessoa física, ou CNPJ se for jurídica: {$this->data['plaintiff']->nif_number}\n
+        RG se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->registration_number}\n
+        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->maritial_status}\n
+        Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->occupation}\n
+        Genero se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->gender}\n
+
+        Qualificação da parte passiva:\n
         Nome: {$this->data['defendant']->name}\n
+        Tipo de pessoa: {$this->data['defendant']->person_type}\n
+        Endereço: {$this->data['defendant']->address}\n
+        CPF se for pessoa física, ou CNPJ se for jurídica: {$this->data['defendant']->nif_number}\n
+        RG se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->registration_number}\n
+        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->maritial_status}\n
+        Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->occupation}\n
+        Genero se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->gender}\n
 
         Tribunal: {$this->data['court']}\n
         Área do direito: {$this->data['fields_of_law']}\n";
@@ -76,12 +88,18 @@ class PromptService
 
         $text .= "Classe: {$this->data['case_matter']}\n";
         $text .= "Assunto: {$this->data['case_type']}\n";
-        $text .= "Descrição: {$this->data['case_description']}\n";
+        $text .= "Descrição dos fatos: {$this->data['case_description']}\n";
         $text .= "Na seção de provas, deve-se fazer referência a provas e anexos:\n";
 
         foreach ($this->data['evidences'] as $k => $evidence) {
             $text .= "ID#{$evidence['legal_case_reference']} - {$evidence['description']}\n";
         }
+
+        $text .=
+            "
+        Regras para gerar o modelo de petição inicial:\n
+        Tudo que está em inglês, exceto nomes próprios, devem ser traduzidos para o português.\n
+        No final do texto NÃO adicione um espaço para assinatura.";
 
         return $text;
     }

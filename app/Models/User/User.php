@@ -32,7 +32,14 @@ class User extends Model implements AuthAuthenticatable
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
+        'nif_number',
+        'registration_number',
+        'maritial_status',
+        'occupation',
+        'gender',
+        'address',
+        'person_type',
     ];
 
     public function setPasswordAttribute($attribute)
