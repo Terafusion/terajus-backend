@@ -3,6 +3,7 @@
 namespace App\Http\Requests\LegalCase;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LegalCaseStoreRequest extends FormRequest
 {
@@ -32,6 +33,9 @@ class LegalCaseStoreRequest extends FormRequest
             'court' => ['nullable'],
             'fields_of_law' => ['nullable'],
             'complaint' => ['nullable'],
+            'participants' => ['array', 'nullable'],
+            //'participants.user_id' => [Rule::requiredIf($this->participants !== null)], 
+            //'participants.participant_type_id' => [Rule::requiredIf($this->participants !== null), 'exists:users,id'], 
         ];
     }
 }

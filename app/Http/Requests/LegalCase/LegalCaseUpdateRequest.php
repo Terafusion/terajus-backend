@@ -30,6 +30,9 @@ class LegalCaseUpdateRequest extends FormRequest
             'complaint' => ['nullable'],
             'court' => ['nullable'],
             'fields_of_law' => ['nullable'],
+            'participants' => ['array', 'nullable'],
+            'participants.user_id' => ['required', 'exists:users,id'], 
+            'participants.participant_type_id' => ['required', 'exists:users,id'], 
         ];
     }
 }

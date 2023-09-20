@@ -4,6 +4,7 @@ namespace App\Services\LegalCase;
 
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\LegalCase\LegalCase;
+use App\Models\LegalCase\LegalCaseParticipant;
 use App\Models\User\User;
 use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
@@ -55,7 +56,9 @@ class LegalCaseService
     {
         $data['user_id'] = $user->id;
         $data['status'] ?? LegalCaseStatusEnum::DRAFT;
-        return $this->legalCaseRepository->create($data);
+        $legalCase = $this->legalCaseRepository->create($data);
+        $this->syncParticipants($legalCase, $data['participants']);
+        return $legalCase;
     }
 
     /**
@@ -71,6 +74,21 @@ class LegalCaseService
             $data['complaint'] = $this->artificialIntelligenceService->getComplaint($legalCase);
         }
 
+        $this->syncParticipants($legalCase, $data['participants']);
         return $this->legalCaseRepository->update($data, $legalCase->id);
+    }
+
+    public function syncParticipants(LegalCase $legalCase, array $data)
+    {
+        foreach ($data as $k => $participant) {
+            $user = User::find($participant['user_id']);
+            if (LegalCaseParticipant::where('user_id', $user->id)->get()->isEmpty()) {
+                $legalCaseParticipant = new LegalCaseParticipant();
+                $legalCaseParticipant->user_id = $user->id;
+                $legalCaseParticipant->legal_case_id = $legalCase->id;
+                $legalCaseParticipant->participant_type_id = $participant['participant_type_id'];
+                $legalCaseParticipant->save();
+            }
+        }
     }
 }

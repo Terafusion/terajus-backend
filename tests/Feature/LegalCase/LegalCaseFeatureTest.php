@@ -8,10 +8,16 @@ use App\Models\Evidence\Evidence;
 use App\Models\LegalCase\LegalCase;
 use App\Models\LegalCase\LegalCaseParticipant;
 use App\Models\User\User;
+use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
+use OpenAI\Laravel\Facades\OpenAI;
+use OpenAI\Resources\Chat;
+use OpenAI\Responses\Chat\CreateResponse;
+
 
 class LegalCaseFeatureTest extends TestCase
 {
@@ -57,9 +63,35 @@ class LegalCaseFeatureTest extends TestCase
         LegalCaseParticipant::factory()->plaintiff()->create(['legal_case_id' => $legalCase->id]);
         LegalCaseParticipant::factory()->defendant()->create(['legal_case_id' => $legalCase->id]);
 
+        $artificialIntelligenceService = App::make(ArtificialIntelligenceService::class);
+        $prompt = $artificialIntelligenceService->getPrompt($legalCase);
+
+        $client = OpenAI::fake([
+            CreateResponse::fake([
+                'choices' => [
+                    [
+                        'text' => $legalCase->description,
+                    ],
+                ],
+            ]),
+        ]);
+
+        $client->chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $prompt
+                ],
+            ],
+        ]);
+
         $this->assertNull($legalCase->complaint);
         $this->put('api/legal-cases/' . $legalCase->id, ['status' => LegalCaseStatusEnum::COMPLAINT_GENERATION])->assertStatus(Response::HTTP_OK);
+        $legalCase->refresh();
         $this->assertEquals(LegalCaseStatusEnum::COMPLAINT_GENERATION, $legalCase->status);
         $this->assertNotNull($legalCase->complaint);
+
+        $client->assertSent(Chat::class);
     }
 }

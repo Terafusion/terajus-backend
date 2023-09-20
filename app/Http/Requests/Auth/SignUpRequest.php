@@ -26,7 +26,10 @@ class SignUpRequest extends FormRequest
         return [
             'name' => ['required'],
             'email' => ['required'],
-            'password' => ['required']
+            'password' => ['required'],
+            'nif_number' => ['required'],
+            'occupation' => ['nullable'],
+            'address' => ['nullable']
         ];
     }
 }

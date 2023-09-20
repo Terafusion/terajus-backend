@@ -49,6 +49,16 @@ class LegalCase extends Model implements Transformable
     }
 
     /**
+     * Get all of the participants for the LegalCase
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function participants()
+    {
+        return $this->hasMany(LegalCaseParticipant::class);
+    }
+
+    /**
      * Get all of the plaintiffs for the LegalCase
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
