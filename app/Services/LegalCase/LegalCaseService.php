@@ -57,7 +57,9 @@ class LegalCaseService
         $data['user_id'] = $user->id;
         $data['status'] ?? LegalCaseStatusEnum::DRAFT;
         $legalCase = $this->legalCaseRepository->create($data);
-        $this->syncParticipants($legalCase, $data['participants']);
+        if (isset($data['participants']) && !empty($data['participants'])) {
+            $this->syncParticipants($legalCase, $data['participants']);
+        }
         return $legalCase;
     }
 
@@ -74,7 +76,9 @@ class LegalCaseService
             $data['complaint'] = $this->artificialIntelligenceService->getComplaint($legalCase);
         }
 
-        $this->syncParticipants($legalCase, $data['participants']);
+        if (isset($data['participants']) && !empty($data['participants'])) {
+            $this->syncParticipants($legalCase, $data['participants']);
+        }
         return $this->legalCaseRepository->update($data, $legalCase->id);
     }
 
@@ -82,7 +86,7 @@ class LegalCaseService
     {
         foreach ($data as $k => $participant) {
             $user = User::find($participant['user_id']);
-            if (LegalCaseParticipant::where('user_id', $user->id)->get()->isEmpty()) {
+            if (LegalCaseParticipant::where('user_id', $user->id)->where('legal_case_id', $legalCase->id)->get()->isEmpty()) {
                 $legalCaseParticipant = new LegalCaseParticipant();
                 $legalCaseParticipant->user_id = $user->id;
                 $legalCaseParticipant->legal_case_id = $legalCase->id;

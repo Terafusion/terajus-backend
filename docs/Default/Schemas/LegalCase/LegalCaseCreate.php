@@ -42,4 +42,11 @@ class LegalCaseCreate
      * @OA\Property()
      */
     public string $case_description;
+
+    /**
+     * @OA\Property(example="['participant_type_id' => '1 para parte ativa, 2 para parte passiva']")
+     */
+    public object $participants;
+
+
 }

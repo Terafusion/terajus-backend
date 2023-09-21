@@ -905,6 +905,10 @@
                     },
                     "case_description": {
                         "type": "string"
+                    },
+                    "participants": {
+                        "type": "object",
+                        "example": "['participant_type_id' => '1 para parte ativa, 2 para parte passiva']"
                     }
                 },
                 "type": "object"
