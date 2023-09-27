@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Evidence;
 
+use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -11,5 +12,8 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface EvidenceRepository extends RepositoryInterface
 {
-    //
+    /**
+     * @return Collection
+     */
+    public function getAll();
 }

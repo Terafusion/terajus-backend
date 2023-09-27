@@ -7,6 +7,11 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Evidence\EvidenceRepository;
 use App\Models\Evidence\Evidence;
 use App\Validators\Evidence\EvidenceValidator;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class EvidenceRepositoryEloquent.
@@ -25,8 +30,6 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
         return Evidence::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -34,5 +37,31 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    /**
+     * Return build Eloquent query
+     *
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
+     * @return Querybuilder
+     */
+    private function queryBuilder($queryBuilder)
+    {
+        return QueryBuilder::for($queryBuilder)
+            ->allowedFilters([
+                'id',
+                AllowedFilter::callback('description', function (Builder $query, $value) {
+                    $query->where('description', 'ILIKE', '%' . $value . '%');
+                }),
+                AllowedFilter::exact('legal_case_id')
+            ])->get();
+    }
+
+
+    /**
+     * @return Collection
+     */
+    public function getAll()
+    {
+        return $this->queryBuilder($this->model());
+    }
 }

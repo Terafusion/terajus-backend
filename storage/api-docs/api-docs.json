@@ -199,6 +199,199 @@
                 }
             }
         },
+        "/evidences": {
+            "get": {
+                "tags": [
+                    "Evidences"
+                ],
+                "summary": "Get all evidences",
+                "operationId": "61b9863b6739e32040fd55b8d409fd42",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "legal_case_id",
+                                    "description"
+                                ]
+                            },
+                            "example": "filter[legal_case_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EvidenceResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Evidences"
+                ],
+                "summary": "Add a new evidence register",
+                "operationId": "5fc1d29888e87ec527153b67ea45c280",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EvidenceCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EvidenceResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/evidences/{evidence_id}": {
+            "get": {
+                "tags": [
+                    "Evidences"
+                ],
+                "summary": "Get a evidence",
+                "operationId": "3086107576c3cc8fc49def9689bc19d6",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "evidence_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Evidence"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/legal-cases": {
             "get": {
                 "tags": [
@@ -841,6 +1034,61 @@
                         "type": "string"
                     },
                     "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Evidence": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "legal_case_id": {
+                        "type": "integer"
+                    },
+                    "legal_case_reference": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EvidenceCreate": {
+                "required": [
+                    "legal_case_id",
+                    "description"
+                ],
+                "properties": {
+                    "legal_case_id": {
+                        "type": "integer"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EvidenceResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Evidence"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "EvidenceUpdate": {
+                "properties": {
+                    "legal_case_id": {
+                        "type": "integer"
+                    },
+                    "description": {
                         "type": "string"
                     }
                 },
