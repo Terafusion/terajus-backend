@@ -18,3 +18,5 @@ yarn-error.log
 /.vscode
 .docker/mysql
 /coverage-report/*
+/public/coverage-report/*
+

@@ -7,21 +7,20 @@ use App\Models\LegalCase\LegalCase;
 use App\Models\LegalCase\LegalCaseParticipant;
 use App\Models\User\User;
 use App\Repositories\LegalCase\LegalCaseRepository;
+use App\Repositories\LegalCase\LegalCaseParticipantRepository;
 use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
+use App\Services\User\UserService;
 use Illuminate\Support\Collection;
 
 class LegalCaseService
 {
-    /** @var ArtificialIntelligenceService */
-    private $artificialIntelligenceService;
 
-    /** @var LegalCaseRepository */
-    private $legalCaseRepository;
-
-    public function __construct(ArtificialIntelligenceService $artificialIntelligenceService, LegalCaseRepository $legalCaseRepository)
-    {
-        $this->artificialIntelligenceService = $artificialIntelligenceService;
-        $this->legalCaseRepository = $legalCaseRepository;
+    public function __construct(
+        private ArtificialIntelligenceService $artificialIntelligenceService,
+        private UserService $userService,
+        private LegalCaseRepository $legalCaseRepository,
+        private LegalCaseParticipantRepository $LegalCaseParticipantRepository
+    ) {
     }
 
     /**
@@ -72,27 +71,35 @@ class LegalCaseService
      */
     public function update(array $data, LegalCase $legalCase)
     {
-        if ($data['status'] === LegalCaseStatusEnum::COMPLAINT_GENERATION) {
-            $data['complaint'] = $this->artificialIntelligenceService->getComplaint($legalCase);
-        }
-
         if (isset($data['participants']) && !empty($data['participants'])) {
             $this->syncParticipants($legalCase, $data['participants']);
         }
+
+        if (isset($data['status']) && $data['status'] === LegalCaseStatusEnum::COMPLAINT_GENERATION) {
+            $data['complaint'] = $this->artificialIntelligenceService->getComplaint($legalCase);
+        }
+
         return $this->legalCaseRepository->update($data, $legalCase->id);
     }
 
+    /**
+     * Sync legal case participants
+     * 
+     * @param LegalCase $legalCase
+     * @param array $data
+     * 
+     * @return void
+     */
     public function syncParticipants(LegalCase $legalCase, array $data)
     {
-        foreach ($data as $k => $participant) {
-            $user = User::find($participant['user_id']);
-            if (LegalCaseParticipant::where('user_id', $user->id)->where('legal_case_id', $legalCase->id)->get()->isEmpty()) {
-                $legalCaseParticipant = new LegalCaseParticipant();
-                $legalCaseParticipant->user_id = $user->id;
-                $legalCaseParticipant->legal_case_id = $legalCase->id;
-                $legalCaseParticipant->participant_type_id = $participant['participant_type_id'];
-                $legalCaseParticipant->save();
-            }
+        $this->LegalCaseParticipantRepository->where(['legal_case_id' => $legalCase->id])->delete();
+
+        foreach ($data as $participant) {
+            $this->LegalCaseParticipantRepository->create([
+                'legal_case_id' => $legalCase->id,
+                'user_id' => $participant['user_id'],
+                'participant_type_id' => $participant['participant_type_id'],
+            ]);
         }
     }
 }

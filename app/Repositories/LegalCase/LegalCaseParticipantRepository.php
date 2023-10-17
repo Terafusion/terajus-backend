@@ -5,11 +5,11 @@ namespace App\Repositories\LegalCase;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface LegalCasesParticipantRepository.
+ * Interface LegalCaseParticipantRepository.
  *
  * @package namespace App\Repositories\LegalCase;
  */
-interface LegalCasesParticipantRepository extends RepositoryInterface
+interface LegalCaseParticipantRepository extends RepositoryInterface
 {
     //
 }

@@ -60,7 +60,15 @@ class PromptService
     {
         $text = "Você é um assistente de advogado designado para escrever petições de alta qualidade:\n
 
-        Gere um texto de petição inicial, com as seguintes especificações:\n
+        Gere um texto de petição inicial formatado em html, com as seguintes especificações:\n
+
+        Use as tags h5, p;
+        Tudo que está em inglês, exceto nomes próprios, devem ser traduzidos para o português;\n
+        No final do texto não adicione um espaço para assinatura;
+        use termos da área juridica e as leis vigintes da constituição brasileira para embasar os argumentos;
+
+        IMPORTANTE: não repita os textos abaixo, use eles para criar uma petição inicial com suas palavras;
+        abaixo estão as informações que você deve usar para criar a petição;
 
         Qualificação da parte ativa:\n
         Nome: {$this->data['plaintiff']->name}\n
@@ -82,8 +90,8 @@ class PromptService
         Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->occupation}\n
         Genero se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->gender}\n
 
-        Tribunal: {$this->data['court']}\n
-        Área do direito: {$this->data['fields_of_law']}\n";
+        ATENÇÃO: Tribunal: {$this->data['court']}\n
+        ATENÇÃO: Área do direito: {$this->data['fields_of_law']}\n";
 
 
         $text .= "Classe: {$this->data['case_matter']}\n";
@@ -96,10 +104,9 @@ class PromptService
         }
 
         $text .=
-            "
-        Regras para gerar o modelo de petição inicial:\n
-        Tudo que está em inglês, exceto nomes próprios, devem ser traduzidos para o português.\n
-        No final do texto NÃO adicione um espaço para assinatura.";
+        "
+            IMPORTANTE: não repita os textos acima, use eles para criar uma petição inicial com suas palavras;
+        ";
 
         return $text;
     }

@@ -10,16 +10,15 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
-    /** @var AuthService */
-    private $authService;
 
-    public function __construct(AuthService $authService)
+    public function __construct(private AuthService $authService)
     {
-        $this->authService = $authService;
     }
 
     /**
      * Register and login user
+     * 
+     * @param SignupRequest $request
      */
     public function signUp(SignUpRequest $request)
     {

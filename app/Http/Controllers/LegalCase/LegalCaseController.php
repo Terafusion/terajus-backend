@@ -13,12 +13,9 @@ use Illuminate\Http\Response;
 
 class LegalCaseController extends Controller
 {
-    /** @var LegalCaseService */
-    private $legalCaseService;
 
-    public function __construct(LegalCaseService $legalCaseService)
+    public function __construct(private LegalCaseService $legalCaseService)
     {
-        $this->legalCaseService = $legalCaseService;
     }
 
     /**

@@ -47,6 +47,12 @@ class EvidenceController extends Controller
         return $this->showOne($this->evidenceService->getById($id));
     }
 
+    /**
+     * Destroy an evidence
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $this->evidenceService->delete($id);

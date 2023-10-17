@@ -56,7 +56,7 @@ class UserFeatureTest extends TestCase
      */
     public function test_store_user()
     {
-        $this->post('api/users', ['name' => 'test', 'email' => 'test@gm.com', 'password' => '12345678'])
+        $this->post('api/users', ['name' => 'test', 'email' => 'test@gm.com', 'password' => '12345678', 'person_type' => 'PERSONAL', 'nif_number' => '12345678'])
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'test']);
     }

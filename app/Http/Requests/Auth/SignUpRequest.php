@@ -29,7 +29,9 @@ class SignUpRequest extends FormRequest
             'password' => ['required'],
             'nif_number' => ['required'],
             'occupation' => ['nullable'],
-            'address' => ['nullable']
+            'address' => ['nullable'],
+            'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
+            'occupation' => ['nullable']
         ];
     }
 }

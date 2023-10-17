@@ -18,7 +18,6 @@ use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Resources\Chat;
 use OpenAI\Responses\Chat\CreateResponse;
 
-
 class LegalCaseFeatureTest extends TestCase
 {
     use RefreshDatabase;
@@ -93,5 +92,37 @@ class LegalCaseFeatureTest extends TestCase
         $this->assertNotNull($legalCase->complaint);
 
         $client->assertSent(Chat::class);
+    }
+
+    public function test_update_legal_case()
+    {
+        $legalCase = LegalCase::factory()->laborlawCase()->create();
+        $oldPlaintiffUser = User::factory()->create();
+        $newPlaintiffUser = User::factory()->create();
+        LegalCaseParticipant::factory()->plaintiff()->create(['user_id' => $oldPlaintiffUser->id, 'legal_case_id' => $legalCase->id]);
+
+        $this->put('api/legal-cases/' . $legalCase->id, ['case_description' => 'test case description'])->assertStatus(Response::HTTP_OK);
+        $legalCase->refresh();
+        $this->assertEquals('test case description', $legalCase->case_description);
+
+        $this->assertDatabaseHas('legal_case_participants', [
+            'legal_case_id' => $legalCase->id,
+            'user_id' => $oldPlaintiffUser->id
+        ]);
+
+        $this->put('api/legal-cases/' . $legalCase->id, ['participants' => [0 => [
+            'user_id' => $newPlaintiffUser->id,
+            'participant_type_id' => 1
+        ]]])->assertStatus(Response::HTTP_OK);
+
+        $this->assertSoftDeleted('legal_case_participants', [
+            'legal_case_id' => $legalCase->id,
+            'user_id' => $oldPlaintiffUser->id
+        ]);
+
+        $this->assertDatabaseHas('legal_case_participants', [
+            'legal_case_id' => $legalCase->id,
+            'user_id' => $newPlaintiffUser->id
+        ]);
     }
 }

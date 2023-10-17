@@ -34,8 +34,8 @@ class LegalCaseStoreRequest extends FormRequest
             'fields_of_law' => ['nullable'],
             'complaint' => ['nullable'],
             'participants' => ['array', 'nullable'],
-            //'participants.user_id' => [Rule::requiredIf($this->participants !== null)], 
-            //'participants.participant_type_id' => [Rule::requiredIf($this->participants !== null), 'exists:users,id'], 
+            'participants.*.participant_type_id' => ['required'],
+            'participants.*.user_id' => ['required', 'exists:users,id'],
         ];
     }
 }
