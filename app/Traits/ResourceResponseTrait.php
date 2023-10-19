@@ -49,12 +49,24 @@ trait ResourceResponseTrait
         return response()->json($resource::collection($collection), $statusCode);
     }
 
+    /**
+     * Get the resource name
+     * 
+     * @return string
+     */
     protected function getResource()
     {
         $routeName = request()->route()->getName();
-        $pos      = strripos($routeName, '.');
-        $resourceName = ucfirst(substr($routeName, 0, $pos - 1));
-        $resourceName = 'App\\Http\\Resources\\' . $resourceName . '\\' . $resourceName . 'Resource';
+        $pos = strripos($routeName, '.');
+        $modelSegment = substr($routeName, 0, $pos - 1);
+        $modelSegments = explode('-', $modelSegment);
+        $modelName = '';
+
+        foreach ($modelSegments as $segment) {
+            $modelName .= ucfirst($segment);
+        }
+
+        $resourceName = 'App\\Http\\Resources\\' . $modelName . '\\' . $modelName . 'Resource';
 
         return $resourceName;
     }

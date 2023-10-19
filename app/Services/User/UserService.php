@@ -17,17 +17,6 @@ class UserService
     }
 
     /**
-     * Get an user instance by ID
-     * 
-     * @param User $user
-     * @return User
-     */
-    public function getById($user)
-    {
-        return $this->userRepository->find($user->id);
-    }
-
-    /**
      * Get all registers
      * 
      * @return Collection
