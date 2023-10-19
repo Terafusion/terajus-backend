@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DocumentType\DocumentTypeController;
 use App\Http\Controllers\Evidence\EvidenceController;
 use App\Http\Controllers\LegalCase\LegalCaseController;
 use App\Http\Controllers\User\UserController;
@@ -23,4 +24,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('legal-cases', LegalCaseController::class);
     Route::apiResource('evidences', EvidenceController::class);
 });
+Route::apiResource('document-types', DocumentTypeController::class);
 Route::post('/oauth/signup', [AuthController::class, 'signUp']);
