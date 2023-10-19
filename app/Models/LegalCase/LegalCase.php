@@ -3,6 +3,7 @@
 namespace App\Models\LegalCase;
 
 use App\Enums\LegalCaseParticipantTypeEnum;
+use App\Enums\LegalCaseStatusEnum;
 use App\Models\Evidence\Evidence;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,10 @@ class LegalCase extends Model implements Transformable
         'fields_of_law',
         'complaint',
         'status'
+    ];
+
+    protected $attributes = [
+        'status' => LegalCaseStatusEnum::DRAFT,
     ];
 
     /**

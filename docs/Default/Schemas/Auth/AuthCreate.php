@@ -9,6 +9,8 @@ use OpenApi\Annotations as OA;
  *  required={
  *      "name",
  *      "email",
+ *      "nif_number",
+ *      "person_type",
  *      "password",
  *      "password_confirmation"
  *  }
@@ -25,6 +27,16 @@ class AuthCreate
      * @OA\Property()
      */
     public string $email;
+
+    /**
+     * @OA\Property(example="CPF or CNPJ")
+     */
+    public string $nif_number;
+
+    /**
+     * @OA\Property(example="PERSONAL || BUSINESS")
+     */
+    public string $person_type;
 
     /**
      * @OA\Property(minimum="8", maximum="25", contains="[A-Z],[#?!@$%&*=_]")

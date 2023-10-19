@@ -4,7 +4,6 @@ namespace App\Services\LegalCase;
 
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\LegalCase\LegalCase;
-use App\Models\LegalCase\LegalCaseParticipant;
 use App\Models\User\User;
 use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Repositories\LegalCase\LegalCaseParticipantRepository;

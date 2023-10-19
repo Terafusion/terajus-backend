@@ -907,6 +907,8 @@
                 "required": [
                     "name",
                     "email",
+                    "nif_number",
+                    "person_type",
                     "password",
                     "password_confirmation"
                 ],
@@ -917,6 +919,14 @@
                     },
                     "email": {
                         "type": "string"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF or CNPJ"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL || BUSINESS"
                     },
                     "password": {
                         "type": "string",

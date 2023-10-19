@@ -2,11 +2,7 @@
 
 namespace App\Services\ArtificialIntelligence;
 
-use App\Models\Document\Document;
-use App\Models\Evidence\Evidence;
 use App\Models\LegalCase\LegalCase;
-use App\Models\LegalCase\LegalCaseParticipant;
-use App\Models\User\User;
 use App\Services\LegalCase\PromptService;
 use OpenAI;
 
