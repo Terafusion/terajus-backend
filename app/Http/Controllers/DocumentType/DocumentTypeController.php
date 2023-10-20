@@ -22,49 +22,4 @@ class DocumentTypeController extends Controller
     {
         return $this->showAll($this->documentTypeService->getAll());
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Document\DocumentType  $documentType
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DocumentType $documentType)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Document\DocumentType  $documentType
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DocumentType $documentType)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Document\DocumentType  $documentType
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DocumentType $documentType)
-    {
-        //
-    }
 }
