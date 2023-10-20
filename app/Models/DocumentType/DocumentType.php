@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Document;
+namespace App\Models\DocumentType;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
@@ -9,7 +9,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 /**
  * Class DocumentType.
  *
- * @package namespace App\Models\Document;
+ * @package namespace App\Models\DocumentType;
  */
 class DocumentType extends Model implements Transformable
 {
@@ -21,5 +21,4 @@ class DocumentType extends Model implements Transformable
      * @var array
      */
     protected $fillable = [];
-
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories\Document;
+namespace App\Repositories\DocumentType;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Document\DocumentTypeRepository;
-use App\Models\Document\DocumentType;
+use App\Repositories\DocumentType\DocumentTypeRepository;
+use App\Models\DocumentType\DocumentType;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Class DocumentTypeRepositoryEloquent.
  *
- * @package namespace App\Repositories\Document;
+ * @package namespace App\Repositories\DocumentType;
  */
 class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentTypeRepository
 {

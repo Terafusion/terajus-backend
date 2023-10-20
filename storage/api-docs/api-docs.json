@@ -199,6 +199,72 @@
                 }
             }
         },
+        "/document-types": {
+            "get": {
+                "tags": [
+                    "DocumentTypes"
+                ],
+                "summary": "Get all document types",
+                "operationId": "bd80cd5d9c0a1ece1d73f4a0a9834c7b",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "legal_case_id",
+                                    "description"
+                                ]
+                            },
+                            "example": "filter[legal_case_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentTypeResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/evidences": {
             "get": {
                 "tags": [
@@ -1045,6 +1111,32 @@
                     },
                     "code": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentType": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentTypeResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentType"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
                     }
                 },
                 "type": "object"

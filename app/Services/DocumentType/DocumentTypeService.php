@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\Document;
+namespace App\Services\DocumentType;
 
-use App\Models\Document\DocumentType;
-use App\Repositories\Document\DocumentTypeRepository;
+use App\Repositories\DocumentType\DocumentTypeRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class DocumentTypeService

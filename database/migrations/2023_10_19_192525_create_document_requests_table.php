@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('client_id');
-            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

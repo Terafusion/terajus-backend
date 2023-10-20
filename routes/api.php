@@ -24,5 +24,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('legal-cases', LegalCaseController::class);
     Route::apiResource('evidences', EvidenceController::class);
 });
+
 Route::apiResource('document-types', DocumentTypeController::class);
 Route::post('/oauth/signup', [AuthController::class, 'signUp']);

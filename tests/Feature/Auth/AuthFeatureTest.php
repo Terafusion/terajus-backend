@@ -23,7 +23,7 @@ class AuthFeatureTest extends TestCase
 
     public function test_signUp()
     {
-        $response = $this->post('/api/oauth/signup', ['name' => 'test', 'email' => 'emailtest@test.com', 'password' => '12345678', 'nif_number' => '123456789', 'person_type' => 'PERSONAL'])
+        $response = $this->post('/api/oauth/signup', ['name' => 'test', 'email' => 'emailtest@test.com', 'password' => '123454678', 'nif_number' => '123456789', 'person_type' => 'PERSONAL'])
             ->assertStatus(Response::HTTP_OK)
             ->decodeResponseJson();
         $this->assertNotNull($response['access_token']);

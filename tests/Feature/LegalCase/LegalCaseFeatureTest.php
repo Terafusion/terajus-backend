@@ -42,11 +42,18 @@ class LegalCaseFeatureTest extends TestCase
      */
     public function test_store_legal_case()
     {
+        $newPlaintiffUser = User::factory()->create();
+
         $this->post('api/legal-cases', [
             'case_type' => 'Test case type',
             'case_matter' => 'Test case matter',
             'case_description' => 'Test case description',
-            'case_requests' => 'Test case request'
+            'case_requests' => 'Test case request',
+            'participants' => [
+                0 => [
+                'user_id' => $newPlaintiffUser->id,
+                'participant_type_id' => 1
+            ]]
         ])
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['case_type' => 'Test case type']);
