@@ -1441,8 +1441,16 @@
                         "type": "string"
                     },
                     "participants": {
-                        "type": "object",
-                        "example": "['participant_type_id' => '1 para parte ativa, 2 para parte passiva']"
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "participant_type_id": {
+                                    "type": "integer",
+                                    "example": "1 para parte ativa, 2 para parte passiva"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"
