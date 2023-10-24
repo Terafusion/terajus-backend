@@ -5,9 +5,11 @@ namespace App\Models\DocumentRequest;
 use App\Enums\DocumentRequestStatusEnum;
 use App\Models\DocumentRequestDoc\DocumentRequestDoc;
 use App\Models\User\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
@@ -18,7 +20,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class DocumentRequest extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

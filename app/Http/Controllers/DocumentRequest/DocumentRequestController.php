@@ -21,7 +21,7 @@ class DocumentRequestController extends Controller
      */
     public function index()
     {
-        //
+        return $this->showAll($this->documentRequestService->getAll());
     }
 
     /**
