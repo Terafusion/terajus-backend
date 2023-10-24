@@ -18,6 +18,11 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'nif_number' => $this->nif_number,
+            'maritial_status' => $this->maritial_status,
+            'registration_number' => $this->registration_number,
+            'occupation' => $this->occupation,
+            'address' => $this->address,
             'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null
         ];
     }
