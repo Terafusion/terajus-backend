@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
+use App\Services\Address\AddressService;
 use App\Services\User\UserService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -11,12 +12,9 @@ use Illuminate\Support\Facades\Http;
 
 class AuthService
 {
-    /** @var UserService */
-    private $userService;
 
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService, private AddressService $addressService)
     {
-        $this->userService = $userService;
     }
 
     /**
@@ -30,6 +28,7 @@ class AuthService
         try {
             $user = $this->userService->store($data);
             $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
+            $this->addressService->store($data['address'], $user);
             $user->setAppends(['access_token' => $token]);
             return $user;
         } catch (\Throwable $th) {

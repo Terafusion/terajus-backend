@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Address\Address;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,12 +39,16 @@ class User extends Model implements AuthAuthenticatable
         'maritial_status',
         'occupation',
         'gender',
-        'address',
         'person_type',
     ];
 
     public function setPasswordAttribute($attribute)
     {
         $this->attributes['password'] = Hash::make($attribute);
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 }

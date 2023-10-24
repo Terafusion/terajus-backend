@@ -26,7 +26,6 @@ class UserTableSeeder extends Seeder
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Advogado',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
         ]);
 
@@ -39,7 +38,6 @@ class UserTableSeeder extends Seeder
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Estagiário',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
 
         ]);
@@ -53,7 +51,6 @@ class UserTableSeeder extends Seeder
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Engenheiro Civil',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
 
         ]);
@@ -67,7 +64,6 @@ class UserTableSeeder extends Seeder
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Programador',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
 
         ]);
@@ -80,7 +76,6 @@ class UserTableSeeder extends Seeder
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Lavrador',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
 
         ]);

@@ -4,16 +4,13 @@ namespace App\Services\User;
 
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
+use App\Services\Address\AddressService;
 use Illuminate\Support\Collection;
 
 class UserService
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private UserRepository $userRepository, private AddressService $addressService)
     {
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -45,7 +42,9 @@ class UserService
      */
     public function store(array $data)
     {
-        return $this->userRepository->create($data);
+        $user = $this->userRepository->create($data);
+        $this->addressService->store($data['address'], $user);
+        return $user;
     }
 
     /**

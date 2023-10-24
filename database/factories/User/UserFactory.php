@@ -28,7 +28,6 @@ class UserFactory extends Factory
             'maritial_status' => 'SOLTEIRO',
             'occupation' => 'Advogado',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
         ];
     }

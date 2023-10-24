@@ -56,8 +56,27 @@ class UserFeatureTest extends TestCase
      */
     public function test_store_user()
     {
-        $this->post('api/users', ['name' => 'test', 'email' => 'test@gm.com', 'password' => '12345678', 'person_type' => 'PERSONAL', 'nif_number' => '12345678'])
-            ->assertStatus(Response::HTTP_CREATED)
+        $data = [
+            'name' => 'test',
+            'email' => 'test@example.com',
+            'password' => '12345678',
+            'person_type' => 'PERSONAL',
+            'nif_number' => '12345678',
+            'address' => [
+                'street' => '123 Main St',
+                'number' => '42',
+                'district' => 'Downtown',
+                'city' => 'Cityville',
+                'state' => 'BA',
+                'country' => 'US',
+                'complement' => 'Apt 101',
+                'zip_code' => '12345',
+            ],
+        ];
+
+        $response = $this->post('api/users', $data);
+
+        $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'test']);
     }
 

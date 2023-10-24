@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Address\AddressController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Evidence\EvidenceController;
 use App\Http\Controllers\LegalCase\LegalCaseController;
@@ -22,5 +23,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('legal-cases', LegalCaseController::class);
     Route::apiResource('evidences', EvidenceController::class);
+    Route::apiResource('addresses', AddressController::class)->only(['index', 'show']);
 });
 Route::post('/oauth/signup', [AuthController::class, 'signUp']);

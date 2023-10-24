@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('registration_number')->nullable();
             $table->string('maritial_status')->nullable();
             $table->string('occupation')->nullable();
-            $table->string('address')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
