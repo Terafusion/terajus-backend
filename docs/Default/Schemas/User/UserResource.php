@@ -12,7 +12,7 @@ class UserResource
     /**
      * @OA\Property()
      */
-    public User $data;
+    public UserResponse $data;
 
     /**
      * @OA\Property(example="integer")

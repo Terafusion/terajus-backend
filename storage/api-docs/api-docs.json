@@ -903,6 +903,44 @@
     },
     "components": {
         "schemas": {
+            "Address": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "addressable_id": {
+                        "type": "integer"
+                    },
+                    "addressable_type": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "AuthCreate": {
                 "required": [
                     "name",
@@ -1338,11 +1376,44 @@
             "UserResource": {
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/UserResponse"
                     },
                     "statusCode": {
                         "type": "integer",
                         "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "nif_number": {
+                        "type": "string"
+                    },
+                    "maritial_status": {
+                        "type": "string"
+                    },
+                    "registration_number": {
+                        "type": "string"
+                    },
+                    "occupation": {
+                        "type": "string"
+                    },
+                    "access_token": {
+                        "type": "string",
+                        "example": "only if accessing /login"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
                     }
                 },
                 "type": "object"
