@@ -20,6 +20,131 @@
         }
     ],
     "paths": {
+        "/addresses": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get all addresses",
+                "operationId": "0e5fa5101f48745d2ddeb847fb288689",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "addressable_type",
+                                    "addressable_id"
+                                ]
+                            },
+                            "example": "filter[addressable_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{address_id}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get a address",
+                "operationId": "d38202733cba43beb13d908401e5d282",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/oauth/token": {
             "post": {
                 "tags": [
@@ -941,6 +1066,55 @@
                 },
                 "type": "object"
             },
+            "AddressCreate": {
+                "required": [
+                    "street",
+                    "number",
+                    "district",
+                    "city",
+                    "country",
+                    "zip_code"
+                ],
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "AuthCreate": {
                 "required": [
                     "name",
@@ -1359,7 +1533,10 @@
             "UserCreate": {
                 "required": [
                     "name",
-                    "email"
+                    "email",
+                    "person_type",
+                    "nif_number",
+                    "registration_number"
                 ],
                 "properties": {
                     "name": {
@@ -1369,6 +1546,25 @@
                     "email": {
                         "type": "string",
                         "maximum": "255"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF || CNPJ"
+                    },
+                    "registration_number": {
+                        "type": "string",
+                        "example": "RG pessoa física"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL || BUSINESS"
+                    },
+                    "occupation": {
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/AddressCreate"
                     }
                 },
                 "type": "object"

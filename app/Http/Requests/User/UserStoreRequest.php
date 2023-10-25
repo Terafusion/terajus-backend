@@ -28,10 +28,11 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => ['required'],
             'email' => ['required'],
-            'password' => ['required'],
+            'password' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'occupation' => ['nullable'],
             'nif_number' => ['required'],
+            'registration_number' => ['required'],
             'address' => ['required', 'array'],
             'address.street' => ['required', 'string', 'max:255'],
             'address.number' => ['required', 'string', 'max:20'],

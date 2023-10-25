@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class UserTableSeeder extends Seeder
 {
