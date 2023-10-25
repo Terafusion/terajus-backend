@@ -62,6 +62,7 @@ class UserFeatureTest extends TestCase
             'password' => '12345678',
             'person_type' => 'PERSONAL',
             'nif_number' => '12345678',
+            'registration_number' => '12345678',
             'address' => [
                 'street' => '123 Main St',
                 'number' => '42',

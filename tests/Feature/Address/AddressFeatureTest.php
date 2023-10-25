@@ -35,9 +35,8 @@ class AddressFeatureTest extends TestCase
      */
     public function test_index_addresses()
     {
-        $user = User::factory()->create(['name' => 'test']);
-        $address = Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $user->id]);
-        $this->get('api/addresses')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['street' => $address->street])->assertJsonCount(1);
+        $address = Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $this->user->id]);
+        $this->get('api/addresses')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['street' => $address->street])->assertJsonCount(2);
     }
 
     /**
