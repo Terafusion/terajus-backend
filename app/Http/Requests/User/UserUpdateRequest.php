@@ -28,6 +28,8 @@ class UserUpdateRequest extends FormRequest
             'email' => ['nullable'],
             'password' => ['nullable'],
             'occupation' => ['nullable'],
+            'maritial_status' => ['nullable'],
+            'registration_number' => ['nullable'],
         ];
     }
 }
