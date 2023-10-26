@@ -28,7 +28,7 @@ class UserUpdateRequest extends FormRequest
             'email' => ['nullable'],
             'password' => ['nullable'],
             'occupation' => ['nullable'],
-            'maritial_status' => ['nullable'],
+            'marital_status' => ['nullable'],
             'registration_number' => ['nullable'],
         ];
     }

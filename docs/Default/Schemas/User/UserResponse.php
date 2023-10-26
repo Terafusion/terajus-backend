@@ -33,7 +33,7 @@ class UserResponse
     /**
      * @OA\Property()
      */
-    public string $maritial_status;
+    public string $marital_status;
 
     /**
      * @OA\Property()

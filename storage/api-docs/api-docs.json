@@ -1595,7 +1595,7 @@
                     "nif_number": {
                         "type": "string"
                     },
-                    "maritial_status": {
+                    "marital_status": {
                         "type": "string"
                     },
                     "registration_number": {

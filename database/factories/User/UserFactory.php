@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'nif_number' => uniqid(),
             'registration_number' => uniqid(),
-            'maritial_status' => 'SOLTEIRO',
+            'marital_status' => 'SOLTEIRO',
             'occupation' => 'Advogado',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
