@@ -11,6 +11,7 @@ use OpenApi\Annotations as OA;
  *      "email",
  *      "nif_number",
  *      "person_type",
+ *      "role",
  *      "password",
  *      "password_confirmation"
  *  }
@@ -37,6 +38,11 @@ class AuthCreate
      * @OA\Property(example="PERSONAL || BUSINESS")
      */
     public string $person_type;
+
+    /**
+     * @OA\Property(example="lawyer || customer")
+     */
+    public string $role;
 
     /**
      * @OA\Property(minimum="8", maximum="25", contains="[A-Z],[#?!@$%&*=_]")
