@@ -13,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    function getAll();
+    function getAll(User $user): Collection;
 }
