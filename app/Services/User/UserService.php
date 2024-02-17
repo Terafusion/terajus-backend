@@ -36,7 +36,11 @@ class UserService
     {
         $createdUser = $this->userRepository->create($data);
         $createdUser->assignRole($data['role']);
-        $this->customerProfessionalRepository->create(['customer_id' => $createdUser->id, 'professional_id' => $user->id]);
+
+        if (!is_null($user)) {
+            $this->customerProfessionalRepository->create(['customer_id' => $createdUser->id, 'professional_id' => $user->id]);
+        }
+
         return $createdUser;
     }
 
