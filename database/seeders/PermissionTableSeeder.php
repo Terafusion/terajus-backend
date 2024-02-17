@@ -16,12 +16,12 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         Permission::create([
-            'name' => 'legalCase.store',
+            'name' => 'legal_case.store',
             'guard_name' => 'api'
         ]);
 
         Permission::create([
-            'name' => 'legalCase.protocol',
+            'name' => 'legal_case.protocol',
             'guard_name' => 'api'
         ]);
 
@@ -32,6 +32,11 @@ class PermissionTableSeeder extends Seeder
 
         Permission::create([
             'name' => 'user.store',
+            'guard_name' => 'api'
+        ]);
+
+        Permission::create([
+            'name' => 'user.update',
             'guard_name' => 'api'
         ]);
     }

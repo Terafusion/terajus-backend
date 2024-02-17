@@ -29,8 +29,9 @@ class AuthService
     {
         try {
             $user = $this->userService->store($data);
+            $user->assignRole($data['role']);
             $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
-            $user->setAppends(['access_token' => $token]);
+            $user->setAppends(['access_token' => $token, 'role' => $user->roles()->first()]);
             return $user;
         } catch (\Throwable $th) {
             throw $th;

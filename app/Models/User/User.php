@@ -52,11 +52,11 @@ class User extends Model implements AuthAuthenticatable, Authorizable
 
     public function professionals()
     {
-        return $this->belongsToMany(User::class, 'customer_professional', 'customer_id', 'professional_id');
+        return $this->belongsToMany(User::class, 'customer_professionals', 'customer_id', 'professional_id');
     }
 
     public function customers()
     {
-        return $this->belongsToMany(User::class, 'customer_professional', 'professional_id', 'customer_id');
+        return $this->belongsToMany(User::class, 'customer_professionals', 'professional_id', 'customer_id');
     }
 }

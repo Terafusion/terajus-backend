@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'roles' => $this->roles,
             'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null
         ];
     }

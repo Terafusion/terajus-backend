@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\ValidRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,6 +32,7 @@ class UserStoreRequest extends FormRequest
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'occupation' => ['nullable'],
             'nif_number' => ['required'],
+            'role' => ['required', new ValidRole]
         ];
     }
 }

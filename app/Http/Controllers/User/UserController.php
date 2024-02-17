@@ -15,8 +15,7 @@ class UserController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        //$this->middleware('can:viewAny,users', ['index']);
-
+        $this->middleware('can:user.store')->only('store');
     }
 
 
@@ -38,7 +37,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        return $this->showOne($this->userService->store($request->validated()), Response::HTTP_CREATED);
+        return $this->showOne($this->userService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 
     /**
@@ -65,7 +64,6 @@ class UserController extends Controller
     }
 
     /**
-     * ***-PUT YOUR LOGIC TO DELETE-***
      *
      * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
