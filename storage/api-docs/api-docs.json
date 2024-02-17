@@ -1045,6 +1045,7 @@
                     "email",
                     "nif_number",
                     "person_type",
+                    "role",
                     "password",
                     "password_confirmation"
                 ],
@@ -1063,6 +1064,10 @@
                     "person_type": {
                         "type": "string",
                         "example": "PERSONAL || BUSINESS"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "lawyer || customer"
                     },
                     "password": {
                         "type": "string",
@@ -1605,7 +1610,11 @@
             "UserCreate": {
                 "required": [
                     "name",
-                    "email"
+                    "email",
+                    "nif_number",
+                    "person_type",
+                    "role",
+                    "password"
                 ],
                 "properties": {
                     "name": {
@@ -1615,6 +1624,24 @@
                     "email": {
                         "type": "string",
                         "maximum": "255"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF or CNPJ"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL || BUSINESS"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "lawyer || customer"
+                    },
+                    "password": {
+                        "type": "string",
+                        "maximum": "25",
+                        "minimum": "8",
+                        "contains": "[A-Z],[#?!@$%&*=_]"
                     }
                 },
                 "type": "object"
