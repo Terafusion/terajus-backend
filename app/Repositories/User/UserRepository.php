@@ -2,6 +2,8 @@
 
 namespace App\Repositories\User;
 
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -11,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    //
+    function getAll();
 }

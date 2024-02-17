@@ -21,9 +21,9 @@ class UserService
      * 
      * @return Collection
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->userRepository->all();
+       return $this->userRepository->getAll($user);    
     }
 
     /**
@@ -47,5 +47,10 @@ class UserService
     public function update(array $data, User $user)
     {
         return $this->userRepository->update($data, $user->id);
+    }
+
+    public function getAllAccessibleUsers(User $user)
+    {
+        return $this->userRepository->getAll($user);
     }
 }
