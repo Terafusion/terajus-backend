@@ -32,7 +32,9 @@ class RoleTableSeeder extends Seeder
         ]);
 
         $lawyer->syncPermissions(Permission::all());
-        $trainee->givePermissionTo('legalCase.store');
+        $trainee->givePermissionTo('legal_case.store');
+        $trainee->givePermissionTo('user.store');
+        $trainee->givePermissionTo('user.update');
         $customer->givePermissionTo('document.store');
     }
 }

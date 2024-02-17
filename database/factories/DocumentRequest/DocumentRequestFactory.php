@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Factories\DocumentRequest;
+
+use App\Models\Evidence\Evidence;
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentRequest\DocumentRequest>
+ */
+class DocumentRequestFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::first()->id ?? User::factory()->create()->id,
+            'client_id' => ++User::first()->id ?? User::factory()->create()->id
+        ];
+    }
+}

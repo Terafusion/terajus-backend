@@ -47,7 +47,7 @@ class LegalCaseController extends Controller
      */
     public function show(LegalCase $legalCase)
     {
-        //
+        return $this->showOne($legalCase);
     }
 
     /**

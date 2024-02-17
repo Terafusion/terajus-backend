@@ -7,6 +7,7 @@ use App\Models\User\User;
 use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -14,16 +15,18 @@ class UserController extends Controller
 
     public function __construct(private UserService $userService)
     {
+        $this->middleware('can:user.store')->only('store');
     }
+
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->showAll($this->userService->getAll());
+        return $this->showAll($this->userService->getAll($request->user()));
     }
 
     /**
@@ -34,7 +37,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        return $this->showOne($this->userService->store($request->validated()), Response::HTTP_CREATED);
+        return $this->showOne($this->userService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 
     /**
@@ -61,7 +64,6 @@ class UserController extends Controller
     }
 
     /**
-     * ***-PUT YOUR LOGIC TO DELETE-*** 
      *
      * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response

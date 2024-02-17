@@ -3,28 +3,16 @@
 namespace App\Services\User;
 
 use App\Models\User\User;
+use App\Repositories\CustomerProfessional\CustomerProfessionalRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Collection;
 
 class UserService
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
-    /**
-     * Get an user instance by ID
-     * 
-     * @param User $user
-     * @return User
-     */
-    public function getById($user)
-    {
-        return $this->userRepository->find($user->id);
+    public function __construct(
+        private UserRepository $userRepository,
+        private CustomerProfessionalRepository $customerProfessionalRepository
+    ) {
     }
 
     /**
@@ -32,20 +20,24 @@ class UserService
      * 
      * @return Collection
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->userRepository->all();
+        return $this->userRepository->getAll($user);
     }
 
     /**
      * Store a new User resource
      * 
      * @param array $data
+     * @param User|null $user
      * @return User
      */
-    public function store(array $data)
+    public function store(array $data, ?User $user = null)
     {
-        return $this->userRepository->create($data);
+        $createdUser = $this->userRepository->create($data);
+        $createdUser->assignRole($data['role']);
+        $this->customerProfessionalRepository->create(['customer_id' => $createdUser->id, 'professional_id' => $user->id]);
+        return $createdUser;
     }
 
     /**
@@ -58,5 +50,10 @@ class UserService
     public function update(array $data, User $user)
     {
         return $this->userRepository->update($data, $user->id);
+    }
+
+    public function getAllAccessibleUsers(User $user)
+    {
+        return $this->userRepository->getAll($user);
     }
 }

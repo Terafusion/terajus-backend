@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 
 class EvidenceController extends Controller
 {
-
     public function __construct(private EvidenceService $evidenceService)
     {
     }

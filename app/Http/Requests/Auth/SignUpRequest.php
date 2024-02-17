@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\ValidRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SignUpRequest extends FormRequest
@@ -31,7 +32,8 @@ class SignUpRequest extends FormRequest
             'occupation' => ['nullable'],
             'address' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
-            'occupation' => ['nullable']
+            'occupation' => ['nullable'],
+            'role' => ['required', new ValidRole]
         ];
     }
 }

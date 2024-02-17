@@ -199,6 +199,142 @@
                 }
             }
         },
+        "/document-requests": {
+            "post": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Add a new document request register",
+                "operationId": "63abf5f49277aa0231385f4570087706",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentRequestCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/document-types": {
+            "get": {
+                "tags": [
+                    "DocumentTypes"
+                ],
+                "summary": "Get all document types",
+                "operationId": "bd80cd5d9c0a1ece1d73f4a0a9834c7b",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "legal_case_id",
+                                    "description"
+                                ]
+                            },
+                            "example": "filter[legal_case_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentTypeResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/evidences": {
             "get": {
                 "tags": [
@@ -1049,6 +1185,146 @@
                 },
                 "type": "object"
             },
+            "DocumentRequest": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "client_id": {
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestCreate": {
+                "required": [
+                    "client_id",
+                    "documents"
+                ],
+                "properties": {
+                    "client_id": {
+                        "type": "integer"
+                    },
+                    "documents": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "document_type_id": {
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentRequestResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "PENDING, FINISHED"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "client_id": {
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "client": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "requested_documents": {
+                        "$ref": "#/components/schemas/DocumentRequestDoc"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestDoc": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "document_id": {
+                        "type": "integer"
+                    },
+                    "document_request_id": {
+                        "type": "integer"
+                    },
+                    "document_type_id": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentType": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentTypeResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentType"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "Evidence": {
                 "properties": {
                     "id": {
@@ -1165,8 +1441,16 @@
                         "type": "string"
                     },
                     "participants": {
-                        "type": "object",
-                        "example": "['participant_type_id' => '1 para parte ativa, 2 para parte passiva']"
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "participant_type_id": {
+                                    "type": "integer",
+                                    "example": "1 para parte ativa, 2 para parte passiva"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"

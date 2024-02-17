@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleTableSeeder::class,
             UserTableSeeder::class,
             ParticipantTypeTableSeeder::class,
+            DocumentTypesSeeder::class
         ]);
     }
 }
