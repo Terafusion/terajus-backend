@@ -9,7 +9,6 @@ use BenSampo\Enum\Enum;
 /**
  * @method static static PENDING()
  * @method static static FINISHED()
- * @method static static COMPLAINT_GENERATION()
  */
 final class DocumentRequestStatusEnum extends Enum
 {
