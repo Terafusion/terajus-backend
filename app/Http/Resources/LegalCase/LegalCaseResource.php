@@ -22,7 +22,8 @@ class LegalCaseResource extends JsonResource
             'pending_protocol' => $this->pending_protocol,
             'case_description' => $this->case_description,
             'case_requests' => $this->case_requests,
-            'complaint' => $this->complaint
+            'complaint' => $this->complaint,
+            'participants' => $this->participants
         ];
     }
 }

@@ -60,7 +60,7 @@ class LegalCase extends Model implements Transformable
      */
     public function participants()
     {
-        return $this->hasMany(LegalCaseParticipant::class);
+        return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id', 'id');
     }
 
     /**
@@ -71,7 +71,7 @@ class LegalCase extends Model implements Transformable
     public function plaintiff()
     {
         return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id')
-            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID); // 1 pode ser o ID do desafiante na sua tabela de tipos de participantes
+            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID); 
     }
 
     /**
@@ -82,6 +82,6 @@ class LegalCase extends Model implements Transformable
     public function defendant()
     {
         return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id')
-            ->where('participant_type_id', LegalCaseParticipantTypeEnum::DEFENDANT_ID); // 2 pode ser o ID do desafiado na sua tabela de tipos de participantes
+            ->where('participant_type_id', LegalCaseParticipantTypeEnum::DEFENDANT_ID);
     }
 }

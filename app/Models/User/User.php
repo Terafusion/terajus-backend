@@ -59,4 +59,9 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     {
         return $this->belongsToMany(User::class, 'customer_professionals', 'professional_id', 'customer_id');
     }
+    
+    public function checkHasPermission(string $name) : bool
+    {
+        return $this->roles->pluck('permissions')->flatten()->contains('name', $name);  
+    }
 }

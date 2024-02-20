@@ -38,9 +38,9 @@ class LegalCaseService
      * 
      * @return Collection
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->legalCaseRepository->all();
+        return $this->legalCaseRepository->getAll($user);
     }
 
     /**

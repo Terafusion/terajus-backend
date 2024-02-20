@@ -21,6 +21,11 @@ class PermissionTableSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name' => 'legal_case.update',
+            'guard_name' => 'api'
+        ]);
+
+        Permission::create([
             'name' => 'legal_case.protocol',
             'guard_name' => 'api'
         ]);

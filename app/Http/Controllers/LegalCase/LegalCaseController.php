@@ -13,7 +13,6 @@ use Illuminate\Http\Response;
 
 class LegalCaseController extends Controller
 {
-
     public function __construct(private LegalCaseService $legalCaseService)
     {
     }
@@ -23,9 +22,9 @@ class LegalCaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $this->showAll($this->legalCaseService->getAll($request->user()));
     }
 
     /**
@@ -36,6 +35,7 @@ class LegalCaseController extends Controller
      */
     public function store(LegalCaseStoreRequest $request)
     {
+        $this->authorize('create', LegalCase::class);
         return $this->showOne($this->legalCaseService->store($request->validated(), $request->user()), Response::HTTP_CREATED, LegalCaseResource::class);
     }
 
@@ -47,6 +47,7 @@ class LegalCaseController extends Controller
      */
     public function show(LegalCase $legalCase)
     {
+        $this->authorize('view', $legalCase);
         return $this->showOne($legalCase);
     }
 
@@ -59,6 +60,7 @@ class LegalCaseController extends Controller
      */
     public function update(LegalCaseUpdateRequest $request, LegalCase $legalCase)
     {
+        $this->authorize('update', $legalCase);
         return $this->showOne($this->legalCaseService->update($request->validated(), $legalCase), Response::HTTP_OK, LegalCaseResource::class);
     }
 
