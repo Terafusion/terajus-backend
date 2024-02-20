@@ -25,8 +25,6 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
         return Document::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */

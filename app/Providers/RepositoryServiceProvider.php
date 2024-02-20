@@ -31,5 +31,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\DocumentRequest\DocumentRequestRepository::class, \App\Repositories\DocumentRequest\DocumentRequestRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\DocumentRequestDoc\DocumentRequestDocRepository::class, \App\Repositories\DocumentRequestDoc\DocumentRequestDocRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\CustomerProfessional\CustomerProfessionalRepository::class, \App\Repositories\CustomerProfessional\CustomerProfessionalRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\ParticipantType\ParticipantTypeRepository::class, \App\Repositories\ParticipantType\ParticipantTypeRepositoryEloquent::class);
     }
 }
