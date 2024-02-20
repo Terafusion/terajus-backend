@@ -2,6 +2,7 @@
 
 namespace App\Models\LegalCase;
 
+use App\Models\ParticipantType\ParticipantType;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,5 +41,15 @@ class LegalCaseParticipant extends Model implements Transformable
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Get the user associated with the LegalCaseParticipant
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function participantType(): HasOne
+    {
+        return $this->hasOne(ParticipantType::class, 'id', 'participant_type_id');
     }
 }

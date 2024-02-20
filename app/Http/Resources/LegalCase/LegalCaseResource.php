@@ -23,7 +23,7 @@ class LegalCaseResource extends JsonResource
             'case_description' => $this->case_description,
             'case_requests' => $this->case_requests,
             'complaint' => $this->complaint,
-            'participants' => $this->participants
+            'participants' => LegalCaseParticipantResource::collection($this->participants)
         ];
     }
 }
