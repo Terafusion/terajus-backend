@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             'maritial_status' => $this->maritial_status,
             'gender' => $this->gender,
             'person_type' => $this->person_type,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null
         ];
     }
