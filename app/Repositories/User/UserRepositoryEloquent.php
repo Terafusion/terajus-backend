@@ -48,8 +48,18 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
-                AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%' . $value . '%');
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('nif_number'),
+                AllowedFilter::exact('email'),
+                AllowedFilter::callback('search', function (Builder $query, $value) {
+                    $query->where('name', 'LIKE', '%' . $value . '%')
+                        ->orWhere('email', 'LIKE', '%' . $value . '%')
+                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                }),
+                AllowedFilter::callback('role', function (Builder $query, $value) {
+                    $query->whereHas('roles', function (Builder $subquery) use ($value) {
+                        $subquery->where('name', $value);
+                    });
                 }),
             ])->when($user, function (Builder $query, $user) {
                 $query->whereHas('professionals', function (Builder $subquery) use ($user) {

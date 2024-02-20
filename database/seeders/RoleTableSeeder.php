@@ -16,23 +16,25 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $lawyer = Role::create([
+        $lawyer = Role::firstOrCreate([
             'name' => 'lawyer',
             'guard_name' => 'api'
         ]);
 
-        $trainee = Role::create([
+        $trainee = Role::firstOrCreate([
             'name' => 'trainee',
             'guard_name' => 'api'
         ]);
 
-        $customer = Role::create([
+        $customer = Role::firstOrCreate([
             'name' => 'customer',
             'guard_name' => 'api'
         ]);
 
         $lawyer->syncPermissions(Permission::all());
         $trainee->givePermissionTo('legal_case.store');
+        $trainee->givePermissionTo('legal_case.update');
+        $trainee->givePermissionTo('legal_case.protocol');
         $trainee->givePermissionTo('user.store');
         $trainee->givePermissionTo('user.update');
         $customer->givePermissionTo('document.store');

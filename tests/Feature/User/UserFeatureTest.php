@@ -39,6 +39,19 @@ class UserFeatureTest extends TestCase
     }
 
     /**
+     * Test retrieve all users
+     * 
+     * @return void
+     */
+    public function test_filter_users()
+    {
+        $user = User::factory()->create(['name' => 'xpto', 'email' => 'abc@email.com']);
+        $user->assignRole('customer');
+        $this->get('api/users?filter[search]='. 'pt')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name])->assertJsonCount(2);
+        $this->get('api/users?filter[search]='. 'email')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name])->assertJsonCount(1);
+    }
+
+    /**
      * Test retrieve specific user
      * 
      * @return void

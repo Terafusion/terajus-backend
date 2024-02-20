@@ -15,32 +15,32 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'legal_case.store',
             'guard_name' => 'api'
         ]);
 
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'legal_case.update',
             'guard_name' => 'api'
         ]);
 
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'legal_case.protocol',
             'guard_name' => 'api'
         ]);
 
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'document.store',
             'guard_name' => 'api'
         ]);
 
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'user.store',
             'guard_name' => 'api'
         ]);
 
-        Permission::create([
+        Permission::firstOrCreate([
             'name' => 'user.update',
             'guard_name' => 'api'
         ]);
