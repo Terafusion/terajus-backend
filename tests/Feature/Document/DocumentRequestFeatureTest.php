@@ -54,6 +54,7 @@ class DocumentRequestFeatureTest extends TestCase
         $documentRequest = DocumentRequest::factory()->create();
         DocumentRequestDoc::factory()->create(['document_request_id' => $documentRequest->id]);
         $this->get('api/document-requests')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['status' => DocumentRequestStatusEnum::PENDING]);
+        $this->get('api/document-requests/' . $documentRequest->id)->assertStatus(Response::HTTP_OK)->assertJsonFragment(['status' => DocumentRequestStatusEnum::PENDING]);
     }
 
     public function test_filters_document_requests()

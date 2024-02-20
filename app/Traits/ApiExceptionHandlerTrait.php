@@ -17,12 +17,14 @@ trait ApiExceptionHandlerTrait
     {
         $statusCode = $this->getHttpStatusCode($exception);
 
-        if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
-            return $this->generateResponse('Route doesn\'t exist', $statusCode);
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->generateResponse('Route doesn\'t exist', Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof AccessDeniedHttpException || $exception instanceof AuthorizationException) {
             return $this->generateResponse('Access denied', Response::HTTP_FORBIDDEN);
         } elseif ($exception instanceof BadRequestHttpException) {
             return $this->generateResponse('Bad request', Response::HTTP_BAD_REQUEST);
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return $this->generateResponse('Resource not found', Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof MethodNotAllowedHttpException) {
             return $this->generateResponse('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
         }

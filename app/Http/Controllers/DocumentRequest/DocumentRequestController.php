@@ -43,7 +43,7 @@ class DocumentRequestController extends Controller
      */
     public function show(DocumentRequest $documentRequest)
     {
-        //
+        return $this->showOne($documentRequest);
     }
 
     /**
