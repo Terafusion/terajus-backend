@@ -269,6 +269,65 @@
                 }
             }
         },
+        "/document-requests/{document_request_id}": {
+            "get": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Get a document request",
+                "operationId": "74dcfbdc634d1872679d0908dc88810e",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "document_request_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/document-types": {
             "get": {
                 "tags": [
@@ -1212,11 +1271,11 @@
             },
             "DocumentRequestCreate": {
                 "required": [
-                    "client_id",
+                    "user_id",
                     "documents"
                 ],
                 "properties": {
-                    "client_id": {
+                    "user_id": {
                         "type": "integer"
                     },
                     "documents": {
@@ -1246,37 +1305,59 @@
                 "type": "object"
             },
             "DocumentRequestResponse": {
+                "title": "DocumentRequest",
+                "description": "DocumentRequest resource representation",
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "title": "ID",
+                        "description": "DocumentRequest ID",
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "status": {
+                        "title": "Status",
+                        "description": "DocumentRequest status",
                         "type": "string",
-                        "example": "PENDING, FINISHED"
+                        "example": "PENDING"
                     },
                     "user_id": {
-                        "type": "integer"
+                        "title": "User ID",
+                        "description": "User ID associated with the DocumentRequest",
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "client_id": {
-                        "type": "integer"
-                    },
-                    "created_at": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string"
+                        "title": "Client ID",
+                        "description": "Client ID associated with the DocumentRequest",
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/UserResponse"
                     },
                     "client": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/UserResponse"
                     },
                     "requested_documents": {
                         "$ref": "#/components/schemas/DocumentRequestDoc"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "DocumentRequest creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-20T23:39:20.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "DocumentRequest update timestamp",
+                        "type": "string",
+                        "example": "2024-02-20T23:39:20.000000Z"
                     }
                 },
-                "type": "object"
+                "type": "object",
+                "xml": {
+                    "name": "DocumentRequest"
+                }
             },
             "DocumentRequestDoc": {
                 "properties": {
@@ -1300,6 +1381,9 @@
                     },
                     "updated_at": {
                         "type": "string"
+                    },
+                    "document_type": {
+                        "$ref": "#/components/schemas/DocumentType"
                     }
                 },
                 "type": "object"
@@ -1649,7 +1733,7 @@
             "UserResource": {
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/UserResponse"
                     },
                     "statusCode": {
                         "type": "integer",
@@ -1657,6 +1741,114 @@
                     }
                 },
                 "type": "object"
+            },
+            "UserResponse": {
+                "title": "User",
+                "description": "User resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "User ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "User's name",
+                        "type": "string",
+                        "example": "Casado"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "casado@terafusion.com.br"
+                    },
+                    "roles": {
+                        "title": "Roles",
+                        "description": "User roles",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": "3"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "customer"
+                                },
+                                "guard_name": {
+                                    "type": "string",
+                                    "example": "api"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "occupation": {
+                        "title": "Occupation",
+                        "description": "User's occupation",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "nif_number": {
+                        "title": "NIF Number",
+                        "description": "User's NIF number",
+                        "type": "string",
+                        "example": "54966687112"
+                    },
+                    "registration_number": {
+                        "title": "Registration Number",
+                        "description": "User's registration number",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "marital_status": {
+                        "title": "Marital Status",
+                        "description": "User's marital status",
+                        "type": "string",
+                        "example": "CASADO"
+                    },
+                    "gender": {
+                        "title": "Gender",
+                        "description": "User's gender",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "person_type": {
+                        "title": "Person Type",
+                        "description": "User's person type",
+                        "type": "string",
+                        "example": "PERSONAL"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "User creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-18T19:53:30.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "User update timestamp",
+                        "type": "string",
+                        "example": "2024-02-18T19:53:30.000000Z"
+                    },
+                    "access_token": {
+                        "title": "Access Token",
+                        "description": "User access token",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
             },
             "UserUpdate": {
                 "properties": {

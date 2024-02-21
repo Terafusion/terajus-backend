@@ -2,6 +2,7 @@
 
 namespace Docs\Default\Schemas\DocumentRequestDoc;
 
+use Docs\Default\Schemas\DocumentType\DocumentType;
 use OpenApi\Annotations as OA;
 
 /**
@@ -43,4 +44,9 @@ class DocumentRequestDoc
      * @OA\Property()
      */
     public string $updated_at;
+
+    /**
+     * @OA\Property()
+     */
+    public DocumentType $document_type;
 }

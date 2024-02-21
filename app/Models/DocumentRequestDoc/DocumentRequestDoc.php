@@ -3,6 +3,7 @@
 namespace App\Models\DocumentRequestDoc;
 
 use App\Enums\DocumentRequestStatusEnum;
+use App\Models\DocumentType\DocumentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,4 +34,9 @@ class DocumentRequestDoc extends Model implements Transformable
     protected $attributes = [
         'status' => DocumentRequestStatusEnum::PENDING,
     ];
+
+    public function documentType()
+    {
+        return $this->hasOne(DocumentType::class, 'id', 'document_type_id');
+    }
 }

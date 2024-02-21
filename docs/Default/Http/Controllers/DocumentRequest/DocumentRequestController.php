@@ -59,4 +59,55 @@ class DocumentRequestController
     public function store()
     {
     }
+
+        /**
+     * @OA\Get(
+     *      tags={"Document Requests"},
+     *      path="/document-requests/{document_request_id}",
+     *      summary="Get a document request",
+     *      @OA\Parameter(
+     *          in="header",
+     *          name="Authorization",
+     *          description="Bearer Token",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="document_request_id",
+     *          description="",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/DocumentRequestResource")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  ),
+     *                  example={"message": "Internal Error"}
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function show()
+    {
+    }
 }

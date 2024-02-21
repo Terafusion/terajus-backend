@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(required={
- * "client_id", 
+ * "user_id", 
  * "documents"
  * }))
  */
@@ -15,7 +15,7 @@ class DocumentRequestCreate
     /**
      * @OA\Property()
      */
-    public int $client_id;
+    public int $user_id;
 
     /**
      * @OA\Property(
