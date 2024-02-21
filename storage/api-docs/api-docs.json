@@ -841,6 +841,56 @@
                 }
             }
         },
+        "/participant-types": {
+            "get": {
+                "tags": [
+                    "ParticipantTypes"
+                ],
+                "summary": "Get all participant types",
+                "operationId": "685ab0e8da2206f83c7ba64224a36ae2",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by participant type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ParticipantTypeResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -1647,6 +1697,47 @@
                     }
                 },
                 "type": "object"
+            },
+            "ParticipantTypeResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/ParticipantTypeResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ParticipantTypeResponse": {
+                "title": "ParticipantTypeResponse",
+                "description": "ParticipantType resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ParticipantType ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "ParticipantType type",
+                        "type": "string",
+                        "example": "Polo Ativo"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "ParticipantType creation timestamp",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ParticipantTypeResponse"
+                }
             },
             "RequestException": {
                 "properties": {
