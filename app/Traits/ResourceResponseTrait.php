@@ -46,7 +46,7 @@ trait ResourceResponseTrait
     protected function showAll($collection, $statusCode = 200, $resource = null)
     {
         if (is_null($collection) || $collection->isEmpty()) {
-            return response()->json(['data' => []], Response::HTTP_OK);
+            return response()->json([], Response::HTTP_OK);
         }
 
         $resource = $resource ?? $this->getResource(true);
