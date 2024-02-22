@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\DocumentType\DocumentTypeRepository;
 use App\Models\DocumentType\DocumentType;
+use Illuminate\Contracts\Pagination\Paginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,7 +40,7 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Querybuilder
+     * @return Paginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -50,12 +51,12 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
                     $query->where('name', 'LIKE', '%' . $value . '%');
                     $query->orWhere('description', 'LIKE', '%' . $value . '%');
                 }),
-            ])->get();
+            ])->jsonPaginate();
     }
 
 
     /**
-     * @return Collection
+     * @return Paginator
      */
     public function getAll()
     {

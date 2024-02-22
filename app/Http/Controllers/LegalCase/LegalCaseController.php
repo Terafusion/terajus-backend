@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LegalCase;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\JsonCollectionResponse;
 use App\Http\Requests\LegalCase\LegalCaseStoreRequest;
 use App\Http\Requests\LegalCase\LegalCaseUpdateRequest;
 use App\Http\Resources\LegalCase\LegalCaseResource;
@@ -15,6 +16,7 @@ class LegalCaseController extends Controller
 {
     public function __construct(private LegalCaseService $legalCaseService)
     {
+        $this->middleware('json.paginate')->only('index');
     }
 
     /**

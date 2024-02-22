@@ -3,6 +3,7 @@
 namespace App\Repositories\LegalCase;
 
 use App\Models\User\User;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -13,5 +14,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface LegalCaseRepository extends RepositoryInterface
 {
-    public function getAll(User $user): Collection;
+    public function getAll(User $user): Paginator;
 }

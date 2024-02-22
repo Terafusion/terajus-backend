@@ -2,49 +2,49 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 trait ResourceResponseTrait
 {
-    /**
-     * Show some message
-     * 
-     * @param string $message
-     * @param int $statusCode
-     * 
-     * @return Response
-     */
     protected function showMessage($message, $statusCode = 200)
     {
         return response()->json(['message' => $message], $statusCode);
     }
 
-    /**
-     * Show one resource
-     * 
-     * @param mixed $model
-     * @param int $statusCode
-     * @param mixed $resource
-     * 
-     * @return Response
-     */
     protected function showOne($model, $statusCode = 200, $resource = null)
     {
         $resource = $resource ?? $this->getResource();
         return response()->json(new $resource($model), $statusCode);
     }
 
-    /**
-     * Show a collection resource
-     * 
-     * @param mixed $model
-     * @param int $statusCode
-     * @param mixed $resource
-     * 
-     * @return Response
-     */
     protected function showAll($collection, $statusCode = 200, $resource = null)
     {
+        if ($collection instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+            $paginator = $collection;
+
+            // Adiciona informações adicionais à resposta de paginação
+            $paginationInfo = [
+                'current_page' => $paginator->currentPage(),
+                'prev_page_url' => $paginator->previousPageUrl(),
+                'next_page_url' => $paginator->nextPageUrl(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
+                'total_pages' => $paginator->lastPage(),
+                'links' => $paginator->getUrlRange(1, $paginator->lastPage()),
+            ];
+
+            // Cria um novo array com a estrutura desejada
+            $modifiedContent = [
+                'data' => $paginator->items(),
+                'statusCode' => $statusCode,
+                'metadata' => $paginationInfo,
+            ];
+
+            return response()->json($modifiedContent, $statusCode);
+        }
+
+        // Se a coleção não for uma instância de LengthAwarePaginator, continua como antes
         if (is_null($collection) || $collection->isEmpty()) {
             return response()->json([], Response::HTTP_OK);
         }
@@ -53,11 +53,6 @@ trait ResourceResponseTrait
         return response()->json($resource::collection($collection), $statusCode);
     }
 
-    /**
-     * Get the resource name
-     * 
-     * @return string
-     */
     protected function getResource()
     {
         $routeName = request()->route()->getName();

@@ -42,7 +42,7 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Querybuilder
+     * @return Paginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -53,12 +53,12 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
                     $query->where('description', 'ILIKE', '%' . $value . '%');
                 }),
                 AllowedFilter::exact('legal_case_id')
-            ])->get();
+            ])->jsonPaginate();
     }
 
 
     /**
-     * @return Collection
+     * @return Paginator
      */
     public function getAll()
     {

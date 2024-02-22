@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Evidence;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\Paginator;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -13,7 +13,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface EvidenceRepository extends RepositoryInterface
 {
     /**
-     * @return Collection
+     * @return Paginator
      */
     public function getAll();
 }

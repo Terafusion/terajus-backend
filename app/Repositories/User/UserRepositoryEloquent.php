@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\User\UserRepository;
 use App\Models\User\User;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -41,7 +42,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
      * @param User $user
-     * @return Querybuilder
+     * @return Paginator
      */
     private function queryBuilder($queryBuilder, $user)
     {
@@ -67,11 +68,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                 })->orWhereHas('customers', function (Builder $subquery) use ($user) {
                     $subquery->where('customer_id', $user->id);
                 });
-            });
+            })->jsonPaginate();
     }
 
-    public function getAll(User $user): Collection
+    public function getAll(User $user): Paginator
     {
-        return $this->queryBuilder($this->model(), $user)->get();
+        return $this->queryBuilder($this->model(), $user);
     }
 }
