@@ -53,7 +53,7 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
                     $query->where('description', 'ILIKE', '%' . $value . '%');
                 }),
                 AllowedFilter::exact('legal_case_id')
-            ])->jsonPaginate();
+            ])->get();
     }
 
 

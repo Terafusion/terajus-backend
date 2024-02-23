@@ -3,6 +3,7 @@
 namespace App\Repositories\DocumentRequest;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -12,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface DocumentRequestRepository extends RepositoryInterface
 {
-    public function getAll(): Paginator;
+    public function getAll(): Collection;
 }

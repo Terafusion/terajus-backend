@@ -10,6 +10,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class DocumentTypeRepositoryEloquent.
@@ -40,7 +41,7 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Paginator
+     * @return Collection
      */
     private function queryBuilder($queryBuilder)
     {
@@ -51,12 +52,12 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
                     $query->where('name', 'LIKE', '%' . $value . '%');
                     $query->orWhere('description', 'LIKE', '%' . $value . '%');
                 }),
-            ])->jsonPaginate();
+            ])->get();
     }
 
 
     /**
-     * @return Paginator
+     * @return Collection
      */
     public function getAll()
     {

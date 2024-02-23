@@ -42,7 +42,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
      * @param User $user
-     * @return Paginator
+     * @return Collection
      */
     private function queryBuilder($queryBuilder, $user)
     {
@@ -52,27 +52,39 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                 AllowedFilter::exact('name'),
                 AllowedFilter::exact('nif_number'),
                 AllowedFilter::exact('email'),
-                AllowedFilter::callback('search', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%' . $value . '%')
-                        ->orWhere('email', 'LIKE', '%' . $value . '%')
-                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                AllowedFilter::callback('search', function (Builder $query, $value) use ($user) {
+                    $query->where(function (Builder $subquery) use ($value, $user) {
+                        $subquery->where('name', 'LIKE', '%' . $value . '%')
+                            ->orWhere('email', 'LIKE', '%' . $value . '%')
+                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                    });
                 }),
-                AllowedFilter::callback('role', function (Builder $query, $value) {
-                    $query->whereHas('roles', function (Builder $subquery) use ($value) {
-                        $subquery->where('name', $value);
+                AllowedFilter::callback('role', function (Builder $query, $value) use ($user) {
+                    $query->where(function (Builder $subquery) use ($value, $user) {
+                        $subquery->whereHas('roles', function (Builder $rolesSubquery) use ($value) {
+                            $rolesSubquery->where('name', $value);
+                        });
+                        // Adicione a lógica de relacionamento do usuário
                     });
                 }),
             ])->when($user, function (Builder $query, $user) {
-                $query->whereHas('professionals', function (Builder $subquery) use ($user) {
-                    $subquery->where('professional_id', $user->id);
-                })->orWhereHas('customers', function (Builder $subquery) use ($user) {
-                    $subquery->where('customer_id', $user->id);
+                $query->where(function (Builder $subquery) use ($user) {
+                    $this->applyUserRelationshipFilters($subquery, $user);
                 });
-            })->jsonPaginate();
+            })->get();
     }
 
-    public function getAll(User $user): Paginator
+    public function getAll(User $user): Collection
     {
         return $this->queryBuilder($this->model(), $user);
+    }
+
+    private function applyUserRelationshipFilters(Builder $query, $user)
+    {
+        $query->orWhereHas('professionals', function (Builder $professionalsSubquery) use ($user) {
+            $professionalsSubquery->where('professional_id', $user->id);
+        })->orWhereHas('customers', function (Builder $customersSubquery) use ($user) {
+            $customersSubquery->where('customer_id', $user->id);
+        });
     }
 }

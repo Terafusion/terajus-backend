@@ -2,7 +2,7 @@
 
 namespace App\Repositories\DocumentType;
 
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -13,7 +13,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface DocumentTypeRepository extends RepositoryInterface
 {
     /**
-     * @return Paginator
+     * @return Collection
      */
     public function getAll();
 }

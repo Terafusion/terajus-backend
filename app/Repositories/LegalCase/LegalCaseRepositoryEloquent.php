@@ -11,6 +11,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class LegalCaseRepositoryEloquent.
@@ -42,7 +43,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
      * @param User $user
-     * @return Paginator
+     * @return Collection
      */
     private function queryBuilder($queryBuilder, $user)
     {
@@ -59,10 +60,10 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 });
             })  ->allowedSorts([
                 'created_at',
-            ])->jsonPaginate();
+            ])->get();
     }
 
-    public function getAll(User $user): Paginator
+    public function getAll(User $user): Collection
     {
         return $this->queryBuilder($this->model(), $user);
     }

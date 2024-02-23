@@ -7,8 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Validators\DocumentRequest\DocumentRequestValidator;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -41,7 +41,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Paginator
+     * @return Collection
      */
     private function queryBuilder($queryBuilder)
     {
@@ -50,13 +50,13 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
                 'id',
                 AllowedFilter::exact('user_id'),
                 AllowedFilter::exact('client_id'),
-            ])->jsonPaginate();
+            ])->get();
     }
 
     /**
-     * @return Paginator
+     * @return Collection
      */
-    public function getAll(): Paginator
+    public function getAll(): Collection
     {
         return $this->queryBuilder($this->model());
     }
