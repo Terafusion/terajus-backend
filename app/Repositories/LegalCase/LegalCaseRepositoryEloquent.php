@@ -52,10 +52,10 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 'id',
             ])->when($user, function (Builder $query, $user) {
                 $query->where('user_id', $user->id)
-                ->orWhereHas('participants', function (Builder $subquery) use ($user) {
-                    $subquery->where('user_id', $user->id);
-                });
-            })  ->allowedSorts([
+                    ->orWhereHas('participants', function (Builder $subquery) use ($user) {
+                        $subquery->where('user_id', $user->id);
+                    });
+            })->allowedSorts([
                 'created_at',
             ])->jsonPaginate();
     }

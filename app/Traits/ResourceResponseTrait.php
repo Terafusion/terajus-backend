@@ -22,10 +22,6 @@ trait ResourceResponseTrait
 
     protected function showAll(LengthAwarePaginator $paginator, $statusCode = 200, $resource = null)
     {
-        if ($paginator->isEmpty()) {
-            return response()->json([], Response::HTTP_OK);
-        }
-
         $resource = $resource ?? $this->getResource(true);
 
         $modifiedContent = [
@@ -44,6 +40,11 @@ trait ResourceResponseTrait
                 'next' => $paginator->nextPageUrl(),
             ],
         ];
+
+        // Se a coleção estiver vazia, retorna uma resposta vazia com as informações de paginação
+        if ($paginator->isEmpty()) {
+            return response()->json($modifiedContent, $statusCode);
+        }
 
         return response()->json($modifiedContent, $statusCode);
     }

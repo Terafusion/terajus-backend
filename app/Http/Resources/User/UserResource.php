@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'roles' =>  RoleResource::collection($this->whenLoaded('roles')),
+            'roles' =>  RoleResource::collection($this->roles),
             'occupation' => $this->occupation,
             'nif_number' => $this->nif_number,
             'registration_number' => $this->registration_number,
