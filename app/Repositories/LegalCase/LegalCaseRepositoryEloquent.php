@@ -50,9 +50,6 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
-                AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%' . $value . '%');
-                }),
             ])->when($user, function (Builder $query, $user) {
                 $query->where('user_id', $user->id)
                 ->orWhereHas('participants', function (Builder $subquery) use ($user) {
@@ -60,7 +57,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 });
             })  ->allowedSorts([
                 'created_at',
-            ])->get();
+            ])->jsonPaginate();
     }
 
     public function getAll(User $user): LengthAwarePaginator

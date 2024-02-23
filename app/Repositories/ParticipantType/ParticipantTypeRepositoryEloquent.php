@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\ParticipantType\ParticipantTypeRepository;
 use App\Models\ParticipantType\ParticipantType;
 use App\Validators\ParticipantType\ParticipantTypeValidator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,7 +41,7 @@ class ParticipantTypeRepositoryEloquent extends BaseRepository implements Partic
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Querybuilder
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -50,13 +51,13 @@ class ParticipantTypeRepositoryEloquent extends BaseRepository implements Partic
                 AllowedFilter::callback('type', function (Builder $query, $value) {
                     $query->where('type', 'LIKE', '%' . $value . '%');
                 }),
-            ])->get();
+            ])->jsonPaginate();
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll()
+    public function getAll(): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model());
     }

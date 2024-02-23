@@ -2,6 +2,7 @@
 
 namespace App\Repositories\ParticipantType;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -11,5 +12,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface ParticipantTypeRepository extends RepositoryInterface
 {
-    //
+    public function getAll(): LengthAwarePaginator;
 }

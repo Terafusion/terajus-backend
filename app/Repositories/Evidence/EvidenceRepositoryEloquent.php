@@ -6,10 +6,8 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Evidence\EvidenceRepository;
 use App\Models\Evidence\Evidence;
-use App\Validators\Evidence\EvidenceValidator;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -42,7 +40,7 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Paginator
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -53,12 +51,12 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
                     $query->where('description', 'ILIKE', '%' . $value . '%');
                 }),
                 AllowedFilter::exact('legal_case_id')
-            ])->get();
+            ])->jsonPaginate();
     }
 
 
     /**
-     * @return Paginator
+     * @return LengthAwarePaginator
      */
     public function getAll()
     {
