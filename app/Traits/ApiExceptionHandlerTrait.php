@@ -10,7 +10,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException; // Adicione esta linha
+use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Exceptions\OAuthServerException;
 use Laravel\Passport\Exceptions\AuthenticationException as ExceptionsAuthenticationException;
 use Throwable;
 
@@ -34,6 +35,8 @@ trait ApiExceptionHandlerTrait
             return $this->generateResponse('Unauthenticated', Response::HTTP_UNAUTHORIZED);
         } elseif ($exception instanceof ValidationException) {
             return $this->handleValidationException($exception);
+        } elseif ($exception instanceof OAuthServerException) {
+            return $this->handleOAuthServerException($exception);
         }
 
         return $this->generateResponse('Server error', Response::HTTP_INTERNAL_SERVER_ERROR, $statusCode);
@@ -45,6 +48,12 @@ trait ApiExceptionHandlerTrait
 
         return response()->json(['error' => 'Validation error', 'errors' => $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    private function handleOAuthServerException(OAuthServerException $exception)
+    {
+        return $this->generateResponse($exception->getMessage() ?? 'OAuth Server error', $exception->statusCode() ?? Response::HTTP_BAD_REQUEST);
+    }
+
 
     private function generateResponse($message, $statusCode, $customStatusCode = null)
     {
