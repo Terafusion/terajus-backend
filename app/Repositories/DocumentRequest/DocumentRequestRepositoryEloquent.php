@@ -51,7 +51,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
                 'id',
                 AllowedFilter::exact('user_id'),
                 AllowedFilter::exact('client_id'),
-            ])->get();
+            ])->jsonPaginate();
     }
 
     /**
