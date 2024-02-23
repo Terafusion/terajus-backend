@@ -6,6 +6,7 @@ use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\User\User;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Services\DocumentRequestDoc\DocumentRequestDocService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +44,7 @@ class DocumentRequestService
     /**
      * Get all registers
      * 
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll()
     {

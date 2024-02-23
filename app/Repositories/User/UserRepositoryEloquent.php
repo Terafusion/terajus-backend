@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 
 /**
  * Class UserRepositoryEloquent.
@@ -42,7 +44,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
      * @param User $user
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder, $user)
     {
@@ -67,14 +69,18 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                         // Adicione a lógica de relacionamento do usuário
                     });
                 }),
-            ])->when($user, function (Builder $query, $user) {
+            ])
+            ->allowedIncludes([
+                'roles',
+            ])
+            ->when($user, function (Builder $query, $user) {
                 $query->where(function (Builder $subquery) use ($user) {
                     $this->applyUserRelationshipFilters($subquery, $user);
                 });
-            })->get();
+            })->jsonPaginate();
     }
 
-    public function getAll(User $user): Collection
+    public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
     }

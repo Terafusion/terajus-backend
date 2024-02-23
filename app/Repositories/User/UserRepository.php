@@ -3,6 +3,7 @@
 namespace App\Repositories\User;
 
 use App\Models\User\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Prettus\Repository\Contracts\RepositoryInterface;
@@ -14,5 +15,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    public function getAll(User $user): Collection;
+    public function getAll(User $user): LengthAwarePaginator;
 }

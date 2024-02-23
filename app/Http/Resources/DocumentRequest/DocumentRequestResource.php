@@ -22,9 +22,9 @@ class DocumentRequestResource extends JsonResource
             'status' => $this->hasPendingDocumentRequestDocs() ? DocumentRequestStatusEnum::PENDING : DocumentRequestStatusEnum::FINISHED,
             'user_id' => $this->user_id,
             'client_id' => $this->client_id,
-            'user' => new UserResource($this->user),
-            'client' => new UserResource($this->client),
-            'requested_documents' => DocumentRequestDocResource::collection($this->requestedDocuments),
+            'user' => new UserResource($this->whenLoaded('user')),
+            'client' => new UserResource($this->whenLoaded('client')),
+            'requested_documents' => DocumentRequestDocResource::collection($this->whenLoaded('requestedDocuments')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

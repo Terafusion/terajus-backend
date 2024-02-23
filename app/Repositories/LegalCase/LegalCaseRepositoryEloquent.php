@@ -7,7 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,7 +43,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
      * @param User $user
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder, $user)
     {
@@ -63,7 +63,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
             ])->get();
     }
 
-    public function getAll(User $user): Collection
+    public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
     }

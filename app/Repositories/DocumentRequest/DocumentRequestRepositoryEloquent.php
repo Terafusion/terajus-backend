@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Validators\DocumentRequest\DocumentRequestValidator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -41,7 +42,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
      * Return build Eloquent query
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -54,9 +55,9 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll(): Collection
+    public function getAll(): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model());
     }
