@@ -60,7 +60,7 @@ class DocumentRequestController
     {
     }
 
-        /**
+    /**
      * @OA\Get(
      *      tags={"Document Requests"},
      *      path="/document-requests/{document_request_id}",
@@ -108,6 +108,61 @@ class DocumentRequestController
      * )
      */
     public function show()
+    {
+    }
+
+    /**
+     * @OA\Put(
+     *      tags={"Document Requests"},
+     *      path="/document-requests/{document_request_id}",
+     *      summary="Update a document request",
+     *      @OA\RequestBody(
+     *          description="",
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/DocumentRequestUpdate")
+     *      ),
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          description="DocumentRequest ID",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/DocumentRequestResponse")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/Unprocessable")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Error",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  ),
+     *                  example={"message": "Internal Error"}
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function update($id)
     {
     }
 }

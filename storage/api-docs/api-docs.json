@@ -326,6 +326,75 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Update a document request",
+                "operationId": "5d74165bfdf920a0e8f142aab71daa3d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "DocumentRequest ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentRequestUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/document-types": {
@@ -1407,6 +1476,42 @@
                 "type": "object",
                 "xml": {
                     "name": "DocumentRequest"
+                }
+            },
+            "DocumentRequestUpdate": {
+                "title": "DocumentRequestUpdate",
+                "description": "DocumentRequest update request representation",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "description": "DocumentRequest status",
+                        "type": "string",
+                        "example": "APPROVED",
+                        "nullable": true
+                    },
+                    "document_request_docs": {
+                        "title": "Document Request Docs",
+                        "description": "Array of document_request_docs with status",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 3
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "example": "COMPLETED"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "DocumentRequestUpdate"
                 }
             },
             "DocumentRequestDoc": {
