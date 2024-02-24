@@ -50,14 +50,33 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
-            ])->when($user, function (Builder $query, $user) {
+                AllowedFilter::exact('status'),
+                AllowedFilter::exact('court'),
+                AllowedFilter::exact('case_type'),
+                AllowedFilter::exact('case_matter'),
+                AllowedFilter::callback('customer', function (Builder $query, $value) use ($user) {
+                    $query->where(function (Builder $subquery) use ($value, $user) {
+                        $subquery->whereHas('participants', function (Builder $participantsSubQuery) use ($value) {
+                            $participantsSubQuery->whereHas('user', function (Builder $participantsUserSubQuery) use ($value) {
+                                $participantsUserSubQuery->where('name', 'LIKE', '%' . $value . '%')
+                                    ->orWhere('email', 'LIKE', '%' . $value . '%')
+                                    ->orWhere('nif_number', 'LIKE', '%' . $value . '%')
+                                    ->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
+                                        $participantsUserRoleSubQuery->where('name', 'customer');
+                                    });
+                            });
+                        });
+                    });
+                }),
+            ])
+            ->when($user, function (Builder $query, $user) {
                 $query->where('user_id', $user->id)
                     ->orWhereHas('participants', function (Builder $subquery) use ($user) {
                         $subquery->where('user_id', $user->id);
                     });
             })->allowedSorts([
-                'created_at',
-            ])->jsonPaginate();
+                    'created_at',
+                ])->jsonPaginate();
     }
 
     public function getAll(User $user): LengthAwarePaginator
