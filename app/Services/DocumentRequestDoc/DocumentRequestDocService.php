@@ -47,4 +47,9 @@ class DocumentRequestDocService
     {
         return $this->documentRequestDocRepository->update($data, $id);
     }
+
+    public function updateAllByDocumentRequest(int $documentRequestId, array $data)
+    {
+        return $this->documentRequestDocRepository->where('document_request_id', $documentRequestId)->update($data);
+    }
 }

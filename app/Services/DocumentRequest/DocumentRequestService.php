@@ -2,6 +2,8 @@
 
 namespace App\Services\DocumentRequest;
 
+use App\Enums\DocumentRequestStatusEnum;
+use App\Exceptions\DocumentRequestPendingDocsException;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\User\User;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
@@ -45,12 +47,18 @@ class DocumentRequestService
     {
         DB::beginTransaction();
         try {
-            $documentRequestData = $data;
-            unset($documentRequestData['document_request_docs']);
-            $documentRequest = $this->documentRequestRepository->update($documentRequestData, $id);
-            foreach ($data['document_request_docs'] as $key => $documentRequestDoc) {
-                $this->documentRequestDocService->update($documentRequestDoc, $documentRequestDoc['id']);
+            $documentRequest = $this->documentRequestRepository->update($data, $id);
+
+            if (isset($data['status']) && $data['status'] === DocumentRequestStatusEnum::COMPLETED) {
+                $this->documentRequestDocService->updateAllByDocumentRequest($id, ['status' => DocumentRequestStatusEnum::COMPLETED]);
             }
+
+            if (!isset($data['status']) && isset($data['document_request_docs'])) {
+                foreach ($data['document_request_docs'] as $key => $documentRequestDoc) {
+                    $this->documentRequestDocService->update($documentRequestDoc, $documentRequestDoc['id']);
+                }
+            }
+
             DB::commit();
             return $documentRequest;
         } catch (\Throwable $th) {

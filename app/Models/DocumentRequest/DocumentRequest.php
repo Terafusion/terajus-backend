@@ -34,13 +34,11 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Check if has pending documents that belongs to request
-     * 
-     * 
      */
     public function hasPendingDocumentRequestDocs()
     {
         return $this->requestedDocuments->contains(function ($documentRequestDoc) {
-            return $documentRequestDoc->status === DocumentRequestStatusEnum::PENDING;
+            return in_array($documentRequestDoc->status, [DocumentRequestStatusEnum::PENDING, DocumentRequestStatusEnum::WAITING]);
         });
     }
 
