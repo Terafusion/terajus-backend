@@ -5,9 +5,11 @@ namespace App\Models\LegalCase;
 use App\Enums\LegalCaseParticipantTypeEnum;
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\Evidence\Evidence;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -44,6 +46,16 @@ class LegalCase extends Model implements Transformable
     ];
 
     /**
+     * Get all of the user for the LegalCase
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
      * Get all of the evidences for the LegalCase
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -71,7 +83,7 @@ class LegalCase extends Model implements Transformable
     public function plaintiff()
     {
         return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id')
-            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID); 
+            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID);
     }
 
     /**
