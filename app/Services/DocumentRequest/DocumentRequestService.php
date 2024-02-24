@@ -41,6 +41,24 @@ class DocumentRequestService
         }
     }
 
+    public function update(array $data, int $id): DocumentRequest
+    {
+        DB::beginTransaction();
+        try {
+            $documentRequestData = $data;
+            unset($documentRequestData['document_request_docs']);
+            $documentRequest = $this->documentRequestRepository->update($documentRequestData, $id);
+            foreach ($data['document_request_docs'] as $key => $documentRequestDoc) {
+                $this->documentRequestDocService->update($documentRequestDoc, $documentRequestDoc['id']);
+            }
+            DB::commit();
+            return $documentRequest;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
     /**
      * Get all registers
      * 

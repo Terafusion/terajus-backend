@@ -8,10 +8,10 @@ use BenSampo\Enum\Enum;
 
 /**
  * @method static static PENDING()
- * @method static static FINISHED()
+ * @method static static COMPLETED()
  */
 final class DocumentRequestStatusEnum extends Enum
 {
     const PENDING = 'PENDING';
-    const FINISHED = 'FINISHED';
+    const COMPLETED = 'COMPLETED';
 }

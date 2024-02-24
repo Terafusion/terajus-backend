@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DocumentRequest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DocumentRequest\DocumentRequestStoreRequest;
+use App\Http\Requests\DocumentRequest\DocumentRequestUpdateRequest;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Services\DocumentRequest\DocumentRequestService;
 use Illuminate\Http\Response;
@@ -49,13 +50,13 @@ class DocumentRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  DocumentRequestStoreRequest  $request
+     * @param  DocumentRequestUpdateRequest  $request
      * @param  \App\Models\DocumentRequest\DocumentRequest  $documentRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(DocumentRequestStoreRequest $request, DocumentRequest $documentRequest)
+    public function update(DocumentRequestUpdateRequest $request, DocumentRequest $documentRequest)
     {
-        //
+        return $this->showOne($this->documentRequestService->update($request->validated(), $documentRequest->id), Response::HTTP_OK);
     }
 
     /**
