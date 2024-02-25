@@ -2,6 +2,7 @@
 
 namespace App\Repositories\DocumentRequest;
 
+use App\Models\User\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,5 +15,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface DocumentRequestRepository extends RepositoryInterface
 {
-    public function getAll(): LengthAwarePaginator;
+    public function getAll(User $user): LengthAwarePaginator;
 }

@@ -19,8 +19,6 @@ trait ApiExceptionHandlerTrait
 {
     public function handleApiExceptions(Throwable $exception)
     {
-        $statusCode = $this->getHttpStatusCode($exception);
-
         if ($exception instanceof NotFoundHttpException) {
             return $this->generateResponse('Route doesn\'t exist', Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof AccessDeniedHttpException || $exception instanceof AuthorizationException) {
@@ -39,7 +37,7 @@ trait ApiExceptionHandlerTrait
             return $this->handleOAuthServerException($exception);
         }
 
-        return $this->generateResponse('Server error', Response::HTTP_INTERNAL_SERVER_ERROR, $statusCode);
+        return $this->generateResponse($exception->getMessage() ?? 'Server error', $exception->getCode() ?? Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function handleValidationException(ValidationException $exception)
@@ -55,11 +53,10 @@ trait ApiExceptionHandlerTrait
     }
 
 
-    private function generateResponse($message, $statusCode, $customStatusCode = null)
+    private function generateResponse($message, $statusCode)
     {
         return response()->json([
-            'error' => $message,
-            'statusCode' => $customStatusCode ?? $statusCode,
+            'error' => $message
         ], $statusCode);
     }
 

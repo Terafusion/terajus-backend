@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('person_type', ['PERSONAL', 'BUSINESS']);
             $table->string('nif_number')->unique();
             $table->string('registration_number')->nullable();
-            $table->string('maritial_status')->nullable();
+            $table->string('marital_status')->nullable();
             $table->string('occupation')->nullable();
             $table->string('address')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE'])->nullable();

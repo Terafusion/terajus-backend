@@ -33,7 +33,7 @@ class UserStoreRequest extends FormRequest
             'occupation' => ['nullable'],
             'nif_number' => ['required'],
             'registration_number' => ['nullable', 'unique:users,registration_number'],
-            'maritial_status' => ['nullable'],
+            'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'role' => ['required', new ValidRole]
         ];

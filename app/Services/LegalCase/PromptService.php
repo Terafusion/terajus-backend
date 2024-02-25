@@ -76,7 +76,7 @@ class PromptService
         Endereço: {$this->data['plaintiff']->address}\n
         CPF se for pessoa física, ou CNPJ se for jurídica: {$this->data['plaintiff']->nif_number}\n
         RG se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->registration_number}\n
-        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->maritial_status}\n
+        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->marital_status}\n
         Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->occupation}\n
         Genero se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->gender}\n
 
@@ -86,7 +86,7 @@ class PromptService
         Endereço: {$this->data['defendant']->address}\n
         CPF se for pessoa física, ou CNPJ se for jurídica: {$this->data['defendant']->nif_number}\n
         RG se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->registration_number}\n
-        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->maritial_status}\n
+        Estado Civil se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->marital_status}\n
         Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->occupation}\n
         Genero se for pessoa física, ou ignore se for jurídica: {$this->data['defendant']->gender}\n
 

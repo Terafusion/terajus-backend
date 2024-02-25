@@ -7,6 +7,7 @@ use App\Http\Requests\DocumentRequest\DocumentRequestStoreRequest;
 use App\Http\Requests\DocumentRequest\DocumentRequestUpdateRequest;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Services\DocumentRequest\DocumentRequestService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class DocumentRequestController extends Controller
@@ -20,9 +21,9 @@ class DocumentRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->showAll($this->documentRequestService->getAll());
+        return $this->showAll($this->documentRequestService->getAll($request->user()));
     }
 
     /**
