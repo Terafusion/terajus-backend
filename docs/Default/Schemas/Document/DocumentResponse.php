@@ -2,6 +2,7 @@
 
 namespace Docs\Default\Schemas\Document;
 
+use Docs\Default\Schemas\DocumentType\DocumentTypeResource;
 use Docs\Default\Schemas\User\UserResource;
 use OpenApi\Annotations as OA;
 
@@ -39,6 +40,15 @@ class DocumentResponse
      * )
      */
     public UserResource $user;
+
+    /**
+     * @OA\Property(
+     *     title="DocumentType",
+     *     description="DocumentType information",
+     *     ref="#/components/schemas/DocumentTypeResource"
+     * )
+     */
+    public DocumentTypeResource $document_type;
 
     /**
      * @OA\Property(
