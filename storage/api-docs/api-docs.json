@@ -1660,6 +1660,9 @@
                     "user": {
                         "$ref": "#/components/schemas/UserResource"
                     },
+                    "document_type": {
+                        "$ref": "#/components/schemas/DocumentTypeResource"
+                    },
                     "document_type_id": {
                         "title": "Document Type ID",
                         "description": "Document Type ID associated with the document",
