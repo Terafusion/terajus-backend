@@ -6,7 +6,13 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Document\DocumentRepository;
 use App\Models\Document\Document;
+use App\Models\User\User;
 use App\Validators\Document\DocumentValidator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class DocumentRepositoryEloquent.
@@ -32,5 +38,68 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    /**
+     * Return build Eloquent query
+     *
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
+     * @param User $user
+     * @return LengthAwarePaginator
+     */
+    private function queryBuilder($queryBuilder, User $user)
+    {
+        return QueryBuilder::for($queryBuilder)
+            ->allowedFilters([
+                'id',
+                AllowedFilter::exact('user_id'),
+                AllowedFilter::exact('model_type'),
+                AllowedFilter::exact('model_id'),
+            ])->when($user, function (Builder $query, $user) {
+                $query->where(function (Builder $subquery) use ($user) {
+                    $subquery->where('user_id', $user->id)
+                        ->orWhere(function (Builder $documentRequestQuery) use ($user) {
+                            $documentRequestQuery->where('model_type', 'App\Models\DocumentRequest\DocumentRequest')
+                                ->whereHasMorph('model', ['App\Models\DocumentRequest\DocumentRequest'], function (Builder $subQuery) use ($user) {
+                                    $subQuery->where(function (Builder $subSubQuery) use ($user) {
+                                        $subSubQuery->where('client_id', $user->id)
+                                            ->orWhere('user_id', $user->id);
+                                    });
+                                });
+                        });
+                });
+            })
+            ->jsonPaginate();
+    }
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function getAll(User $user): LengthAwarePaginator
+    {
+        return $this->queryBuilder($this->model(), $user);
+    }
+
+    /**
+     * @return array
+     */
+    private function getAdditionalFilters(User $user): array
+    {
+        return [
+            // Adicionar filtro para o criador do recurso
+            AllowedFilter::callback('user_id', function (Builder $query, $value) use ($user) {
+                $query->where('user_id', $user->id);
+            }),
+
+            // Adicionar filtro para o relacionamento com DocumentRequest
+            AllowedFilter::callback('document_request', function (Builder $query) use ($user) {
+                $query->where('model_type', 'App\Models\DocumentRequest\DocumentRequest')
+                    ->whereHas('documentRequest', function (Builder $documentRequestQuery) use ($user) {
+                        $documentRequestQuery->where(function (Builder $subQuery) use ($user) {
+                            $subQuery->where('client_id', $user->id)
+                                ->orWhere('user_id', $user->id);
+                        });
+                    });
+            }),
+        ];
+    }
 }

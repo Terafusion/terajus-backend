@@ -72,8 +72,8 @@ class DocumentRequestService
      * 
      * @return LengthAwarePaginator
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->documentRequestRepository->getAll();
+        return $this->documentRequestRepository->getAll($user);
     }
 }

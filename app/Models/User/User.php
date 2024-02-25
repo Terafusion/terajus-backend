@@ -38,7 +38,7 @@ class User extends Model implements AuthAuthenticatable, Authorizable
         'password',
         'nif_number',
         'registration_number',
-        'maritial_status',
+        'marital_status',
         'occupation',
         'gender',
         'address',

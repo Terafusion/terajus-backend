@@ -2,8 +2,11 @@
 
 namespace App\Models\Document;
 
+use App\Models\DocumentType\DocumentType;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -19,10 +22,25 @@ class Document extends Model implements Transformable
     use SoftDeletes;
     use HasFactory;
 
-    protected $fillable = ['file_name', 'file_path', 'model_type', 'model_id'];
+    protected $fillable = ['file_name', 'file_path', 'model_type', 'model_id', 'user_id'];
 
     public function model()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Get the user associated with the DocumentRequest
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function documentType(): HasOne
+    {
+        return $this->hasOne(DocumentType::class, 'id', 'document_type_id');
     }
 }

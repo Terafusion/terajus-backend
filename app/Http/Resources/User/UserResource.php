@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'occupation' => $this->occupation,
             'nif_number' => $this->nif_number,
             'registration_number' => $this->registration_number,
-            'maritial_status' => $this->maritial_status,
+            'marital_status' => $this->marital_status,
             'gender' => $this->gender,
             'person_type' => $this->person_type,
             'created_at' => $this->created_at,

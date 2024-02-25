@@ -199,6 +199,237 @@
                 }
             }
         },
+        "/documents": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get all documents",
+                "operationId": "3bb6692c870998d655997d2dce5e7258",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Create a new document",
+                "operationId": "ba17331ed8379eba8df472d9253f7c52",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{document_id}": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get a document",
+                "operationId": "b03f3d06d04fa8d435868ba8e8aef069",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Delete a document",
+                "operationId": "3b93985ffc1cc1dcd03a9a2301cba4d7",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/download/{document_id}": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Download a document",
+                "operationId": "8032991101c70a96474879624b9d4e80",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "ID of the document",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - File download"
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/document-requests": {
             "post": {
                 "tags": [
@@ -1364,6 +1595,89 @@
                     },
                     "code": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentCreate": {
+                "title": "Document Create",
+                "description": "Document creation schema",
+                "required": [
+                    "file",
+                    "model_type",
+                    "model_id"
+                ],
+                "properties": {
+                    "file": {
+                        "description": "File to be attached",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "model_type": {
+                        "description": "Model type associated with the document",
+                        "type": "string"
+                    },
+                    "model_id": {
+                        "description": "Model ID associated with the document",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentResource": {
+                "title": "Document Resource",
+                "description": "Document resource representation",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentResponse"
+                    },
+                    "statusCode": {
+                        "title": "Status Code",
+                        "description": "HTTP status code",
+                        "type": "integer",
+                        "example": 200
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentResponse": {
+                "title": "Document",
+                "description": "Document resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Document ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User ID associated with the document",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResource"
+                    },
+                    "document_type_id": {
+                        "title": "Document Type ID",
+                        "description": "Document Type ID associated with the document",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "Document creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-24T22:40:33.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "Document update timestamp",
+                        "type": "string",
+                        "example": "2024-02-24T22:40:33.000000Z"
                     }
                 },
                 "type": "object"
