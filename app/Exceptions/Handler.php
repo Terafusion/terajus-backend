@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Traits\ApiExceptionHandlerTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -59,6 +60,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        Log::info($exception);
         return $this->handleApiExceptions($exception) ?: parent::render($request, $exception);
     }
 }
