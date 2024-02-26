@@ -23,16 +23,13 @@ class ArtificialIntelligenceService
     public function getComplaint(LegalCase $legalCase)
     {
         $response = $this->client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4-turbo-preview',
             'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => $this->getPrompt($legalCase)
-                ],
+                ['role' => 'user', 'content' => $this->getPrompt($legalCase)],
             ],
         ]);
 
-        return $response->choices[0]->message->content;
+         dd($response->choices[0]->message->content);
     }
 
     /**
@@ -52,6 +49,8 @@ class ArtificialIntelligenceService
             ->setCourt($legalCase->court)
             ->setFieldsOfLaw($legalCase->fields_of_law)
             ->setEvidences($legalCase->evidences)
+            ->setCaseRequests($legalCase->case_requests)
+            ->setProfessional($legalCase->user)
             ->build();
     }
 }

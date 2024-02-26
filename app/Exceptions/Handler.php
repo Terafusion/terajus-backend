@@ -49,13 +49,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->reportable(function (\League\OAuth2\Server\Exception\OAuthServerException $e) {
+            if($e->getCode() == 9)
+                return false;
+        });
     }
 
     // Restante do código do Handler.php...
 
     public function render($request, Throwable $exception)
     {
-        dd($exception);
         return $this->handleApiExceptions($exception) ?: parent::render($request, $exception);
     }
 }

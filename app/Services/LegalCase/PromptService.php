@@ -4,6 +4,7 @@ namespace App\Services\LegalCase;
 
 use App\Models\LegalCase\LegalCaseParticipant;
 use App\Models\User\User;
+use Carbon\Carbon;
 
 class PromptService
 {
@@ -55,22 +56,25 @@ class PromptService
         $this->data['defendant'] = $value->user;
         return $this;
     }
+    public function setProfessional(User $value)
+    {
+        $this->data['professional'] = $value;
+        return $this;
+    }
+    public function setCaseRequests(string $value)
+    {
+        $this->data['case_requests'] = $value;
+        return $this;
+    }
 
     public function build()
     {
         $text = "Você é um assistente de advogado designado para escrever petições de alta qualidade:\n
-
-        Gere um texto de petição inicial formatado em html, com as seguintes especificações:\n
-
-        Use as tags h5, p;
+        Gere um texto de petição inicial formatada em html, com as seguintes especificações:\n
         Tudo que está em inglês, exceto nomes próprios, devem ser traduzidos para o português;\n
-        No final do texto não adicione um espaço para assinatura;
-        use termos da área juridica e as leis vigintes da constituição brasileira para embasar os argumentos;
-
-        IMPORTANTE: não repita os textos abaixo, use eles para criar uma petição inicial com suas palavras;
-        abaixo estão as informações que você deve usar para criar a petição;
-
-        Qualificação da parte ativa:\n
+        Use termos da área jurídica e as leis vigintes da constituição brasileira para embasar os argumentos;\n\n
+        
+        Polo Ativo: (monte um texto de qualificação baseado em petições reais:)\n
         Nome: {$this->data['plaintiff']->name}\n
         Tipo de pessoa: {$this->data['plaintiff']->person_type}\n
         Endereço: {$this->data['plaintiff']->address}\n
@@ -80,7 +84,7 @@ class PromptService
         Profissão se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->occupation}\n
         Genero se for pessoa física, ou ignore se for jurídica: {$this->data['plaintiff']->gender}\n
 
-        Qualificação da parte passiva:\n
+        Polo Passivo: (monte um texto de qualificação baseado em petições reais:)\n
         Nome: {$this->data['defendant']->name}\n
         Tipo de pessoa: {$this->data['defendant']->person_type}\n
         Endereço: {$this->data['defendant']->address}\n
@@ -94,9 +98,9 @@ class PromptService
         ATENÇÃO: Área do direito: {$this->data['fields_of_law']}\n";
 
 
-        $text .= "Classe: {$this->data['case_matter']}\n";
-        $text .= "Assunto: {$this->data['case_type']}\n";
-        $text .= "Descrição dos fatos: {$this->data['case_description']}\n";
+        $text .= "Classes (Para que você possa se respaldar juridicamente e se basear) : {$this->data['case_matter']}\n";
+        $text .= "Assuntos (Para que você possa se respaldar juridicamente e se basear) : {$this->data['case_type']}\n";
+        $text .= "Descrição dos fatos (Argumente de maneira detalhada e robusta): {$this->data['case_description']}\n";
         $text .= "Na seção de provas, deve-se fazer referência a provas e anexos:\n";
 
         foreach ($this->data['evidences'] as $k => $evidence) {
@@ -104,7 +108,20 @@ class PromptService
         }
 
         $text .=
-        "
+            "
+            Estes são os pedidos que você irá fazer ao juiz: {$this->data['case_requests']}. Argumente da melhor maneira possível.
+        ";
+
+        $text .= "
+            Data da petição:
+        " . Carbon::now()->format('d/m/Y');
+
+        $text .= "
+        Advogado que está fazendo a petição:
+    " . $this->data['professional']->name;
+
+        $text .=
+            "  
             IMPORTANTE: não repita os textos acima, use eles para criar uma petição inicial com suas palavras;
         ";
 
