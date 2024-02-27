@@ -25,7 +25,7 @@ class DocumentStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:pdf,doc,docx,csv',
+            'file' => 'required|mimes:pdf,doc,docx,csv,application/pdf',
             'model_type' => ['required', 'string',  new ValidModelType],
             'model_id' => ['required', 'numeric'],
             'document_type_id' => ['nullable', 'exists:document_types,id']

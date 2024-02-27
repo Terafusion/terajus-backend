@@ -19,6 +19,8 @@ class LegalCaseResource extends JsonResource
             'case_type' => $this->case_type,
             'case_matter' => $this->case_matter,
             'status' => $this->status,
+            'court' => $this->court,
+            'fields_of_law' => $this->fields_of_law,
             'pending_protocol' => $this->pending_protocol,
             'case_description' => $this->case_description,
             'case_requests' => $this->case_requests,
