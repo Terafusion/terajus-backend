@@ -21,6 +21,7 @@ class DocumentResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'document_type_id' => $this->document_type_id,
+            'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => new UserResource($this->user),

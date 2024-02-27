@@ -22,7 +22,7 @@ class Document extends Model implements Transformable
     use SoftDeletes;
     use HasFactory;
 
-    protected $fillable = ['file_name', 'file_path', 'model_type', 'model_id', 'user_id', 'document_type_id'];
+    protected $fillable = ['file_name', 'file_path', 'model_type', 'model_id', 'user_id', 'document_type_id', 'description'];
 
     public function model()
     {

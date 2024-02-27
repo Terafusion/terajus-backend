@@ -24,6 +24,10 @@ class DocumentRequestCreate
      *         @OA\Property(
      *             property="document_type_id",
      *             type="integer"
+     *         ),
+     *         @OA\Property(
+     *             property="description",
+     *             type="string"
      *         )
      *     )
      * )

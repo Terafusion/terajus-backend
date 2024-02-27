@@ -23,7 +23,8 @@ class DocumentRequestDocService
         foreach ($data['documents'] as $document) {
             $this->documentRequestDocRepository->create([
                 'document_request_id' => $documentRequestId,
-                'document_type_id' => $document['document_type_id']
+                'document_type_id' => $document['document_type_id'],
+                'description' => $document['description'],
             ]);
         }
     }

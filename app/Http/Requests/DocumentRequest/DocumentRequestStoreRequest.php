@@ -26,7 +26,8 @@ class DocumentRequestStoreRequest extends FormRequest
         return [
             'client_id' => ['required', 'exists:users,id'],
             'documents' => ['required', 'array'],
-            'documents.*.document_type_id' => ['required', 'exists:document_types,id']
+            'documents.*.document_type_id' => ['required', 'exists:document_types,id'],
+            'documents.*.description' => ['nullable', 'string']
         ];
     }
 }
