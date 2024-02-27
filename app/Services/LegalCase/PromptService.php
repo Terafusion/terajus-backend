@@ -69,10 +69,12 @@ class PromptService
 
     public function build()
     {
-        $text = "Você é um assistente de advogado designado para escrever petições de alta qualidade:\n
-        Gere um texto de petição inicial formatada em html, com as seguintes especificações:\n
+        $text = "
+        Você é um assistente de advogado designado para escrever petições de alta qualidade.\n
+        Gere um texto de petição inicial formatada em HTML, com as seguintes especificações:\n
+        Use as tags <br> para quebrar linhas. Use as tags do HTML para formatar a resposta;\n
         Tudo que está em inglês, exceto nomes próprios, devem ser traduzidos para o português;\n
-        Use termos da área jurídica e as leis vigintes da constituição brasileira para embasar os argumentos;\n\n
+        Use termos da área jurídica e as leis vigintes da constituição brasileira para embasar os argumentos;\n
         
         Polo Ativo: (monte um texto de qualificação baseado em petições reais:)\n
         Nome: {$this->data['plaintiff']->name}\n
@@ -122,7 +124,7 @@ class PromptService
 
         $text .=
             "  
-            IMPORTANTE: não repita os textos acima, use eles para criar uma petição inicial com suas palavras;
+            ATENÇÃO: não repita os textos acima, utilize eles para criar uma petição inicial de alta qualidade acrescentando o máximo possível de conteúdo relevante.
         ";
 
         return $text;
