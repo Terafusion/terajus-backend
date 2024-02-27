@@ -1613,6 +1613,10 @@
                         "type": "string",
                         "format": "binary"
                     },
+                    "description": {
+                        "description": "Description",
+                        "type": "string"
+                    },
                     "model_type": {
                         "description": "Model type associated with the document",
                         "type": "string"
@@ -1670,6 +1674,9 @@
                         "format": "int64",
                         "nullable": true
                     },
+                    "description": {
+                        "type": "string"
+                    },
                     "created_at": {
                         "title": "Created At",
                         "description": "Document creation timestamp",
@@ -1720,6 +1727,9 @@
                             "properties": {
                                 "document_type_id": {
                                     "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
                                 }
                             },
                             "type": "object"
@@ -1846,6 +1856,9 @@
                         "type": "integer"
                     },
                     "status": {
+                        "type": "string"
+                    },
+                    "description": {
                         "type": "string"
                     },
                     "created_at": {

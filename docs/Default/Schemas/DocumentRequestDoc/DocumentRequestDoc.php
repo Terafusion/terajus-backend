@@ -34,6 +34,11 @@ class DocumentRequestDoc
      * @OA\Property()
      */
     public string $status;
+    
+    /**
+     * @OA\Property()
+     */
+    public string $description;
 
     /**
      * @OA\Property()

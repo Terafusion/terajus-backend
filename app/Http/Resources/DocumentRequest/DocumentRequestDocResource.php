@@ -3,6 +3,7 @@
 namespace App\Http\Resources\DocumentRequest;
 
 use App\Enums\DocumentRequestStatusEnum;
+use App\Http\Resources\Document\DocumentResource;
 use App\Http\Resources\DocumentType\DocumentTypeResource;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,7 +24,9 @@ class DocumentRequestDocResource extends JsonResource
             'document_id' => $this->document_id,
             'document_type_id' => $this->document_type_id,
             'status' => $this->status,
-            'document_type' => new DocumentTypeResource($this->documentType)
+            'description' => $this->description,
+            'document_type' => new DocumentTypeResource($this->documentType),
+            'documents' => DocumentResource::collection($this->documents)
         ];
     }
 }

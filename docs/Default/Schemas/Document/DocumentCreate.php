@@ -14,6 +14,11 @@ namespace Docs\Default\Schemas\Document;
  *         description="File to be attached"
  *     ),
  *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         description="Description"
+ *     ),
+ *     @OA\Property(
  *         property="model_type",
  *         type="string",
  *         description="Model type associated with the document"
@@ -31,4 +36,6 @@ class DocumentCreate
     public string $file;
     public string $model_type;
     public int $model_id;
+
+    public string $description;
 }

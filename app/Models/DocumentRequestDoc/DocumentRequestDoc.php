@@ -3,6 +3,7 @@
 namespace App\Models\DocumentRequestDoc;
 
 use App\Enums\DocumentRequestStatusEnum;
+use App\Models\Document\Document;
 use App\Models\DocumentType\DocumentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ class DocumentRequestDoc extends Model implements Transformable
         'document_id',
         'document_type_id',
         'status',
+        'description',
     ];
 
     protected $attributes = [
@@ -38,5 +40,10 @@ class DocumentRequestDoc extends Model implements Transformable
     public function documentType()
     {
         return $this->hasOne(DocumentType::class, 'id', 'document_type_id');
+    }
+
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'model');
     }
 }

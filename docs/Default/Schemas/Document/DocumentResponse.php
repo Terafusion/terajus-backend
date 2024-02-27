@@ -60,6 +60,11 @@ class DocumentResponse
     public ?int $document_type_id;
 
     /**
+     * @OA\Property()
+     */
+    public string $description;
+
+    /**
      * @OA\Property(
      *     title="Created At",
      *     description="Document creation timestamp",
