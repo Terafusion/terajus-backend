@@ -12,7 +12,8 @@ use OpenApi\Annotations as OA;
  *      "nif_number",
  *      "person_type",
  *      "role",
- *      "password"
+ *      "password",
+ *      "customer"
  *  }
  * )
  */
@@ -27,6 +28,11 @@ class UserCreate
      * @OA\Property(maximum="255")
      */
     public string $email;
+
+    /**
+     * @OA\Property()
+     */
+    public bool $customer;
 
     /**
      * @OA\Property(example="CPF or CNPJ")

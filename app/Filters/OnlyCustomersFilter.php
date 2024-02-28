@@ -18,7 +18,7 @@ class OnlyCustomersFilter implements Filter
     public function __invoke(Builder $query, $value, $property): Builder
     {
         return $query->whereHas('legalCaseParticipations', function (Builder $legalCaseParticipationsQuery) {
-            $legalCaseParticipationsQuery->where('participant_type_id', 1); //TODO - CRIAR FORMA MELHOR DE MAPEAR APENAS CLIENTES
+            $legalCaseParticipationsQuery->where('participant_type_id', 1); //@TODO - CRIAR FORMA MELHOR DE MAPEAR APENAS CLIENTES
             $legalCaseParticipationsQuery->whereHas('legalCase', function (Builder $legalCaseParticipationLegalCaseQuery) {
                 $legalCaseParticipationLegalCaseQuery->where('user_id', $this->user->id);
             });

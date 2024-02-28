@@ -2224,7 +2224,8 @@
                     "nif_number",
                     "person_type",
                     "role",
-                    "password"
+                    "password",
+                    "customer"
                 ],
                 "properties": {
                     "name": {
@@ -2234,6 +2235,9 @@
                     "email": {
                         "type": "string",
                         "maximum": "255"
+                    },
+                    "customer": {
+                        "type": "boolean"
                     },
                     "nif_number": {
                         "type": "string",
