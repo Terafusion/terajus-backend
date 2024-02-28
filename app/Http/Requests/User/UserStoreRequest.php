@@ -35,7 +35,8 @@ class UserStoreRequest extends FormRequest
             'registration_number' => ['nullable', 'unique:users,registration_number'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
-            'role' => ['required', new ValidRole]
+            'role' => ['required', new ValidRole],
+            'customer' => ['required', 'boolean']
         ];
     }
 }
