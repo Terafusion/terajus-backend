@@ -12,7 +12,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
+use App\Filters\OnlyCustomersFilter;
 
 /**
  * Class UserRepositoryEloquent.
@@ -69,6 +69,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                         // Adicione a lógica de relacionamento do usuário
                     });
                 }),
+                $this->onlyCustomersFilter($user),
             ])
             ->allowedIncludes([
                 'roles',
@@ -84,6 +85,16 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         return $this->queryBuilder($this->model(), $user);
     }
+
+    /**
+     * @param User $user
+     * @return AllowedFilter
+     */
+    private function onlyCustomersFilter(User $user): AllowedFilter
+    {
+        return AllowedFilter::custom('only_customers', new OnlyCustomersFilter($user));
+    }
+
 
     private function applyUserRelationshipFilters(Builder $query, $user)
     {

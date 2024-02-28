@@ -48,8 +48,19 @@ class LegalCaseParticipant extends Model implements Transformable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    public function legalCase(): HasOne
+    {
+        return $this->hasOne(LegalCase::class, 'id', 'legal_case_id');
+    }
+
+    /**
+     * Get the user associated with the LegalCaseParticipant
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function participantType(): HasOne
     {
         return $this->hasOne(ParticipantType::class, 'id', 'participant_type_id');
     }
+    
 }

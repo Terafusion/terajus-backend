@@ -2,11 +2,15 @@
 
 namespace App\Models\User;
 
+use App\Models\LegalCase\LegalCase;
+use App\Models\LegalCase\LegalCaseParticipant;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
@@ -64,4 +68,15 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     {
         return $this->roles->pluck('permissions')->flatten()->contains('name', $name);  
     }
+
+    public function legalCases(): HasMany
+    {
+        return $this->hasMany(LegalCase::class, 'user_id', 'id');
+    }
+
+    public function legalCaseParticipations(): HasMany
+    {
+        return $this->hasMany(LegalCaseParticipant::class);
+    }
+
 }
