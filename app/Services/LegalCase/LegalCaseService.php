@@ -9,7 +9,7 @@ use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Repositories\LegalCase\LegalCaseParticipantRepository;
 use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
 use App\Services\User\UserService;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LegalCaseService
 {
@@ -36,7 +36,7 @@ class LegalCaseService
     /**
      * Get all registers
      * 
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll(User $user)
     {

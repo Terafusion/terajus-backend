@@ -2,9 +2,12 @@
 
 namespace App\Services\ArtificialIntelligence;
 
+use App\Helpers\StringHelper;
 use App\Models\LegalCase\LegalCase;
 use App\Services\LegalCase\PromptService;
 use OpenAI;
+
+use function App\Helpers\getSubstringBetween;
 
 class ArtificialIntelligenceService
 {
@@ -23,13 +26,14 @@ class ArtificialIntelligenceService
     public function getComplaint(LegalCase $legalCase)
     {
         $response = $this->client->chat()->create([
-            'model' => 'gpt-4-turbo-preview',
+            'model' => 'gpt-3.5-turbo',
             'messages' => [
                 ['role' => 'user', 'content' => $this->getPrompt($legalCase)],
             ],
         ]);
 
-         return $response->choices[0]->message->content;
+        $response = $response->choices[0]->message->content;
+        return $response;
     }
 
     /**
