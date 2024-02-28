@@ -2,6 +2,7 @@
 
 namespace App\Services\ArtificialIntelligence;
 
+use App\Helpers\HtmlHelper;
 use App\Helpers\StringHelper;
 use App\Models\LegalCase\LegalCase;
 use App\Services\LegalCase\PromptService;
@@ -26,13 +27,17 @@ class ArtificialIntelligenceService
     public function getComplaint(LegalCase $legalCase)
     {
         $response = $this->client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4-turbo-preview',
             'messages' => [
                 ['role' => 'user', 'content' => $this->getPrompt($legalCase)],
             ],
         ]);
 
         $response = $response->choices[0]->message->content;
+        $response = HtmlHelper::trimIAHtmlResponse($response);
+        $response = HtmlHelper::getHtmlInitialTag($response);
+        $response = HtmlHelper::getHtmlFinalTag($response);
+
         return $response;
     }
 
