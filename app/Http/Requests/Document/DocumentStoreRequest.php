@@ -28,7 +28,7 @@ class DocumentStoreRequest extends FormRequest
             'file' => 'required|mimes:pdf,doc,docx,csv,jpg,jpeg,png',
             'model_type' => ['required', 'string',  new ValidModelType],
             'model_id' => ['required', 'numeric'],
-            'document_type_id' => ['nullable', 'exists:document_types,id'],
+            'document_type_id' => ['nullable', 'numeric', 'exists:document_types,id'],
             'description' => ['nullable', 'string']
         ];
     }
