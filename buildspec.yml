@@ -6,6 +6,9 @@ phases:
       php: 8.2
     commands:
       - aws --version
+      - sudo apt install awscli
+      - sudo apt-get install python3-pip
+      - sudo pip3 install --upgrade awscli
       - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
 
   pre_build:
