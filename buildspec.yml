@@ -6,7 +6,7 @@ phases:
       php: 8.2
     commands:
       - aws --version
-      - eval $(aws ecr get-login-password --region region | docker login --username AWS --password-stdin public.ecr.aws/a0t2b5b9/terajus-staging)
+      - eval $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 747040582340.dkr.ecr.us-east-1.amazonaws.com/terajus-staging-private)
 
   pre_build:
     commands:
@@ -18,12 +18,12 @@ phases:
       - echo ===================
       - echo $REPOSITORY_URI
       - echo ==================
-#      - composer install
-#      - php artisan key:generate
-#      - php artisan cache:clear
-#      - php artisan config:clear
-#      - php artisan migrate --force
-#      - cp .env.example .env
+      - composer install
+      - php artisan key:generate
+      - php artisan cache:clear
+      - php artisan config:clear
+      - php artisan migrate --force
+      - cp .env.example .env
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
