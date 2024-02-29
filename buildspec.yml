@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      php: 8.2
+      php: 8.1
     commands:
       - aws --version
       - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
