@@ -28,6 +28,6 @@ phases:
     commands:
       - docker image ls -a
       - docker push$ REPOSITORY_URI:$IMAGE_TAG
-
-enviroments:
-  type: linux-container
+#
+#enviroments:
+#  type: linux-container
