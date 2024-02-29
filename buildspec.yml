@@ -15,12 +15,12 @@ phases:
 
   build:
     commands:
-      - composer install
-      - cp .env.example .env
-      - php artisan key:generate
-      - php artisan cache:clear
-      - php artisan config:clear
-      - php artisan migrate --force
+#      - composer install
+#      - php artisan key:generate
+#      - php artisan cache:clear
+#      - php artisan config:clear
+#      - php artisan migrate --force
+#      - cp .env.example .env
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
