@@ -6,7 +6,7 @@ phases:
       php: 8.2
     commands:
       - aws --version
-      - eval $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 747040582340.dkr.ecr.us-east-1.amazonaws.com/terajus-staging-private)
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 747040582340.dkr.ecr.us-east-1.amazonaws.com/terajus-staging-private
 
   pre_build:
     commands:
