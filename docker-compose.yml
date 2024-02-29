@@ -4,43 +4,34 @@ services:
     # image project
     app:
         build:
-            context: .
+            context: ./
             dockerfile: Dockerfile
-        restart: unless-stopped
-        working_dir: /var/www/
+        working_dir: /var/www/html
         volumes:
-            - ./:/var/www
-        depends_on: 
-            - redis
-        networks: 
-            - laravel
-    
-    # nginx
-    nginx:
-        image: nginx:alpine
-        restart: unless-stopped
-        ports: 
-            - "8989:80"
-        volumes: 
-            - ./:/var/www
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        networks: 
+            - ./:/var/www/html
+        ports:
+            - "8080:80"
+        environment:
+            - APACHE_DOCUMENT_ROOT=/var/www/html/public
+        depends_on:
+            - mysql
+        networks:
             - laravel
 
     # db mysql
     mysql:
         image: mysql:5.7.22
         restart: unless-stopped
-        environment: 
+        environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
-        volumes: 
+        volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
-        ports: 
+        ports:
             - "3388:3306"
-        networks: 
+        networks:
             - laravel
 
     # queue
@@ -48,20 +39,20 @@ services:
         image: especializati/laravel9-app
         restart: unless-stopped
         command: "php artisan queue:work"
-        volumes: 
-            - ./:/var/www
-        depends_on: 
+        volumes:
+            - ./:/var/www/html
+        depends_on:
             - redis
             - app
-        networks: 
+        networks:
             - laravel
 
     # redis
     redis:
         image: redis:latest
-        networks: 
+        networks:
             - laravel
 
-networks: 
+networks:
     laravel:
         driver: bridge

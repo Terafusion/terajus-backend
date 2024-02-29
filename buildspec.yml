@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.2
+    commands:
+      - echo Logging in to Amazon ECR....
+      - aws --version
+      # Login to Elastic Container Registry, make sure to specify the region
+      - eval $(aws ecr get-login --region us-east-2 --no-include-email | sed 's|https://||')
+
+  pre_build:
+    commands:
+      - REPOSITORY_URI=public.ecr.aws/a0t2b5b9/terajus-staging
+      - IMAGE_TAG=1.0
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Installing composer...
+      - composer install
+      - echo Creating .env file...
+      - cp .env.example .env
+      - echo Generating app key
+      - php artisan key:generate
+      - php artisan cache:clear
+      - php artisan config:clear
+      - php artisan migrate --force
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker image ls -a
+      - docker push $REPOSITORY_URI:$IMAGE_TAG

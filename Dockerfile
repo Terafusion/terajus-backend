@@ -1,49 +1,52 @@
-FROM php:8.1-fpm
+# Use an official PHP image with Apache as the base image.
+FROM php:8.2-apache
 
-# set your user name, ex: user=bernardo
-ARG user=terafusion
-ARG uid=1000
+# Set environment variables.
+ENV ACCEPT_EULA=Y
+LABEL maintainer="er.avinashrathod@gmail.com"
 
-# Install system dependencies
+# Install system dependencies.
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
     libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     zip \
-    unzip
+    unzip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Enable Apache modules required for Laravel.
+RUN a2enmod rewrite
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
+# Set the Apache document root
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+# Update the default Apache site configuration
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-RUN echo "xdebug.coverage_enable" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# Install PHP extensions.
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql
 
-# Copiar configurações
-COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/php.ini
-COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+# Install Composer globally.
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Create a directory for your Laravel application.
+WORKDIR /var/www/html
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# Copy the Laravel application files into the container.
+COPY . .
 
-# Install redis
-RUN pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
+# Install Laravel dependencies using Composer.
+RUN composer install --no-interaction --optimize-autoloader
 
-# Set working directory
-WORKDIR /var/www
+# Set permissions for Laravel.
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-USER $user
+# Expose port 80 for Apache.
+EXPOSE 80
+
+# Start Apache web server.
+CMD ["apache2-foreground"]
+
+# You can add any additional configurations or commands required for Laravel 10 here.
