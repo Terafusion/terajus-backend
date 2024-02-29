@@ -18,12 +18,13 @@ phases:
       - echo ===================
       - echo $REPOSITORY_URI
       - echo ==================
-      - composer install
-      - php artisan key:generate
-      - php artisan cache:clear
-      - php artisan config:clear
-      - php artisan migrate --force
-      - cp .env.example .env
+      - docker ps
+#      - composer install
+#      - php artisan key:generate
+#      - php artisan cache:clear
+#      - php artisan config:clear
+#      - php artisan migrate --force
+#      - cp .env.example .env
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
