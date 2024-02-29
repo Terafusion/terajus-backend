@@ -26,8 +26,7 @@ phases:
 
   post_build:
     commands:
-      - docker image ls -a
-      - docker push$ REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
 #
 #enviroments:
 #  type: linux-container
