@@ -10,7 +10,7 @@ phases:
 
   pre_build:
     commands:
-      - REPOSITORY_URI=public.ecr.aws/a0t2b5b9/terajus-staging
+      - REPOSITORY_URI=747040582340.dkr.ecr.us-east-1.amazonaws.com/terajus-staging-private
       - IMAGE_TAG=1.0
 
   build:
