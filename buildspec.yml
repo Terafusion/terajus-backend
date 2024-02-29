@@ -8,7 +8,7 @@ phases:
       - echo Logging in to Amazon ECR....
       - aws --version
       # Login to Elastic Container Registry, make sure to specify the region
-      - eval $(aws ecr get-login --region us-east-2 --no-include-email | sed 's|https://||')
+      - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
 
   pre_build:
     commands:
