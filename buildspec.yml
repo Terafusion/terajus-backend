@@ -6,10 +6,7 @@ phases:
       php: 8.2
     commands:
       - aws --version
-      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - unzip awscliv2.zip
-      - sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-      - eval $(aws ecr get-login --region us-east-1 --no-include-email | sed 's|https://||')
+      - eval $(aws ecr get-login-password --region region | docker login --username AWS --password-stdin public.ecr.aws/a0t2b5b9/terajus-staging)
 
   pre_build:
     commands:
