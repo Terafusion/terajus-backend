@@ -9,6 +9,7 @@ use App\Http\Controllers\LegalCase\LegalCaseController;
 use App\Http\Controllers\ParticipantType\ParticipantTypeController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +22,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('legal-cases', LegalCaseController::class);
-    Route::apiResource('evidences', EvidenceController::class);
-    Route::apiResource('document-requests', DocumentRequestController::class);
-    Route::apiResource('documents', DocumentController::class);
-    Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
-});
+// Route::middleware(['auth:api'])->group(function () {
+//     Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
+//     Route::apiResource('users', UserController::class);
+//     Route::apiResource('legal-cases', LegalCaseController::class);
+//     Route::apiResource('evidences', EvidenceController::class);
+//     Route::apiResource('document-requests', DocumentRequestController::class);
+//     Route::apiResource('documents', DocumentController::class);
+//     Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
+// });
 
-Route::apiResource('document-types', DocumentTypeController::class);
-Route::apiResource('participant-types', ParticipantTypeController::class);
-Route::post('/oauth/signup', [AuthController::class, 'signUp']);
+// Route::apiResource('document-types', DocumentTypeController::class);
+// Route::apiResource('participant-types', ParticipantTypeController::class);
+Route::post('/oauth/signup', [AuthController::class, 'centralSignUp']);
+Route::post('/oauth/token', [AccessTokenController::class, 'issueToken']);

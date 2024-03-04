@@ -32,7 +32,7 @@ class SignUpRequest extends FormRequest
             'occupation' => ['nullable'],
             'address' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
-            'role' => ['required', new ValidRole],
+            'role' => ['nullable', new ValidRole],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'registration_number' => ['nullable', 'unique:users,registration_number'],

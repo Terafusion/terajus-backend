@@ -37,4 +37,22 @@ class AuthService
             throw $th;
         }
     }
+
+    /**
+     * Register and login user
+     * 
+     * @param array $data
+     * @return User
+     */
+    public function centralSignUp(array $data)
+    {
+        try {
+            $user = $this->userService->store($data);
+            $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
+            $user->setAppends(['access_token' => $token]);
+            return $user;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
