@@ -4,6 +4,7 @@ namespace App\Models\Customer;
 
 use App\Models\Tenant\Tenant;
 use App\Models\User\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Prettus\Repository\Contracts\Transformable;
@@ -16,7 +17,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Customer extends Model implements Transformable
 {
-    use TransformableTrait;
+    use HasFactory, TransformableTrait;
 
     protected $fillable = [
         'user_id',

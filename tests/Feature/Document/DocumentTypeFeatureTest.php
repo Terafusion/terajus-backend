@@ -14,20 +14,6 @@ class DocumentTypeFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->user = User::factory()->create();
-        $this->artisan('db:seed --class=DocumentTypesSeeder');
-        Passport::actingAs($this->user);
-    }
-
     /**
      * Test retrieve all documents and filters
      * 

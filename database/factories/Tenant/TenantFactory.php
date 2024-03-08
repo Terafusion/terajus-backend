@@ -1,7 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Tenant;
 
+use App\Models\Tenant\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,16 +10,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TenantFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Tenant::class;
+
     public function definition()
     {
         return [
-            'name',
-            'user_id'
+            'name' => $this->faker->company,
+            'user_id' => 1
         ];
     }
 }

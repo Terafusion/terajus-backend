@@ -4,9 +4,11 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Customer\Customer;
 use App\Models\LegalCase\LegalCase;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\User\User;
+use App\Policies\CustomerPolicy;
 use App\Policies\LegalCasePolicy;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         LegalCase::class => LegalCasePolicy::class,
+        Customer::class => CustomerPolicy::class,
     ];
 
     /**
@@ -31,25 +34,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::ignoreMigrations();
 
-        Route::group([
-            'as' => 'passport.',
-            'middleware' => [
-                InitializeTenancyByDomain::class, // Use tenancy initialization middleware of your choice
-                PreventAccessFromCentralDomains::class,
-            ],
-            'prefix' => config('passport.path', 'oauth'),
-            'namespace' => 'Laravel\Passport\Http\Controllers',
-        ], function () {
-            $this->loadRoutesFrom(__DIR__ . "/../../vendor/laravel/passport/src/../routes/web.php");
-        });
-
-        //
     }
 
     public function register()
     {
-        Passport::ignoreRoutes();
+        //
     }
 }

@@ -15,20 +15,6 @@ class DocumentRequestFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->user = User::factory()->create();
-        $this->artisan('db:seed');
-        Passport::actingAs($this->user);
-    }
-
     /**
      * Test store an Document Request
      *

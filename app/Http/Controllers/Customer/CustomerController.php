@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 class CustomerController extends Controller
 {
 
-    public function __construct(private CustomerService $userService)
+    public function __construct(private CustomerService $customerService)
     {
         //$this->middleware('can:user.store')->only('store');
     }
@@ -26,7 +26,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->showAll($this->userService->getAll($request->user()));
+        return $this->showAll($this->customerService->getAll());
     }
 
     /**
@@ -37,38 +37,40 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        return $this->showOne($this->userService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
+        return $this->showOne($this->customerService->store($request->validated()), Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer\Customer  $user
+     * @param  \App\Models\Customer\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $user)
+    public function show(Customer $customer)
     {
-        return $this->showOne($user);
+        $this->authorize('view', $customer);
+        return $this->showOne($customer);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  CustomerUpdateRequest $request
-     * @param  \App\Models\Customer\Customer  $user
+     * @param  \App\Models\Customer\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerUpdateRequest $request, Customer $user)
+    public function update(CustomerUpdateRequest $request, Customer $customer)
     {
-        return $this->showOne($this->userService->update($request->validated(), $user), Response::HTTP_OK);
+        $this->authorize('update', $customer);
+        return $this->showOne($this->customerService->update($request->validated(), $customer), Response::HTTP_OK);
     }
 
     /**
      *
-     * @param  \App\Models\Customer\Customer  $user
+     * @param  \App\Models\Customer\Customer $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $user)
+    public function destroy(Customer $customer)
     {
         return $this->showMessage('Success');
     }

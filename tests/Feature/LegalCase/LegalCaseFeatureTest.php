@@ -22,19 +22,6 @@ class LegalCaseFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->user = User::factory()->create();
-        Passport::actingAs($this->user);
-    }
-
     /**
      * Test store an Legal Case
      *

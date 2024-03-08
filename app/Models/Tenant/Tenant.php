@@ -3,6 +3,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User\User;
 use Tenancy\Identification\Concerns\AllowsTenantIdentification;
@@ -12,6 +13,7 @@ use Tenancy\Tenant\Events;
 
 class Tenant extends Model implements TenancyTenant
 {
+    use HasFactory;
     protected $fillable = ['name', 'user_id'];
 
     use AllowsTenantIdentification;
