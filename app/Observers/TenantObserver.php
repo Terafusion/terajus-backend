@@ -10,7 +10,7 @@ class TenantObserver
     public function creating(Model $model)
     {
         $tenant = Tenancy::getTenant();
-        if ($tenant) {
+        if ($tenant && is_null($model->tenant_id)) {
             $model->tenant_id = $tenant->id;
         }
     }

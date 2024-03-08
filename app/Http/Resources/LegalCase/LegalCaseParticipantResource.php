@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\LegalCase;
 
+use App\Http\Resources\Customer\CustomerResource;
+use App\Http\Resources\ParticipantType\ParticipantTypeResource;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,10 +20,10 @@ class LegalCaseParticipantResource extends JsonResource
         return [
             'id' => $this->id,
             'legal_case_id' => $this->legal_case_id,
-            'user_id' => $this->user_id,
+            'customer_id' => $this->customer_id,
             'participant_type_id' => $this->participant_type_id,
-            'participant_type' => $this->participantType,
-            'user' => new UserResource($this->user)
+            'participant_type' => new ParticipantTypeResource($this->participantType),
+            'customer' => new CustomerResource($this->customer)
         ];
     }
 }

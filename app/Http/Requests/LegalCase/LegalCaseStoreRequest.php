@@ -35,7 +35,7 @@ class LegalCaseStoreRequest extends FormRequest
             'complaint' => ['nullable'],
             'participants' => ['array', 'nullable'],
             'participants.*.participant_type_id' => ['required'],
-            'participants.*.user_id' => ['required', 'exists:users,id'],
+            'participants.*.customer_id' => ['required', 'exists:customers,id'],
         ];
     }
 }

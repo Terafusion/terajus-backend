@@ -10,6 +10,8 @@ use App\Repositories\User\UserRepository;
 use App\Services\User\UserService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Tenancy\Facades\Tenancy;
+use Tenancy\Identification\Events\Configuring;
 
 class AuthService
 {
@@ -54,5 +56,6 @@ class AuthService
     {
         $tenant = Tenant::create(['name' => $user->name . '\'s Tenant', 'user_id' => $user->id]);
         $this->userService->update(['is_tenant' => true, 'tenant_id' => $tenant->id], $user);
+        Tenancy::setTenant($tenant);
     }
 }

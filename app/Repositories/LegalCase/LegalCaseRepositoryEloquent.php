@@ -12,6 +12,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Tenancy\Facades\Tenancy;
 
 /**
  * Class LegalCaseRepositoryEloquent.
@@ -58,7 +59,9 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 $this->professionalFilter()
             ])->allowedSorts([
                     'created_at',
-                ])->jsonPaginate();
+                ])
+                ->where('tenant_id', Tenancy::getTenant()->id)
+                ->jsonPaginate();
     }
 
     public function getAll(User $user): LengthAwarePaginator

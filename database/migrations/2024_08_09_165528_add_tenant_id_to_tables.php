@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        $tables = ['roles', 'permissions', 'legal_cases', 'documents', 'document_requests', 'document_types', 'users'];
+        $tables = ['legal_cases', 'documents', 'document_requests', 'document_types', 'users', 'evidences', 'participant_types'];
 
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
