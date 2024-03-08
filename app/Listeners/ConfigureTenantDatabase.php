@@ -17,7 +17,7 @@ class ConfigureTenantDatabase implements ShouldQueue
     {
         Tenancy::setTenant($event->tenant);
         if ($event->tenant->id != config('terajus.default_tenant.id')) {
-            Artisan::call('db:seed', ['--class' => EnvironmentSeeder::class]);
+            Artisan::call('db:seed', ['--class' => EnvironmentSeeder::class, '--force' => true]);
         }
     }
 }

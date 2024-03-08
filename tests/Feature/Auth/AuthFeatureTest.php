@@ -20,7 +20,6 @@ class AuthFeatureTest extends TestCase
     {
         parent::setUp();
         $this->artisan('passport:install', ['-vvv' => true]);
-
     }
 
     public function test_signUp()
@@ -37,7 +36,7 @@ class AuthFeatureTest extends TestCase
         $this->assertNotNull($response['access_token']);
 
         $user = User::where('email', 'emailtest@test.com')->first();
-        $tenant = Tenant::first();
+        $tenant = Tenant::find($user->tenant_id);
         $this->assertEquals($user->tenant_id, $tenant->id);
     }
 

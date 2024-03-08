@@ -35,11 +35,11 @@ abstract class TestCase extends BaseTestCase
         $this->user = User::factory()->create();
         $tenant = Tenant::factory()->create();
 
-        // Associar o usuário ao Tenant
         $this->user->tenant_id = $tenant->id;
         $this->user->is_tenant = true;
         $this->user->save();
-
+        $this->user->refresh();
+        $this->user->assignRole(['lawyer']);
         Passport::actingAs($this->user);
     }
 }
