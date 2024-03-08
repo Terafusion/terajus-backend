@@ -33,6 +33,6 @@ class AuthController extends Controller
      */
     public function centralSignUp(SignUpRequest $request)
     {
-        return $this->showOne($this->authService->centralSignUp($request->validated()), Response::HTTP_OK, UserCentralResource::class);
+        return $this->showOne($this->authService->signUp($request->validated()), Response::HTTP_OK, UserCentralResource::class);
     }
 }

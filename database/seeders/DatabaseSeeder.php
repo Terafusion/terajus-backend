@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
             PassportSeeder::class,
-            UserTableSeeder::class,
+           // UserTableSeeder::class,
             ParticipantTypeTableSeeder::class,
             DocumentTypesSeeder::class,
         ]);

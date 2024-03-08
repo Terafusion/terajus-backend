@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Customer;
 
 use App\Rules\ValidRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
-class SignUpRequest extends FormRequest
+class CustomerStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,17 +27,14 @@ class SignUpRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'email' => ['required'],
+            'email' => ['required', 'unique:users,email'],
             'password' => ['required'],
-            'nif_number' => ['required', 'unique:users,nif_number'],
-            'occupation' => ['nullable'],
-            'address' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
-            'role' => ['nullable', new ValidRole],
-            'create_tenant' => ['required', 'boolean'],
+            'occupation' => ['nullable'],
+            'nif_number' => ['required', 'unique:users,nif_number'],
+            'registration_number' => ['nullable', 'unique:users,registration_number'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
-            'registration_number' => ['nullable', 'unique:users,registration_number'],
         ];
     }
 }

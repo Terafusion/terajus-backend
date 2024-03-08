@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'json.paginate' => \App\Http\Middleware\JsonPaginate::class,
+        'identify.tenant' => \App\Http\Middleware\IdentifyTenant::class,
     ];
 }

@@ -40,11 +40,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('index', 'index');
 
         Route::middleware(['json.paginate'])->group(base_path('routes/api.php'))->name('*.index');
-
-        $this->routes(function () {
-            $this->mapApiRoutes();
-            $this->mapWebRoutes();
-        });
     }
 
     /**
@@ -57,26 +52,5 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
-    }
-
-    protected function mapWebRoutes()
-    {
-        foreach ($this->centralDomains() as $domain) {
-            Route::middleware('web')
-                ->domain($domain)
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-        }
-    }
-
-    protected function mapApiRoutes()
-    {
-        foreach ($this->centralDomains() as $domain) {
-            Route::prefix('api')
-                ->domain($domain)
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-        }
     }
 }

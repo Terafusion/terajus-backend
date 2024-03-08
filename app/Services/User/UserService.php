@@ -3,22 +3,20 @@
 namespace App\Services\User;
 
 use App\Models\User\User;
-use App\Repositories\CustomerProfessional\CustomerProfessionalRepository;
 use App\Repositories\User\UserRepository;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserService
 {
     public function __construct(
         private UserRepository $userRepository,
-        private CustomerProfessionalRepository $customerProfessionalRepository
     ) {
     }
 
     /**
      * Get all registers
      * 
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll(User $user)
     {
@@ -35,12 +33,9 @@ class UserService
     public function store(array $data, ?User $user = null)
     {
         $createdUser = $this->userRepository->create($data);
-        if(isset($data['role'])){
+        
+        if (isset($data['role'])) {
             $createdUser->assignRole($data['role']);
-        }
-
-        if (!is_null($user) && isset($data['customer']) && $data['customer'] === true) {
-            $this->customerProfessionalRepository->create(['customer_id' => $createdUser->id, 'professional_id' => $user->id]);
         }
 
         return $createdUser;

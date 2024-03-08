@@ -56,13 +56,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 AllowedFilter::exact('case_matter'),
                 $this->customerFilter(),
                 $this->professionalFilter()
-            ])
-            ->when($user, function (Builder $query, $user) {
-                $query->where('user_id', $user->id)
-                    ->orWhereHas('participants', function (Builder $subquery) use ($user) {
-                        $subquery->where('user_id', $user->id);
-                    });
-            })->allowedSorts([
+            ])->allowedSorts([
                     'created_at',
                 ])->jsonPaginate();
     }

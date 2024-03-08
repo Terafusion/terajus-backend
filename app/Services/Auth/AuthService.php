@@ -1,13 +1,15 @@
 <?php
 
+// app/Services/Auth/AuthService.php
+
 namespace App\Services\Auth;
 
 use App\Models\User\User;
+use App\Models\Tenant\Tenant;
 use App\Repositories\User\UserRepository;
 use App\Services\User\UserService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class AuthService
 {
@@ -29,7 +31,11 @@ class AuthService
     {
         try {
             $user = $this->userService->store($data);
-            $user->assignRole($data['role']);
+
+            if (isset($data['create_tenant']) && $data['create_tenant'] === true) {
+                $this->createTenantForUser($user);
+            }
+
             $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
             $user->setAppends(['access_token' => $token, 'role' => $user->roles()->first()]);
             return $user;
@@ -39,20 +45,14 @@ class AuthService
     }
 
     /**
-     * Register and login user
+     * Cria um novo tenant para advogado
      * 
-     * @param array $data
-     * @return User
+     * @param User $user
+     * @return void
      */
-    public function centralSignUp(array $data)
+    private function createTenantForUser(User $user)
     {
-        try {
-            $user = $this->userService->store($data);
-            $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
-            $user->setAppends(['access_token' => $token]);
-            return $user;
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $tenant = Tenant::create(['name' => $user->name . '\'s Tenant', 'user_id' => $user->id]);
+        $this->userService->update(['is_tenant' => true, 'tenant_id' => $tenant->id], $user);
     }
 }
