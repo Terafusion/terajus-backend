@@ -38,7 +38,6 @@ services:
             MYSQL_USER: ${DB_USERNAME}
         volumes: 
             - ./.docker/mysql/dbdata:/var/lib/mysql
-            - ./docker/tenant_privileges.sql:/docker-entrypoint-initdb.d/tenant_privileges.sql
         ports: 
             - "3388:3306"
         networks: 

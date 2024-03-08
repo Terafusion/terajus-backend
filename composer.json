@@ -20,7 +20,7 @@
         "spatie/laravel-json-api-paginate": "^1.13",
         "spatie/laravel-permission": "^5.10",
         "spatie/laravel-query-builder": "^5.5",
-        "stancl/tenancy": "^3.7"
+        "tenancy/framework": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
