@@ -12,17 +12,7 @@ use OpenApi\Annotations as OA;
  *  "person_type",
  *  "nif_number",
  *  "registration_number"}))
- * @OA\Schema(
- *  required={
- *      "name",
- *      "email",
- *      "nif_number",
- *      "person_type",
- *      "role",
- *      "password",
- *      "customer"
- *  }
- * )
+ * 
  */
 class UserCreate
 {
