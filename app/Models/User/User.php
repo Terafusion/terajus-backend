@@ -13,11 +13,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
-use Prettus\Repository\Traits\TransformableTrait;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -30,8 +28,8 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     use HasApiTokens;
     use HasFactory;
     use HasRoles;
-    protected $with = ['tenant'];
 
+    protected $with = ['tenant'];
 
     /**
      * The attributes that are mass assignable.
@@ -46,13 +44,14 @@ class User extends Model implements AuthAuthenticatable, Authorizable
         'person_type',
         'gender',
         'is_tenant',
-        'tenant_id'
+        'tenant_id',
     ];
 
     public function isTenant(): bool
     {
         return $this->is_tenant;
     }
+
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(TenantModel::class, 'tenant_id');

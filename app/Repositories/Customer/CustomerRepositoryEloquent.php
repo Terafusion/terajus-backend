@@ -2,21 +2,17 @@
 
 namespace App\Repositories\Customer;
 
-use App\Filters\OnlyCustomersFilter;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
 use App\Models\Customer\Customer;
-use App\Models\User\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Tenancy\Facades\Tenancy;
 
 /**
  * Class CustomerRepositoryEloquent.
- *
- * @package namespace App\Repositories\Customer;
  */
 class CustomerRepositoryEloquent extends BaseRepository implements CustomerRepository
 {
@@ -41,7 +37,7 @@ class CustomerRepositoryEloquent extends BaseRepository implements CustomerRepos
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
      * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
@@ -54,11 +50,11 @@ class CustomerRepositoryEloquent extends BaseRepository implements CustomerRepos
                 AllowedFilter::exact('email'),
                 AllowedFilter::callback('search', function (Builder $query, $value) {
                     $query->where(function (Builder $subquery) use ($value) {
-                        $subquery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                        $subquery->where('name', 'LIKE', '%'.$value.'%')
+                            ->orWhere('email', 'LIKE', '%'.$value.'%')
+                            ->orWhere('nif_number', 'LIKE', '%'.$value.'%');
                     });
-                })
+                }),
             ])
             ->where('tenant_id', Tenancy::getTenant()->id)
             ->jsonPaginate();

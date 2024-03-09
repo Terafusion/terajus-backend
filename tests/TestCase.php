@@ -34,7 +34,6 @@ abstract class TestCase extends BaseTestCase
     {
         $this->user = User::factory()->create();
 
-        // Verifica se o usuário deve estar associado a um tenant
         if ($this->shouldAssociateWithTenant()) {
             $tenant = Tenant::factory()->create();
             $this->user->tenant_id = $tenant->id;

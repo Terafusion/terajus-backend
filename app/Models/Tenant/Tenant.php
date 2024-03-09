@@ -1,19 +1,18 @@
 <?php
 
-
 namespace App\Models\Tenant;
 
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User\User;
 use Tenancy\Identification\Concerns\AllowsTenantIdentification;
 use Tenancy\Identification\Contracts\Tenant as TenancyTenant;
 use Tenancy\Tenant\Events;
 
-
 class Tenant extends Model implements TenancyTenant
 {
     use HasFactory;
+
     protected $fillable = ['name', 'user_id'];
 
     use AllowsTenantIdentification;
@@ -31,8 +30,6 @@ class Tenant extends Model implements TenancyTenant
 
     /**
      * The attribute of the Model to use for the key.
-     *
-     * @return string
      */
     public function getTenantKeyName(): string
     {
@@ -41,8 +38,6 @@ class Tenant extends Model implements TenancyTenant
 
     /**
      * The actual value of the key for the tenant Model.
-     *
-     * @return string|int
      */
     public function getTenantKey(): int|string
     {
@@ -51,8 +46,6 @@ class Tenant extends Model implements TenancyTenant
 
     /**
      * A unique identifier, eg class or table to distinguish this tenant Model.
-     *
-     * @return string
      */
     public function getTenantIdentifier(): string
     {

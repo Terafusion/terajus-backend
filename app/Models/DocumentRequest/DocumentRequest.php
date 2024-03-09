@@ -28,7 +28,7 @@ class DocumentRequest extends Model implements Transformable
      */
     protected $fillable = [
         'user_id',
-        'customer_id'
+        'customer_id',
     ];
 
     /**

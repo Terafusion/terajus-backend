@@ -3,10 +3,9 @@
 namespace App\Listeners;
 
 use Database\Seeders\EnvironmentSeeder;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use League\CommonMark\Environment\Environment;
 use Tenancy\Facades\Tenancy;
 
 class ConfigureTenantDatabase implements ShouldQueue

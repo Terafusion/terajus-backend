@@ -3,10 +3,8 @@
 namespace App\Services\Customer;
 
 use App\Models\Customer\Customer;
-use App\Models\User\User;
 use App\Repositories\Customer\CustomerRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Tenancy\Facades\Tenancy;
 
 class CustomerService
 {
@@ -17,7 +15,7 @@ class CustomerService
 
     /**
      * Get all registers
-     * 
+     *
      * @return LengthAwarePaginator
      */
     public function getAll()
@@ -27,8 +25,7 @@ class CustomerService
 
     /**
      * Store a new Customer resource
-     * 
-     * @param array $data
+     *
      * @return Customer
      */
     public function store(array $data)
@@ -38,9 +35,7 @@ class CustomerService
 
     /**
      * Update a Customer resource
-     * 
-     * @param array $data
-     * @param Customer $customer
+     *
      * @return Customer
      */
     public function update(array $data, Customer $customer)

@@ -25,8 +25,6 @@ class AuthController extends Controller
 
     /**
      * Register and login user
-     * 
-     * @param SignupRequest $request
      */
     public function centralSignUp(SignUpRequest $request)
     {

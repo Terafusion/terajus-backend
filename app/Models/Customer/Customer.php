@@ -12,8 +12,6 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Customer.
- *
- * @package namespace App\Models\Customer;
  */
 class Customer extends Model implements Transformable
 {
@@ -29,7 +27,7 @@ class Customer extends Model implements Transformable
         'person_type',
         'registration_number',
         'marital_status',
-        'occupation'
+        'occupation',
     ];
 
     public function user(): BelongsTo

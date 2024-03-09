@@ -4,7 +4,6 @@ namespace App\Rules;
 
 use App\Models\Customer\Customer;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Gate;
 
 class TenantCustomer implements Rule
 {
@@ -26,7 +25,7 @@ class TenantCustomer implements Rule
         $customer = Customer::find($value);
 
         // Verifica se o modelo foi encontrado
-        if (!$customer) {
+        if (! $customer) {
             return false;
         }
 
@@ -44,5 +43,3 @@ class TenantCustomer implements Rule
         return 'O cliente não pertence ao tenant atual.';
     }
 }
-
-

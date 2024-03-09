@@ -14,6 +14,7 @@ class CustomerPolicy
     {
         return $customer->tenant_id === $user->tenant_id;
     }
+
     public function update(User $user, Customer $customer)
     {
         return $customer->tenant_id === $user->tenant_id;

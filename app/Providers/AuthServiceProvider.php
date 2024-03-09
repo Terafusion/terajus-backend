@@ -6,14 +6,9 @@ namespace App\Providers;
 
 use App\Models\Customer\Customer;
 use App\Models\LegalCase\LegalCase;
-use App\Policies\LegalCasePolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Models\User\User;
 use App\Policies\CustomerPolicy;
 use App\Policies\LegalCasePolicy;
-use Illuminate\Support\Facades\Route;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;use Laravel\Passport\Passport;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

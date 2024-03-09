@@ -2,21 +2,15 @@
 
 namespace Tests\Feature\Address;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-
 use App\Models\Address\Address;
 use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class AddressFeatureTest extends TestCase
 {
     use RefreshDatabase;
-
-    /** @var User */
-    private $user;
 
     /**
      * @return void
@@ -24,8 +18,6 @@ class AddressFeatureTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
-        Passport::actingAs($this->user);
     }
 
     /**

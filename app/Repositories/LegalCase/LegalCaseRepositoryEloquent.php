@@ -11,9 +11,6 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Tenancy\Facades\Tenancy;
 
 /**
  * Class LegalCaseRepositoryEloquent.
@@ -100,9 +97,9 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return AllowedFilter::callback('professional', function (Builder $query, $value) {
             $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
                 $userSubQuery->where(function (Builder $userQuery) use ($value) {
-                    $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                        ->orWhere('email', 'LIKE', '%' . $value . '%')
-                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                    $userQuery->where('name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('email', 'LIKE', '%'.$value.'%')
+                        ->orWhere('nif_number', 'LIKE', '%'.$value.'%');
                 })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
                     $participantsUserRoleSubQuery->where('name', 'lawyer');
                 });

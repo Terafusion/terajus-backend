@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User\User;
 use Closure;
 use Tenancy\Facades\Tenancy;
 

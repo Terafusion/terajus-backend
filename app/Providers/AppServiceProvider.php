@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->resolving(ResolvesTenants::class, function (ResolvesTenants $resolver) {
             $resolver->addModel(Tenant::class);
+
             return $resolver;
         });
 

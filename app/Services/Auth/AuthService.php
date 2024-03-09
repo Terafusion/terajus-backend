@@ -1,21 +1,15 @@
 <?php
 
-// app/Services/Auth/AuthService.php
-
 namespace App\Services\Auth;
 
-use App\Models\User\User;
 use App\Models\Tenant\Tenant;
-use App\Repositories\User\UserRepository;
+use App\Models\User\User;
 use App\Services\User\UserService;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Tenancy\Facades\Tenancy;
-use Tenancy\Identification\Events\Configuring;
 
 class AuthService
 {
-    public function __construct(private UserService $userService, private AddressService $addressService)
+    public function __construct(private UserService $userService)
     {
     }
 
@@ -44,13 +38,12 @@ class AuthService
 
     /**
      * Cria um novo tenant para advogado
-     * 
-     * @param User $user
+     *
      * @return void
      */
     private function createTenantForUser(User $user)
     {
-        $tenant = Tenant::create(['name' => $user->name . '\'s Tenant', 'user_id' => $user->id]);
+        $tenant = Tenant::create(['name' => $user->name.'\'s Tenant', 'user_id' => $user->id]);
         $this->userService->update(['is_tenant' => true, 'tenant_id' => $tenant->id], $user);
         Tenancy::setTenant($tenant);
     }

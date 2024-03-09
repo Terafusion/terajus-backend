@@ -4,7 +4,6 @@ namespace App\Services\User;
 
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Services\Address\AddressService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +27,7 @@ class UserService
 
     /**
      * Get all registers
-     * 
+     *
      * @return LengthAwarePaginator
      */
     public function getAll(User $user)

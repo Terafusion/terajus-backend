@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use Tenancy\Facades\Tenancy;
 use Spatie\QueryBuilder\QueryBuilder;
+use Tenancy\Facades\Tenancy;
 
 trait TenantScopeTrait
 {
