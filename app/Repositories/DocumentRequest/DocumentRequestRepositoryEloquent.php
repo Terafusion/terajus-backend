@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Tenancy\Facades\Tenancy;
 
 /**
  * Class DocumentRequestRepositoryEloquent.
@@ -39,28 +40,27 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /**
-     * Return build Eloquent query
-     *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @param User
-     * @return LengthAwarePaginator
-     */
-    private function queryBuilder($queryBuilder, $user)
+    private function queryBuilder($queryBuilder, User $user)
     {
-        return QueryBuilder::for($queryBuilder)
+        $query = QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
                 AllowedFilter::exact('user_id'),
                 AllowedFilter::exact('client_id'),
-            ])
-            ->when($user, function (Builder $query, $user) {
-                $query->where(function (Builder $subquery) use ($user) {
-                    $subquery->where('client_id', $user->id)
-                        ->orWhere('user_id', $user->id);
-                });
-            })
-            ->jsonPaginate();
+            ]);
+
+        // Verifica se o usuário tem tenant associado
+        if ($user->tenant_id !== null) {
+            $query->where('tenant_id', Tenancy::getTenant()->id);
+        } else {
+            // Adicione lógica para recuperar recursos baseados em outros relacionamentos,
+            // por exemplo, usando nif_number do usuário
+            $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
+                $customerQuery->where('nif_number', $user->nif_number);
+            });
+        }
+
+        return $query->jsonPaginate();
     }
 
     /**

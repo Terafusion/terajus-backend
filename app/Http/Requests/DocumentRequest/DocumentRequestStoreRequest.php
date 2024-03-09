@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\DocumentRequest;
 
+use App\Rules\TenantCustomer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DocumentRequestStoreRequest extends FormRequest
@@ -24,7 +25,7 @@ class DocumentRequestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id' => ['required', 'exists:users,id'],
+            'customer_id' => ['required', 'exists:customers,id', new TenantCustomer],
             'documents' => ['required', 'array'],
             'documents.*.document_type_id' => ['required', 'exists:document_types,id'],
             'documents.*.description' => ['nullable', 'string']

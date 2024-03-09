@@ -3,6 +3,7 @@
 namespace App\Http\Resources\DocumentRequest;
 
 use App\Enums\DocumentRequestStatusEnum;
+use App\Http\Resources\Customer\CustomerResource;
 use App\Http\Resources\DocumentType\DocumentTypeResource;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,7 +24,7 @@ class DocumentRequestResource extends JsonResource
             'user_id' => $this->user_id,
             'client_id' => $this->client_id,
             'user' => new UserResource($this->user),
-            'client' => new UserResource($this->client),
+            'customer' => new CustomerResource($this->customer),
             'requested_documents' => DocumentRequestDocResource::collection($this->whenLoaded('requestedDocuments')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

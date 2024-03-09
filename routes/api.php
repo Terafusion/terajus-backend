@@ -29,7 +29,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('customers', CustomerController::class)->middleware('identify.tenant');
     Route::apiResource('legal-cases', LegalCaseController::class)->middleware('identify.tenant');;
     Route::apiResource('evidences', EvidenceController::class)->middleware('identify.tenant');
-    Route::apiResource('document-requests', DocumentRequestController::class);
+    Route::apiResource('document-requests', DocumentRequestController::class)->middleware('identify.tenant');
     Route::apiResource('documents', DocumentController::class);
     Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
 });
