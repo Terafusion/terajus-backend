@@ -33,14 +33,36 @@ abstract class TestCase extends BaseTestCase
     private function associateUserWithTenant()
     {
         $this->user = User::factory()->create();
-        $tenant = Tenant::factory()->create();
 
-        $this->user->tenant_id = $tenant->id;
-        $this->user->is_tenant = true;
-        $this->user->save();
-        $this->user->refresh();
-        $this->user->assignRole(['lawyer']);
+        // Verifica se o usuário deve estar associado a um tenant
+        if ($this->shouldAssociateWithTenant()) {
+            $tenant = Tenant::factory()->create();
+            $this->user->tenant_id = $tenant->id;
+            $this->user->is_tenant = true;
+            $this->user->save();
+            $this->user->refresh();
+        }
+
         Passport::actingAs($this->user);
     }
-}
 
+    /**
+     * Determina se o usuário deve ou não estar associado a um tenant
+     *
+     * @return bool
+     */
+    private function shouldAssociateWithTenant()
+    {
+        return true;
+    }
+
+    /**
+     * Determina se o usuário deve ou não estar associado a uma role
+     *
+     * @return void
+     */
+    protected function assignRoles(mixed $roles, User $user)
+    {
+        $user->assignRole($roles);
+    }
+}

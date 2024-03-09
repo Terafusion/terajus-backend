@@ -2,6 +2,7 @@
 
 namespace App\Repositories\DocumentRequest;
 
+use App\Traits\TenantScopeTrait;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
@@ -22,6 +23,8 @@ use Tenancy\Facades\Tenancy;
  */
 class DocumentRequestRepositoryEloquent extends BaseRepository implements DocumentRequestRepository
 {
+    use TenantScopeTrait;
+
     /**
      * Specify Model class name
      *
@@ -46,19 +49,10 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
             ->allowedFilters([
                 'id',
                 AllowedFilter::exact('user_id'),
-                AllowedFilter::exact('client_id'),
+                AllowedFilter::exact('customer_id'),
             ]);
 
-        // Verifica se o usuário tem tenant associado
-        if ($user->tenant_id !== null) {
-            $query->where('tenant_id', Tenancy::getTenant()->id);
-        } else {
-            // Adicione lógica para recuperar recursos baseados em outros relacionamentos,
-            // por exemplo, usando nif_number do usuário
-            $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
-                $customerQuery->where('nif_number', $user->nif_number);
-            });
-        }
+        $this->applyTenantScope($query, $user);
 
         return $query->jsonPaginate();
     }
@@ -69,5 +63,12 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
     public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
+    }
+
+    protected function addAdditionalFilters(QueryBuilder $query, $user)
+    {
+        $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
+            $customerQuery->where('nif_number', $user->nif_number);
+        });
     }
 }

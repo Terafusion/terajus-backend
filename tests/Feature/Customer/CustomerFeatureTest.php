@@ -18,6 +18,8 @@ class CustomerFeatureTest extends TestCase
      */
     public function test_index_customers()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $customer = Customer::factory()->create(['name' => 'Customer1', 'tenant_id' => $this->user->tenant_id]);
         $this->get('api/customers')
             ->assertStatus(Response::HTTP_OK)
@@ -32,6 +34,8 @@ class CustomerFeatureTest extends TestCase
      */
     public function test_show_customer()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $customer = Customer::factory()->create(['name' => 'Customer2', 'tenant_id' => $this->user->tenant_id]);
         $this->get('api/customers/' . $customer->id)
             ->assertStatus(Response::HTTP_OK)
@@ -45,6 +49,8 @@ class CustomerFeatureTest extends TestCase
      */
     public function test_store_customer()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $this->post('api/customers', [
             'name' => 'Casado',
             'email' => 'tst@terafusion.com.br',
@@ -66,6 +72,8 @@ class CustomerFeatureTest extends TestCase
      */
     public function test_update_customer()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $customer = Customer::factory()->create(['name' => 'Customer3', 'tenant_id' => $this->user->tenant_id]);
         $this->put('api/customers/' . $customer->id, ['name' => 'UpdatedName'])
             ->assertStatus(Response::HTTP_OK)
@@ -79,6 +87,8 @@ class CustomerFeatureTest extends TestCase
      */
     public function test_delete_customer()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $customer = Customer::factory()->create(['name' => 'Customer4']);
         $this->delete('api/customers/' . $customer->id)
             ->assertStatus(Response::HTTP_OK)

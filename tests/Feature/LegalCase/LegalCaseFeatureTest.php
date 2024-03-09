@@ -30,6 +30,8 @@ class LegalCaseFeatureTest extends TestCase
      */
     public function test_store_legal_case()
     {
+        $this->assignRoles('lawyer', $this->user);
+
         $newPlaintiffUser = Customer::factory()->create(['tenant_id' => $this->user->tenant_id]);
         $newDeffendantUser = Customer::factory()->create(['tenant_id' => 1]);
 
@@ -64,6 +66,7 @@ class LegalCaseFeatureTest extends TestCase
 
     public function test_generate_complaint()
     {
+        $this->assignRoles('lawyer', $this->user);
         $legalCase = LegalCase::factory()->laborlawCase()->create();
         $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
         $evidence = Evidence::factory()->create(['legal_case_id' => $legalCase->id]);
@@ -106,6 +109,7 @@ class LegalCaseFeatureTest extends TestCase
 
     public function test_update_legal_case()
     {
+        $this->assignRoles('lawyer', $this->user);
         $legalCase = LegalCase::factory()->laborlawCase()->create(['tenant_id' => $this->user->tenant_id]);
         $oldPlaintiffUser = Customer::factory()->create(['tenant_id' => $this->user->tenant_id]);
         $newPlaintiffUser = Customer::factory()->create(['tenant_id' => $this->user->tenant_id]);

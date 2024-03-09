@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Customer\Customer;
+use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\LegalCase\LegalCase;
 use App\Models\Tenant\Tenant;
 use App\Observers\TenantObserver;
@@ -36,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Customer::observe(TenantObserver::class);
         LegalCase::observe(TenantObserver::class);
+        DocumentRequest::observe(TenantObserver::class);
     }
 }
