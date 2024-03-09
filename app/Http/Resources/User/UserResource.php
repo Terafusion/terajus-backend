@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Role\RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,6 +20,11 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'nif_number' => $this->nif_number,
+            'marital_status' => $this->marital_status,
+            'registration_number' => $this->registration_number,
+            'occupation' => $this->occupation,
+            'address' => new AddressResource($this->address),
             'roles' =>  RoleResource::collection($this->roles),
             'occupation' => $this->occupation,
             'nif_number' => $this->nif_number,

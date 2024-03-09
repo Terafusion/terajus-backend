@@ -2,6 +2,8 @@
 
 namespace Database\Factories\User;
 
+use App\Models\Address\Address;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -28,7 +30,6 @@ class UserFactory extends Factory
             'marital_status' => 'SOLTEIRO',
             'occupation' => 'Advogado',
             'gender' => 'MALE',
-            'address' => 'Rua teste, 50, Alto, Itiúba, Bahia, 48850-000',
             'person_type' => 'PERSONAL'
         ];
     }
@@ -43,5 +44,12 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $user->id]);
+        });
     }
 }

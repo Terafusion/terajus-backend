@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Address\AddressController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Document\DocumentController;
 use App\Http\Controllers\DocumentRequest\DocumentRequestController;
@@ -26,6 +27,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('legal-cases', LegalCaseController::class);
     Route::apiResource('evidences', EvidenceController::class);
+    Route::apiResource('addresses', AddressController::class)->only(['index', 'show']);
     Route::apiResource('document-requests', DocumentRequestController::class);
     Route::apiResource('documents', DocumentController::class);
     Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');

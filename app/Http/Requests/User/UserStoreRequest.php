@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\ValidStateUF;
 use App\Rules\ValidRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
@@ -37,6 +38,16 @@ class UserStoreRequest extends FormRequest
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'role' => ['required', new ValidRole],
             'customer' => ['required', 'boolean']
+            'registration_number' => ['required'],
+            'address' => ['required', 'array'],
+            'address.street' => ['required', 'string', 'max:255'],
+            'address.number' => ['required', 'string', 'max:20'],
+            'address.district' => ['required', 'string', 'max:255'],
+            'address.city' => ['required', 'string', 'max:255'],
+            'address.state' => ['required', 'string', 'max:2', new ValidStateUF()],
+            'address.country' => ['required', 'string', 'max:255'],
+            'address.complement' => ['nullable', 'string', 'max:255'],
+            'address.zip_code' => ['required', 'string', 'max:10'],
         ];
     }
 }

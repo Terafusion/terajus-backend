@@ -5,14 +5,24 @@ namespace App\Services\User;
 use App\Models\User\User;
 use App\Repositories\CustomerProfessional\CustomerProfessionalRepository;
 use App\Repositories\User\UserRepository;
+use App\Services\Address\AddressService;
 use Illuminate\Support\Collection;
 
 class UserService
 {
-    public function __construct(
-        private UserRepository $userRepository,
-        private CustomerProfessionalRepository $customerProfessionalRepository
-    ) {
+    public function __construct(private UserRepository $userRepository, private AddressService $addressService)
+    {
+    }
+
+    /**
+     * Get an user instance by ID
+     * 
+     * @param User $user
+     * @return User
+     */
+    public function getById($user)
+    {
+        return $this->userRepository->find($user->id);
     }
 
     /**
@@ -34,14 +44,7 @@ class UserService
      */
     public function store(array $data, ?User $user = null)
     {
-        $createdUser = $this->userRepository->create($data);
-        $createdUser->assignRole($data['role']);
-
-        if (!is_null($user) && isset($data['customer']) && $data['customer'] === true) {
-            $this->customerProfessionalRepository->create(['customer_id' => $createdUser->id, 'professional_id' => $user->id]);
-        }
-
-        return $createdUser;
+        return $this->userRepository->create($data);
     }
 
     /**

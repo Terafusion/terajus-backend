@@ -2,9 +2,16 @@
 
 namespace Docs\Default\Schemas\User;
 
+use Docs\Default\Schemas\Address\AddressCreate;
 use OpenApi\Annotations as OA;
 
 /**
+ * @OA\Schema(required={
+ *  "name",
+ *  "email",
+ *  "person_type",
+ *  "nif_number",
+ *  "registration_number"}))
  * @OA\Schema(
  *  required={
  *      "name",

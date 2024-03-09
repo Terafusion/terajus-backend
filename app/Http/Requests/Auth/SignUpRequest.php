@@ -30,7 +30,6 @@ class SignUpRequest extends FormRequest
             'password' => ['required'],
             'nif_number' => ['required', 'unique:users,nif_number'],
             'occupation' => ['nullable'],
-            'address' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'role' => ['required', new ValidRole],
             'marital_status' => ['nullable'],

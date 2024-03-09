@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Address\Address;
 use App\Models\LegalCase\LegalCase;
 use App\Models\LegalCase\LegalCaseParticipant;
 use Illuminate\Auth\Authenticatable;
@@ -45,13 +46,17 @@ class User extends Model implements AuthAuthenticatable, Authorizable
         'marital_status',
         'occupation',
         'gender',
-        'address',
         'person_type',
     ];
 
     public function setPasswordAttribute($attribute)
     {
         $this->attributes['password'] = Hash::make($attribute);
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 
     public function professionals()
