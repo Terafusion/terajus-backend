@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
+use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -21,6 +22,8 @@ use Tenancy\Facades\Tenancy;
  */
 class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRepository
 {
+    use TenantScopeTrait;
+
     /**
      * Specify Model class name
      *
@@ -48,7 +51,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
      */
     private function queryBuilder($queryBuilder, $user)
     {
-        return QueryBuilder::for($queryBuilder)
+        $query = QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
                 AllowedFilter::exact('status'),
@@ -57,16 +60,24 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 AllowedFilter::exact('case_matter'),
                 $this->customerFilter(),
                 $this->professionalFilter()
-            ])->allowedSorts([
-                    'created_at',
-                ])
-                ->where('tenant_id', Tenancy::getTenant()->id)
-                ->jsonPaginate();
+            ])
+            ->allowedSorts(['created_at']);
+
+        $this->applyTenantScope($query, $user);
+
+        return $query->jsonPaginate();
     }
 
     public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
+    }
+
+    protected function addAdditionalFilters(QueryBuilder $query, $user)
+    {
+        $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
+            $customerQuery->where('nif_number', $user->nif_number);
+        });
     }
 
     protected function customerFilter()
@@ -88,15 +99,15 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
     protected function professionalFilter()
     {
         return AllowedFilter::callback('professional', function (Builder $query, $value) {
-                $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
-                    $userSubQuery->where(function (Builder $userQuery) use ($value) {
-                        $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
-                    })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
-                        $participantsUserRoleSubQuery->where('name', 'lawyer');
-                    });
+            $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
+                $userSubQuery->where(function (Builder $userQuery) use ($value) {
+                    $userQuery->where('name', 'LIKE', '%' . $value . '%')
+                        ->orWhere('email', 'LIKE', '%' . $value . '%')
+                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
+                    $participantsUserRoleSubQuery->where('name', 'lawyer');
                 });
+            });
         });
     }
 }
