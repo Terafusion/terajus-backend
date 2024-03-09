@@ -13,12 +13,10 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class DocumentRequestDoc.
- *
- * @package namespace App\Models\DocumentRequestDoc;
  */
 class DocumentRequestDoc extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.

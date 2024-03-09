@@ -8,8 +8,6 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class LegalCaseProgress.
- *
- * @package namespace App\Models\LegalCase;
  */
 class LegalCaseProgress extends Model implements Transformable
 {
@@ -22,6 +20,6 @@ class LegalCaseProgress extends Model implements Transformable
      */
     protected $fillable = [
         'description',
-        'legal_case_id'
+        'legal_case_id',
     ];
 }

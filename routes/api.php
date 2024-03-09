@@ -27,7 +27,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('legal-cases', LegalCaseController::class);
     Route::apiResource('evidences', EvidenceController::class);
-    Route::apiResource('addresses', AddressController::class)->only(['index', 'show']);
+    Route::apiResource('addresses', AddressController::class);
     Route::apiResource('document-requests', DocumentRequestController::class);
     Route::apiResource('documents', DocumentController::class);
     Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');

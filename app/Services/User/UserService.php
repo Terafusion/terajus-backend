@@ -3,10 +3,10 @@
 namespace App\Services\User;
 
 use App\Models\User\User;
-use App\Repositories\CustomerProfessional\CustomerProfessionalRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\Address\AddressService;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -16,8 +16,8 @@ class UserService
 
     /**
      * Get an user instance by ID
-     * 
-     * @param User $user
+     *
+     * @param  User  $user
      * @return User
      */
     public function getById($user)
@@ -27,8 +27,8 @@ class UserService
 
     /**
      * Get all registers
-     * 
-     * @return Collection
+     *
+     * @return LengthAwarePaginator
      */
     public function getAll(User $user)
     {
@@ -37,21 +37,36 @@ class UserService
 
     /**
      * Store a new User resource
-     * 
-     * @param array $data
-     * @param User|null $user
+     *
+     * @param  User|null  $user
      * @return User
      */
-    public function store(array $data, ?User $user = null)
+    public function store(array $data, ?User $authUser = null)
     {
-        return $this->userRepository->create($data);
+        DB::beginTransaction();
+        try {
+            $user = $this->userRepository->create($data);
+            if (isset($data['role']) && ! empty($data['role'])) {
+                $user->assignRole($data['role']);
+            }
+            if (isset($data['address']) && ! empty($data['address'])) {
+                $data['address']['addressable_type'] = User::class;
+                $data['address']['addressable_id'] = $user->id;
+                $this->addressService->store($data['address'], $authUser);
+            }
+            DB::commit();
+
+            return $user;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            report($th);
+            throw $th;
+        }
     }
 
     /**
      * Update a User resource
-     * 
-     * @param array $data
-     * @param User $user
+     *
      * @return User
      */
     public function update(array $data, User $user)

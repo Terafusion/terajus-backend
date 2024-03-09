@@ -13,7 +13,7 @@ class DocumentTypeService
 
     /**
      * Get all registers
-     * 
+     *
      * @return Collection
      */
     public function getAll()

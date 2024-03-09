@@ -3,7 +3,6 @@
 namespace App\Http\Resources\DocumentRequest;
 
 use App\Enums\DocumentRequestStatusEnum;
-use App\Http\Resources\DocumentType\DocumentTypeResource;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 

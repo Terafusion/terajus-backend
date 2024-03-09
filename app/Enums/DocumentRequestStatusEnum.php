@@ -14,6 +14,8 @@ use BenSampo\Enum\Enum;
 final class DocumentRequestStatusEnum extends Enum
 {
     const PENDING = 'PENDING';
+
     const WAITING = 'WAITING';
+
     const COMPLETED = 'COMPLETED';
 }

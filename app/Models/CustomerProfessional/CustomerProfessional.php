@@ -9,13 +9,11 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class CustomerProfessional.
- *
- * @package namespace App\Models\CustomerProfessional;
  */
 class CustomerProfessional extends Model implements Transformable
 {
-    use TransformableTrait;
     use SoftDeletes;
+    use TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +22,6 @@ class CustomerProfessional extends Model implements Transformable
      */
     protected $fillable = [
         'customer_id',
-        'professional_id'
+        'professional_id',
     ];
-
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\User;
 
-use App\Rules\ValidStateUF;
 use App\Rules\ValidRole;
+use App\Rules\ValidStateUF;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
 
 class UserStoreRequest extends FormRequest
 {

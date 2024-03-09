@@ -13,8 +13,6 @@ class EnumRule implements Rule
 
     /**
      * Create a new rule instance.
-     *
-     * @param string $enumClass
      */
     public function __construct(string $enumClass)
     {
@@ -31,6 +29,7 @@ class EnumRule implements Rule
     public function passes($attribute, $value)
     {
         $enumValues = $this->enumClass::toArray();
+
         return in_array($value, $enumValues);
     }
 

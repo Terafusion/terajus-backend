@@ -2,16 +2,12 @@
 
 namespace App\Repositories\CustomerProfessional;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\CustomerProfessional\CustomerProfessionalRepository;
 use App\Models\CustomerProfessional\CustomerProfessional;
-use App\Validators\CustomerProfessionalValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class CustomerProfessionalRepositoryEloquent.
- *
- * @package namespace App\Repositories\CustomerProfessional;
  */
 class CustomerProfessionalRepositoryEloquent extends BaseRepository implements CustomerProfessionalRepository
 {
@@ -25,8 +21,6 @@ class CustomerProfessionalRepositoryEloquent extends BaseRepository implements C
         return CustomerProfessional::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -34,5 +28,4 @@ class CustomerProfessionalRepositoryEloquent extends BaseRepository implements C
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
 }

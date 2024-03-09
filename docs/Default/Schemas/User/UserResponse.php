@@ -2,6 +2,7 @@
 
 namespace Docs\Default\Schemas\User;
 
+use Illuminate\Database\Eloquent\Collection;
 use OpenApi\Annotations as OA;
 
 /**
@@ -64,7 +65,6 @@ class UserResponse
      *             type="string",
      *             example="api"
      *         )
-     *      
      *     )
      * )
      **/
@@ -148,7 +148,16 @@ class UserResponse
      *     description="User access token",
      *     example=null
      * )
-     * 
-     * */
+     */
     public ?string $access_token;
+
+    /**
+     * @OA\Property(
+     *     title="Addresses",
+     *     description="User addresses",
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/Address")
+     * )
+     */
+    public array $addresses;
 }

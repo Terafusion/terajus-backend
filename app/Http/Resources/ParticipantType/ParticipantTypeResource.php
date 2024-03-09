@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\ParticipantType;
 
-use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ParticipantTypeResource extends JsonResource
@@ -18,7 +17,7 @@ class ParticipantTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
         ];
     }
 }

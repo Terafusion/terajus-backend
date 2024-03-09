@@ -2,19 +2,16 @@
 
 namespace App\Repositories\DocumentType;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\DocumentType\DocumentTypeRepository;
 use App\Models\DocumentType\DocumentType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class DocumentTypeRepositoryEloquent.
- *
- * @package namespace App\Repositories\DocumentType;
  */
 class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentTypeRepository
 {
@@ -39,7 +36,7 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
      * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
@@ -48,12 +45,11 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%' . $value . '%');
-                    $query->orWhere('description', 'LIKE', '%' . $value . '%');
+                    $query->where('name', 'LIKE', '%'.$value.'%');
+                    $query->orWhere('description', 'LIKE', '%'.$value.'%');
                 }),
             ])->jsonPaginate();
     }
-
 
     /**
      * @return LengthAwarePaginator

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Document;
 
-use App\Enums\DocumentStatusEnum;
 use App\Http\Resources\DocumentType\DocumentTypeResource;
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;

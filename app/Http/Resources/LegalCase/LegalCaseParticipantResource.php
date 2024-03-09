@@ -21,7 +21,7 @@ class LegalCaseParticipantResource extends JsonResource
             'user_id' => $this->user_id,
             'participant_type_id' => $this->participant_type_id,
             'participant_type' => $this->participantType,
-            'user' => new UserResource($this->user)
+            'user' => new UserResource($this->user),
         ];
     }
 }

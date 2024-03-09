@@ -14,9 +14,6 @@ class DocumentRequestDocService
 
     /**
      * Create a new Document Request Doc register
-     * 
-     * @param array $data
-     * @param int $documentRequestId
      */
     public function store(array $data, int $documentRequestId)
     {
@@ -31,7 +28,7 @@ class DocumentRequestDocService
 
     /**
      * Get all registers
-     * 
+     *
      * @return Collection
      */
     public function getAll()

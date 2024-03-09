@@ -2,16 +2,12 @@
 
 namespace App\Repositories\DocumentRequestDoc;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\DocumentRequestDoc\DocumentRequestDocRepository;
 use App\Models\DocumentRequestDoc\DocumentRequestDoc;
-use App\Validators\DocumentRequestDoc\DocumentRequestDocValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class DocumentRequestDocRepositoryEloquent.
- *
- * @package namespace App\Repositories\DocumentRequestDoc;
  */
 class DocumentRequestDocRepositoryEloquent extends BaseRepository implements DocumentRequestDocRepository
 {
@@ -25,8 +21,6 @@ class DocumentRequestDocRepositoryEloquent extends BaseRepository implements Doc
         return DocumentRequestDoc::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -34,5 +28,4 @@ class DocumentRequestDocRepositoryEloquent extends BaseRepository implements Doc
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
 }

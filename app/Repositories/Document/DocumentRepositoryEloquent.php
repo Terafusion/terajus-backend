@@ -2,22 +2,17 @@
 
 namespace App\Repositories\Document;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Document\DocumentRepository;
 use App\Models\Document\Document;
 use App\Models\User\User;
-use App\Validators\Document\DocumentValidator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class DocumentRepositoryEloquent.
- *
- * @package namespace App\Repositories\Document;
  */
 class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepository
 {
@@ -42,8 +37,7 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @param User $user
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
      * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder, User $user)
@@ -71,17 +65,11 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
             ->jsonPaginate();
     }
 
-    /**
-     * @return LengthAwarePaginator
-     */
     public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
     }
 
-    /**
-     * @return array
-     */
     private function getAdditionalFilters(User $user): array
     {
         return [

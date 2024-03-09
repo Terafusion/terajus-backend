@@ -9,8 +9,8 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class Address extends Model
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
-    
+    use HasFactory, SoftDeletes, TransformableTrait;
+
     protected $fillable = [
         'street',
         'number',
@@ -22,6 +22,7 @@ class Address extends Model
         'zip_code',
         'addressable_id',
         'addressable_type',
+        'user_id',
     ];
 
     public function addressable()

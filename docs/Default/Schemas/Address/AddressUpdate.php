@@ -15,18 +15,8 @@ use OpenApi\Annotations as OA;
  *
  * }))
  */
-class AddressCreate
+class AddressUpdate
 {
-    /**
-     * @OA\Property()
-     */
-    public string $addressable_type;
-    
-    /**
-     * @OA\Property()
-     */
-    public int $addressable_id;
-
     /**
      * @OA\Property()
      */

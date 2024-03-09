@@ -2,17 +2,16 @@
 
 namespace App\Repositories\Address;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface AddressRepository.
- *
- * @package namespace App\Repositories\Address;
  */
 interface AddressRepository extends RepositoryInterface
 {
-        /**
-     * @return Collection
+    /**
+     * @return LengthAwarePaginator
      */
     public function getAll();
 }

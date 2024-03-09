@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Evidence;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Evidence\EvidenceStoreRequest;
 use App\Services\Evidence\EvidenceService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class EvidenceController extends Controller
@@ -27,7 +26,6 @@ class EvidenceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  EvidenceStoreRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(EvidenceStoreRequest $request)
@@ -48,13 +46,14 @@ class EvidenceController extends Controller
 
     /**
      * Destroy an evidence
-     * 
-     * @param int $id
+     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $this->evidenceService->delete($id);
+
         return $this->showMessage('Success');
     }
 }

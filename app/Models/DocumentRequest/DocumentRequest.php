@@ -15,12 +15,10 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class DocumentRequest.
- *
- * @package namespace App\Models\DocumentRequest;
  */
 class DocumentRequest extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +27,7 @@ class DocumentRequest extends Model implements Transformable
      */
     protected $fillable = [
         'user_id',
-        'client_id'
+        'client_id',
     ];
 
     /**
@@ -44,8 +42,6 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Get the user associated with the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function user(): HasOne
     {
@@ -54,8 +50,6 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Get the user associated with the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function client(): HasOne
     {
@@ -64,8 +58,6 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Get all of the requestedDocuments for the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function requestedDocuments(): HasMany
     {

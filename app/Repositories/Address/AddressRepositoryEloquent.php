@@ -2,19 +2,15 @@
 
 namespace App\Repositories\Address;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Address\AddressRepository;
 use App\Models\Address\Address;
-use App\Validators\Address\AddressValidator;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class AddressRepositoryEloquent.
- *
- * @package namespace App\Repositories\Address;
  */
 class AddressRepositoryEloquent extends BaseRepository implements AddressRepository
 {
@@ -39,8 +35,8 @@ class AddressRepositoryEloquent extends BaseRepository implements AddressReposit
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Querybuilder
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -49,12 +45,11 @@ class AddressRepositoryEloquent extends BaseRepository implements AddressReposit
                 'id',
                 AllowedFilter::exact('addressable_type'),
                 AllowedFilter::exact('addressable_id'),
-            ])->get();
+            ])->jsonPaginate();
     }
 
-
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll()
     {

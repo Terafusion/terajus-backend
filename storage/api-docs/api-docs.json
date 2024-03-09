@@ -1621,6 +1621,12 @@
                     "zip_code"
                 ],
                 "properties": {
+                    "addressable_type": {
+                        "type": "string"
+                    },
+                    "addressable_id": {
+                        "type": "integer"
+                    },
                     "street": {
                         "type": "string"
                     },
@@ -1656,6 +1662,43 @@
                     "statusCode": {
                         "type": "integer",
                         "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressUpdate": {
+                "required": [
+                    "street",
+                    "number",
+                    "district",
+                    "city",
+                    "country",
+                    "zip_code"
+                ],
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -2583,6 +2626,14 @@
                         "type": "string",
                         "example": null,
                         "nullable": true
+                    },
+                    "addresses": {
+                        "title": "Addresses",
+                        "description": "User addresses",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Address"
+                        }
                     }
                 },
                 "type": "object",

@@ -2,17 +2,17 @@
 
 namespace App\Traits;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Exceptions\AuthenticationException as ExceptionsAuthenticationException;
+use Laravel\Passport\Exceptions\OAuthServerException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException;
-use Laravel\Passport\Exceptions\OAuthServerException;
-use Laravel\Passport\Exceptions\AuthenticationException as ExceptionsAuthenticationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 trait ApiExceptionHandlerTrait
@@ -52,11 +52,10 @@ trait ApiExceptionHandlerTrait
         return $this->generateResponse($exception->getMessage() ?? 'OAuth Server error', $exception->statusCode() ?? Response::HTTP_BAD_REQUEST);
     }
 
-
     private function generateResponse($message, $statusCode)
     {
         return response()->json([
-            'error' => $message
+            'error' => $message,
         ], $statusCode);
     }
 

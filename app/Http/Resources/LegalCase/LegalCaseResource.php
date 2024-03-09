@@ -28,7 +28,7 @@ class LegalCaseResource extends JsonResource
             'updated_at' => $this->updated_at,
             'user_id' => $this->user_id,
             'user' => new UserResource($this->user),
-            'participants' => LegalCaseParticipantResource::collection($this->participants)
+            'participants' => LegalCaseParticipantResource::collection($this->participants),
         ];
     }
 }

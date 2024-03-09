@@ -8,8 +8,6 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class DocumentType.
- *
- * @package namespace App\Models\DocumentType;
  */
 class DocumentType extends Model implements Transformable
 {

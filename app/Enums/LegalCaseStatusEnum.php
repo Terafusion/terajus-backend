@@ -14,6 +14,8 @@ use BenSampo\Enum\Enum;
 final class LegalCaseStatusEnum extends Enum
 {
     const DRAFT = 'DRAFT';
+
     const PENDING_PROTOCOL = 'PENDING_PROTOCOL';
+
     const COMPLAINT_GENERATION = 'COMPLAINT_GENERATION';
 }

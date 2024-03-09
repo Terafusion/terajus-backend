@@ -11,7 +11,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
@@ -20,17 +19,15 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
- * @package namespace App\Models\User;
  */
 class User extends Model implements AuthAuthenticatable, Authorizable
 {
-    use Authenticatable;
     use AccessAuthorizable;
-    use TransformableTrait;
-    use HasFactory;
+    use Authenticatable;
     use HasApiTokens;
+    use HasFactory;
     use HasRoles;
+    use TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +53,7 @@ class User extends Model implements AuthAuthenticatable, Authorizable
 
     public function address()
     {
-        return $this->morphOne(Address::class, 'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     public function professionals()
@@ -68,10 +65,10 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     {
         return $this->belongsToMany(User::class, 'customer_professionals', 'professional_id', 'customer_id');
     }
-    
-    public function checkHasPermission(string $name) : bool
+
+    public function checkHasPermission(string $name): bool
     {
-        return $this->roles->pluck('permissions')->flatten()->contains('name', $name);  
+        return $this->roles->pluck('permissions')->flatten()->contains('name', $name);
     }
 
     public function legalCases(): HasMany
@@ -83,5 +80,4 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     {
         return $this->hasMany(LegalCaseParticipant::class);
     }
-
 }

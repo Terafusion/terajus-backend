@@ -11,16 +11,15 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Evidence.
- *
- * @package namespace App\Models\Evidence;
  */
 class Evidence extends Model implements Transformable
 {
-    use TransformableTrait;
     use HasFactory;
     use SoftDeletes;
+    use TransformableTrait;
 
     protected $table = 'evidences';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,7 +28,7 @@ class Evidence extends Model implements Transformable
     protected $fillable = [
         'description',
         'legal_case_reference',
-        'legal_case_id'
+        'legal_case_id',
     ];
 
     public function documents()

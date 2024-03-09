@@ -29,7 +29,7 @@ class DocumentStoreRequest extends FormRequest
             'model_type' => ['required', 'string',  new ValidModelType],
             'model_id' => ['required', 'numeric'],
             'document_type_id' => ['nullable', 'numeric', 'exists:document_types,id'],
-            'description' => ['nullable', 'string']
+            'description' => ['nullable', 'string'],
         ];
     }
 }

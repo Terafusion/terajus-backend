@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User\User>
  */
 class UserFactory extends Factory
 {
@@ -41,7 +41,7 @@ class UserFactory extends Factory
      */
     public function unverified()
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -49,7 +49,7 @@ class UserFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (User $user) {
-            Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $user->id]);
+            Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $user->id, 'user_id' => $user->id]);
         });
     }
 }

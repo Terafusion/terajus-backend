@@ -24,13 +24,13 @@ class UserResource extends JsonResource
             'marital_status' => $this->marital_status,
             'registration_number' => $this->registration_number,
             'occupation' => $this->occupation,
-            'address' => AddressResource::collection($this->address),
-            'roles' =>  RoleResource::collection($this->roles),
+            'addresses' => AddressResource::collection($this->address),
+            'roles' => RoleResource::collection($this->roles),
             'gender' => $this->gender,
             'person_type' => $this->person_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null
+            'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null,
         ];
     }
 }

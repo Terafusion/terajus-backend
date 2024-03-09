@@ -29,7 +29,6 @@ class DocumentRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  DocumentRequestStoreRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(DocumentRequestStoreRequest $request)
@@ -40,7 +39,6 @@ class DocumentRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DocumentRequest\DocumentRequest $documentRequest
      * @return \Illuminate\Http\Response
      */
     public function show(DocumentRequest $documentRequest)
@@ -51,8 +49,6 @@ class DocumentRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  DocumentRequestUpdateRequest  $request
-     * @param  \App\Models\DocumentRequest\DocumentRequest  $documentRequest
      * @return \Illuminate\Http\Response
      */
     public function update(DocumentRequestUpdateRequest $request, DocumentRequest $documentRequest)
@@ -63,7 +59,6 @@ class DocumentRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DocumentRequest\DocumentRequest  $documentRequest
      * @return \Illuminate\Http\Response
      */
     public function destroy(DocumentRequest $documentRequest)

@@ -13,7 +13,7 @@ class JsonPaginate
         $response = $next($request);
 
         if (
-            !$response->exception
+            ! $response->exception
             && $response instanceof JsonResponse
             && $response->original instanceof LengthAwarePaginator
         ) {
