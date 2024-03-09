@@ -37,8 +37,6 @@ class UserStoreRequest extends FormRequest
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'role' => ['required', new ValidRole],
-            'customer' => ['required', 'boolean']
-            'registration_number' => ['required'],
             'address' => ['required', 'array'],
             'address.street' => ['required', 'string', 'max:255'],
             'address.number' => ['required', 'string', 'max:20'],
