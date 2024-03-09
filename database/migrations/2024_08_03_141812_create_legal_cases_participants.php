@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer_professionals', function (Blueprint $table) {
+        Schema::create('legal_case_participants', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('users');
-    
-            $table->unsignedBigInteger('professional_id');
-            $table->foreign('professional_id')->references('id')->on('users');
+            $table->unsignedBigInteger('legal_case_id');
+            $table->unsignedBigInteger('participant_type_id')->nullable();
+
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('legal_case_id')->references('id')->on('legal_cases');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_professional');
+        Schema::dropIfExists('legal_case_participants');
     }
 };

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Tenancy\Facades\Tenancy;
 
 class RoleTableSeeder extends Seeder
 {
@@ -16,19 +17,24 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
+        $tenantId = Tenancy::getTenant()->id;
+
         $lawyer = Role::firstOrCreate([
             'name' => 'lawyer',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId
         ]);
 
         $trainee = Role::firstOrCreate([
             'name' => 'trainee',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId
         ]);
 
         $customer = Role::firstOrCreate([
             'name' => 'customer',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId
         ]);
 
         $lawyer->syncPermissions(Permission::all());

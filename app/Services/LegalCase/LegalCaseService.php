@@ -90,7 +90,7 @@ class LegalCaseService
         foreach ($data as $participant) {
             $this->LegalCaseParticipantRepository->create([
                 'legal_case_id' => $legalCase->id,
-                'user_id' => $participant['user_id'],
+                'customer_id' => $participant['customer_id'],
                 'participant_type_id' => $participant['participant_type_id'],
             ]);
         }

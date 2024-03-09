@@ -54,15 +54,13 @@ class PromptService
 
     public function setPlaintiff(LegalCaseParticipant $value)
     {
-        $this->data['plaintiff'] = $value->user;
-
+        $this->data['plaintiff'] = $value->customer;
         return $this;
     }
 
     public function setDefendant(LegalCaseParticipant $value)
     {
-        $this->data['defendant'] = $value->user;
-
+        $this->data['defendant'] = $value->customer;
         return $this;
     }
 

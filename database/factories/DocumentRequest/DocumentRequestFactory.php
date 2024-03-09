@@ -2,6 +2,7 @@
 
 namespace Database\Factories\DocumentRequest;
 
+use App\Models\Customer\Customer;
 use App\Models\Evidence\Evidence;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +22,7 @@ class DocumentRequestFactory extends Factory
     {
         return [
             'user_id' => User::first()->id ?? User::factory()->create()->id,
-            'client_id' => ++User::first()->id ?? User::factory()->create()->id
+            'customer_id' => Customer::factory()->create()->id
         ];
     }
 }

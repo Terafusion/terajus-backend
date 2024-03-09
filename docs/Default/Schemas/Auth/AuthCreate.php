@@ -13,7 +13,8 @@ use OpenApi\Annotations as OA;
  *      "person_type",
  *      "role",
  *      "password",
- *      "password_confirmation"
+ *      "password_confirmation",
+ *      "create_tenant"
  *  }
  * )
  */
@@ -53,4 +54,9 @@ class AuthCreate
      * @OA\Property(minimum="8", maximum="25", contains="[A-Z],[#?!@$%&*=_]")
      */
     public string $password_confirmation;
+
+    /**
+     * @OA\Property(type="boolean")
+     */
+    public bool $create_tenant;
 }

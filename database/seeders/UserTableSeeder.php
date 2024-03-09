@@ -20,9 +20,6 @@ class UserTableSeeder extends Seeder
             'email' => 'advogado@terafusion.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Advogado',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
         ]);
@@ -32,9 +29,6 @@ class UserTableSeeder extends Seeder
             'email' => 'estagiario@terafusion.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Estagiário',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
 
@@ -45,12 +39,8 @@ class UserTableSeeder extends Seeder
             'email' => 'cliente@terafusion.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Engenheiro Civil',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
-
         ]);
 
         $plaintiff = User::factory()->create([
@@ -58,9 +48,6 @@ class UserTableSeeder extends Seeder
             'email' => 'pateste@terafusion.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Programador',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
 
@@ -70,12 +57,8 @@ class UserTableSeeder extends Seeder
             'email' => 'ppteste@terafusion.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Lavrador',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
-
         ]);
 
         $lawyer->syncRoles('lawyer');

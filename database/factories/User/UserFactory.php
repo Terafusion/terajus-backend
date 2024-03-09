@@ -26,9 +26,6 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'nif_number' => uniqid(),
-            'registration_number' => uniqid(),
-            'marital_status' => 'SOLTEIRO',
-            'occupation' => 'Advogado',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL'
         ];

@@ -20,7 +20,8 @@ class DocumentRequestDocFactory extends Factory
     public function definition()
     {
         return [
-            'document_type_id' => 1
+            'document_type_id' => 1,
+            'document_request_id' => 1
         ];
     }
 }

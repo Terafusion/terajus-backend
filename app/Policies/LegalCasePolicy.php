@@ -12,7 +12,7 @@ class LegalCasePolicy
 
     public function view(User $user, LegalCase $legalCase)
     {
-        if ($legalCase->user_id === $user->id) {
+        if ($legalCase->tenant_id === $user->tenant_id) {
             return true;
         }
 
@@ -26,6 +26,6 @@ class LegalCasePolicy
 
     public function update(User $user, LegalCase $legalCase)
     {
-        return $user->checkHasPermission('legal_case.update') && $legalCase->user_id === $user->id;
+        return $user->checkHasPermission('legal_case.update') && $legalCase->tenant_id === $user->tenant_id;
     }
 }

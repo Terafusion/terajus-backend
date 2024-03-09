@@ -15,7 +15,7 @@ class DocumentRequestCreate
     /**
      * @OA\Property()
      */
-    public int $user_id;
+    public int $customer_id;
 
     /**
      * @OA\Property(

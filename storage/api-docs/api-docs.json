@@ -225,7 +225,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User successfully authenticated",
+                        "description": "User successfully registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -317,6 +317,319 @@
                                     "example": {
                                         "message": "Internal Error"
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get all customers",
+                "operationId": "6be9b58625d057f8c50f2d9026c4c3b9",
+                "responses": {
+                    "200": {
+                        "description": "List of customers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomerResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Create a new customer",
+                "operationId": "3e94190c5255c53c7d77b95190eb2dde",
+                "requestBody": {
+                    "description": "Customer data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get a specific customer",
+                "operationId": "b0c81e9029f4906666697c599bd23733",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Update a customer",
+                "operationId": "6febbaac65daa2d90e99c3b4f9d822ae",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Customer data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Delete a customer",
+                "operationId": "06f5a2d23c46f5c95f0ac47668338d4e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
                                 }
                             }
                         }
@@ -1711,7 +2024,8 @@
                     "person_type",
                     "role",
                     "password",
-                    "password_confirmation"
+                    "password_confirmation",
+                    "create_tenant"
                 ],
                 "properties": {
                     "name": {
@@ -1744,6 +2058,9 @@
                         "maximum": "25",
                         "minimum": "8",
                         "contains": "[A-Z],[#?!@$%&*=_]"
+                    },
+                    "create_tenant": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -1850,6 +2167,117 @@
                     },
                     "code": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerCreate": {
+                "required": [
+                    "name",
+                    "email",
+                    "nif_number",
+                    "person_type",
+                    "marital_status",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF or CNPJ"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL"
+                    },
+                    "marital_status": {
+                        "type": "string",
+                        "example": "CASADO"
+                    },
+                    "password": {
+                        "type": "string",
+                        "maximum": "25",
+                        "minimum": "8",
+                        "contains": "[A-Z],[#?!@$%&*=_]"
+                    },
+                    "password_confirmation": {
+                        "type": "string",
+                        "maximum": "25",
+                        "minimum": "8",
+                        "contains": "[A-Z],[#?!@$%&*=_]"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/CustomerResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "occupation": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "nif_number": {
+                        "type": "string"
+                    },
+                    "registration_number": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "marital_status": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "gender": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "person_type": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerUpdate": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
                     }
                 },
                 "type": "object"
@@ -2209,6 +2637,14 @@
                 },
                 "type": "object"
             },
+            "ForbiddenError": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "LegalCase": {
                 "properties": {
                     "user_id": {
@@ -2388,6 +2824,14 @@
                 },
                 "type": "object"
             },
+            "NotFoundError": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "ParticipantTypeResource": {
                 "properties": {
                     "data": {
@@ -2439,6 +2883,14 @@
                         "example": []
                     },
                     "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UnauthenticatedError": {
+                "properties": {
+                    "message": {
                         "type": "string"
                     }
                 },
@@ -2646,6 +3098,23 @@
                     "name": {
                         "type": "string",
                         "maximum": "255"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidationError": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "object",
+                        "example": {
+                            "field_name": [
+                                "The 'field name' field is required.",
+                                "..."
+                            ]
+                        }
                     }
                 },
                 "type": "object"

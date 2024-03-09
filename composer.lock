@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14d51c2487d4021f4823b975bd081f78",
+    "content-hash": "c44691724fe7100dbc34898c32710084",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8447,6 +8447,74 @@
                 }
             ],
             "time": "2023-04-28T13:28:14+00:00"
+        },
+        {
+            "name": "tenancy/framework",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tenancy/framework.git",
+                "reference": "f2b90c4c7dd6a503ee486213473088929be852f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tenancy/framework/zipball/f2b90c4c7dd6a503ee486213473088929be852f2",
+                "reference": "f2b90c4c7dd6a503ee486213473088929be852f2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^9.0 | ^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tenancy\\Providers\\TenancyProvider"
+                    ],
+                    "aliases": {
+                        "Tenancy": "Tenancy\\Facades\\Tenancy"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tenancy\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arlon Antonius",
+                    "email": "opensource@arlon.dev",
+                    "homepage": "https://arlon.dev"
+                }
+            ],
+            "description": "Creating multi tenant saas from your Laravel app with ease",
+            "keywords": [
+                "aws",
+                "gce",
+                "laravel",
+                "multi-tenant",
+                "saas",
+                "tenancy"
+            ],
+            "support": {
+                "source": "https://github.com/tenancy/framework/tree/v2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/tenancy",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/tenancy",
+                    "type": "opencollective"
+                }
+            ],
+            "time": "2023-10-26T03:19:30+00:00"
         },
         {
             "name": "theseer/tokenizer",
