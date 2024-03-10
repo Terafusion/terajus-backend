@@ -3,6 +3,7 @@
 namespace App\Services\DocumentType;
 
 use App\Repositories\DocumentType\DocumentTypeRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class DocumentTypeService
@@ -14,7 +15,7 @@ class DocumentTypeService
     /**
      * Get all registers
      *
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll()
     {

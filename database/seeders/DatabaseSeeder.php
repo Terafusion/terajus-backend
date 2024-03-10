@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             TenantSeeder::class,
             PermissionTableSeeder::class,
             PassportSeeder::class,
+            LegalPleadingsTypesSeeder::class,
         ]);
     }
 }
