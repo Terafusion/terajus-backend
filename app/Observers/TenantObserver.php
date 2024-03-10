@@ -11,7 +11,7 @@ class TenantObserver
     {
         $tenant = Tenancy::getTenant();
         if ($tenant && is_null($model->tenant_id)) {
-            $model->tenant_id = $tenant->id;
+            $model->tenant_id = $tenant->id ?? config('terajus_default_tenant.id');
         }
     }
 }

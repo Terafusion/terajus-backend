@@ -35,5 +35,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\ParticipantType\ParticipantTypeRepository::class, \App\Repositories\ParticipantType\ParticipantTypeRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\Document\DocumentRepository::class, \App\Repositories\Document\DocumentRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\LegalPleadingType\LegalPleadingTypeRepository::class, \App\Repositories\LegalPleadingType\LegalPleadingTypeRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\LegalPleading\LegalPleadingRepository::class, \App\Repositories\LegalPleading\LegalPleadingRepositoryEloquent::class);
     }
 }

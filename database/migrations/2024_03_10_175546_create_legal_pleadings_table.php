@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('legal_case_id')->nullable();
             $table->unsignedBigInteger('tenant_id');
             $table->text('context');
-            $table->text('legal_pleading')->nullable();
+            $table->text('content')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('legal_case_id')->references('id')->on('legal_cases')->onDelete('set null');
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');

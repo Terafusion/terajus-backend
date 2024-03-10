@@ -8,6 +8,7 @@ use App\Http\Controllers\DocumentRequest\DocumentRequestController;
 use App\Http\Controllers\DocumentType\DocumentTypeController;
 use App\Http\Controllers\Evidence\EvidenceController;
 use App\Http\Controllers\LegalCase\LegalCaseController;
+use App\Http\Controllers\LegalPleading\LegalPleadingController;
 use App\Http\Controllers\LegalPleadingType\LegalPleadingTypeController;
 use App\Http\Controllers\ParticipantType\ParticipantTypeController;
 use App\Http\Controllers\User\UserController;
@@ -35,6 +36,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('documents', DocumentController::class);
     Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
     Route::apiResource('document-types', DocumentTypeController::class);
+    Route::apiResource('legal-pleadings', LegalPleadingController::class)->middleware('identify.tenant');;
     Route::apiResource('legal-pleading-types', LegalPleadingTypeController::class)->middleware('identify.tenant');;
     Route::apiResource('participant-types', ParticipantTypeController::class);
 });

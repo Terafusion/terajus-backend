@@ -2,12 +2,8 @@
 
 namespace Tests\Feature\LegalPleading;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-
-use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class LegalPleadingTypeFeatureTest extends TestCase
