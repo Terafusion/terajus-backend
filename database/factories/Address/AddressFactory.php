@@ -3,6 +3,7 @@
 namespace Database\Factories\Address;
 
 use App\Models\Address\Address;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,9 +24,12 @@ class AddressFactory extends Factory
             'district' => fake()->word,
             'city' => fake()->city,
             'state' => fake()->stateAbbr,
-            'country' => 'US', // Pode alterar para o país desejado
+            'country' => 'US',
             'complement' => fake()->sentence,
             'zip_code' => fake()->postcode,
+            'user_id' => User::first()->id ?? User::factory()->create()->id,
+            'addressable_type' => User::class,
+            'addressable_id' => User::first()->id,
         ];
     }
 }

@@ -20,6 +20,142 @@
         }
     ],
     "paths": {
+        "/addresses/{address_id}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get a address",
+                "operationId": "d38202733cba43beb13d908401e5d282",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Update a address",
+                "operationId": "3a3fc275921316149b50a1dbb2a8b4de",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddressUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/addresses": {
             "get": {
                 "tags": [
@@ -84,42 +220,41 @@
                         }
                     }
                 }
-            }
-        },
-        "/addresses/{address_id}": {
-            "get": {
+            },
+            "post": {
                 "tags": [
                     "Addresses"
                 ],
-                "summary": "Get a address",
-                "operationId": "d38202733cba43beb13d908401e5d282",
-                "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Bearer Token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "address_id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "summary": "Create a new address",
+                "operationId": "05a453bf0cc58d470d0aad1cb8d4ec26",
+                "requestBody": {
+                    "description": "Address data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddressCreate"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "Success",
+                    "201": {
+                        "description": "Created",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Address"
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
                                 }
                             }
                         }
@@ -1953,7 +2088,8 @@
                         "type": "string"
                     },
                     "state": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "BA"
                     },
                     "country": {
                         "type": "string"
@@ -2401,7 +2537,7 @@
                     "documents"
                 ],
                 "properties": {
-                    "user_id": {
+                    "customer_id": {
                         "type": "integer"
                     },
                     "documents": {

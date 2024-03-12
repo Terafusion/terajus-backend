@@ -48,7 +48,7 @@ class AddressCreate
     public string $city;
 
     /**
-     * @OA\Property()
+     * @OA\Property(example="BA")
      */
     public string $state;
 

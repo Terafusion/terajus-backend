@@ -53,6 +53,6 @@ class AddressController extends Controller
      */
     public function update(AddressUpdateRequest $request, int $id)
     {
-        return $this->showOne($this->addressService->update($request->validated(), $id), Response::HTTP_CREATED, AddressResource::class);
+        return $this->showOne($this->addressService->update($request->validated(), $id), Response::HTTP_OK, AddressResource::class);
     }
 }

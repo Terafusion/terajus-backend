@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        $tables = ['legal_cases', 'documents', 'document_requests', 'document_types', 'users', 'evidences', 'participant_types'];
+        $tables = ['legal_cases', 'documents', 'document_requests', 'document_types', 'users', 'evidences', 'participant_types', 'addresses'];
 
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
@@ -19,7 +19,7 @@ return new class extends Migration {
 
     public function down()
     {
-        $tables = ['roles', 'permissions', 'legal_cases', 'documents', 'document_requests', 'document_types'];
+        $tables = ['legal_cases', 'documents', 'document_requests', 'document_types', 'users', 'evidences', 'participant_types', 'addresses'];
 
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {

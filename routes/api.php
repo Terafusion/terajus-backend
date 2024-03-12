@@ -26,20 +26,30 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 |
 */
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('customers', CustomerController::class)->middleware('identify.tenant');
-    Route::apiResource('legal-cases', LegalCaseController::class)->middleware('identify.tenant');;
-    Route::apiResource('evidences', EvidenceController::class)->middleware('identify.tenant');
-    Route::apiResource('document-requests', DocumentRequestController::class)->middleware('identify.tenant');
-    Route::apiResource('documents', DocumentController::class);
-    Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
-    Route::apiResource('document-types', DocumentTypeController::class);
-    Route::apiResource('legal-pleadings', LegalPleadingController::class)->middleware('identify.tenant');;
-    Route::apiResource('legal-pleading-types', LegalPleadingTypeController::class)->middleware('identify.tenant');;
-    Route::apiResource('participant-types', ParticipantTypeController::class);
-});
-
 Route::post('/oauth/signup', [AuthController::class, 'signUp']);
 Route::post('/oauth/token', [AccessTokenController::class, 'issueToken']);
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::middleware('identify.tenant')->group(function () {
+        Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
+        Route::apiResource('users', UserController::class);
+        Route::apiResource('customers', CustomerController::class);
+
+        Route::apiResource('addresses', AddressController::class);
+        
+        Route::apiResource('legal-pleadings', LegalPleadingController::class);
+        Route::apiResource('legal-pleading-types', LegalPleadingTypeController::class);
+        
+        Route::apiResource('legal-cases', LegalCaseController::class);
+        
+        Route::apiResource('participant-types', ParticipantTypeController::class);
+        
+        Route::apiResource('evidences', EvidenceController::class);
+        
+        Route::apiResource('document-requests', DocumentRequestController::class);
+        
+        Route::apiResource('documents', DocumentController::class);
+        Route::apiResource('document-types', DocumentTypeController::class);
+        Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
+    });
+});
