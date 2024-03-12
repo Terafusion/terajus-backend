@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
 
 use App\Models\Customer\Customer;
 use App\Models\LegalCase\LegalCase;

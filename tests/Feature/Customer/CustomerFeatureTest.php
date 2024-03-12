@@ -89,7 +89,14 @@ class CustomerFeatureTest extends TestCase
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'Gabriel']);
 
-        $this->assertDatabaseHas('customers', ['tenant_id' => config('terajus.default_tenant.id'), 'nif_number' => '5496668777']);
+        $this->assertDatabaseHas(
+            'customers',
+            [
+                'tenant_id' => config('terajus.default_tenant.id'),
+                'nif_number' => '5496668777',
+                'user_id' => $this->user->id
+            ]
+        );
     }
 
     /**

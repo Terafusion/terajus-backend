@@ -33,7 +33,7 @@ class LegalCaseFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $newPlaintiffUser = Customer::factory()->create(['tenant_id' => $this->user->tenant_id]);
-        $newDeffendantUser = Customer::factory()->create(['tenant_id' => 1]);
+        $newDeffendantUser = Customer::factory()->create(['tenant_id' => 1, 'user_id' => $this->user->id]);
 
         $this->post('api/legal-cases', [
             'case_type' => 'Test case type',

@@ -35,7 +35,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        return $this->showOne($this->customerService->store($request->validated()), Response::HTTP_CREATED);
+        return $this->showOne($this->customerService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 
     /**

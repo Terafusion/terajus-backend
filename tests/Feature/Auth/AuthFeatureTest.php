@@ -31,6 +31,7 @@ class AuthFeatureTest extends TestCase
             'nif_number' => '123456789',
             'person_type' => 'PERSONAL',
             'create_tenant' => true,
+            'role' => 'lawyer'
         ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
 
         $this->assertNotNull($response['access_token']);
@@ -48,6 +49,7 @@ class AuthFeatureTest extends TestCase
             'nif_number' => '123456789',
             'person_type' => 'PERSONAL',
             'create_tenant' => false,
+            'role' => 'customer'
         ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
 
         $this->assertNotNull($response['access_token']);

@@ -73,12 +73,10 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
     private function getAdditionalFilters(User $user): array
     {
         return [
-            // Adicionar filtro para o criador do recurso
             AllowedFilter::callback('user_id', function (Builder $query, $value) use ($user) {
                 $query->where('user_id', $user->id);
             }),
 
-            // Adicionar filtro para o relacionamento com DocumentRequest
             AllowedFilter::callback('document_request', function (Builder $query) use ($user) {
                 $query->where('model_type', 'App\Models\DocumentRequest\DocumentRequest')
                     ->whereHas('documentRequest', function (Builder $documentRequestQuery) use ($user) {
