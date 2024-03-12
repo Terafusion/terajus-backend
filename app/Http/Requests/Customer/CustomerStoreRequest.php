@@ -34,7 +34,7 @@ class CustomerStoreRequest extends FormRequest
             'registration_number' => ['nullable', 'unique:users,registration_number'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
-            'tenant_id' => ['nullable', 'numeric', Rule::in(config('terajus.default_tenant.id'))],
+            'is_customer' => ['required', 'boolean'],
         ];
     }
 }

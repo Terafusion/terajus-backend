@@ -52,17 +52,44 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $this->post('api/customers', [
-            'name' => 'Casado',
-            'email' => 'tst@terafusion.com.br',
+            'name' => 'Gabriel',
+            'email' => 'tst@terajus.com.br',
             'password' => '12345678',
             'nif_number' => '5496668777',
             'role' => 'customer',
             'person_type' => 'PERSONAL',
             'marital_status' => 'CASADO',
-            'customer' => false
+            'is_customer' => true
         ])
             ->assertStatus(Response::HTTP_CREATED)
-            ->assertJsonFragment(['name' => 'Casado']);
+            ->assertJsonFragment(['name' => 'Gabriel']);
+
+        $this->assertDatabaseHas('customers', ['tenant_id' => $this->user->tenant_id, 'nif_number' => '5496668777']);
+    }
+
+    /**
+     * Test store a customer that not belongs to current tenant
+     *
+     * @return void
+     */
+    public function test_store_customer_that_not_belongs_to_current_tenant()
+    {
+        $this->assignRoles('lawyer', $this->user);
+
+        $this->post('api/customers', [
+            'name' => 'Gabriel',
+            'email' => 'tst@terajus.com.br',
+            'password' => '12345678',
+            'nif_number' => '5496668777',
+            'role' => 'customer',
+            'person_type' => 'PERSONAL',
+            'marital_status' => 'CASADO',
+            'is_customer' => false
+        ])
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonFragment(['name' => 'Gabriel']);
+
+        $this->assertDatabaseHas('customers', ['tenant_id' => config('terajus.default_tenant.id'), 'nif_number' => '5496668777']);
     }
 
     /**
