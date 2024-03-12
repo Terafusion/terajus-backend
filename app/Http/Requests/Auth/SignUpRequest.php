@@ -31,7 +31,7 @@ class SignUpRequest extends FormRequest
             'nif_number' => ['required', 'unique:users,nif_number'],
             'occupation' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
-            'role' => ['nullable', new ValidRole],
+            'role' => ['required', new ValidRole],
             'create_tenant' => ['required', 'boolean'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],

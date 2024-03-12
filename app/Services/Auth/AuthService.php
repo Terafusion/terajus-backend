@@ -25,6 +25,8 @@ class AuthService
 
             if (isset($data['create_tenant']) && $data['create_tenant'] === true) {
                 $this->createTenantForUser($user);
+            } else {
+                $this->userService->update(['tenant_id' => config('terajus.default_tenant.id')], $user);
             }
 
             $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;

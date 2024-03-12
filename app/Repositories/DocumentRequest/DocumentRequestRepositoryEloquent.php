@@ -45,9 +45,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
                 AllowedFilter::exact('user_id'),
                 AllowedFilter::exact('customer_id'),
             ]);
-
         $this->applyTenantScope($query, $user);
-
         return $query->jsonPaginate();
     }
 
@@ -58,7 +56,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
 
     protected function addAdditionalFilters(QueryBuilder $query, $user)
     {
-        $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
+        $query->orWhereHas('customer', function (Builder $customerQuery) use ($user) {
             $customerQuery->where('nif_number', $user->nif_number);
         });
     }

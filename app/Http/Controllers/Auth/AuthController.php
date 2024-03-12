@@ -22,12 +22,4 @@ class AuthController extends Controller
     {
         return $this->showOne($this->authService->signUp($request->validated()), Response::HTTP_OK, UserResource::class);
     }
-
-    /**
-     * Register and login user
-     */
-    public function centralSignUp(SignUpRequest $request)
-    {
-        return $this->showOne($this->authService->signUp($request->validated()), Response::HTTP_OK, UserCentralResource::class);
-    }
 }

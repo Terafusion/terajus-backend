@@ -22,7 +22,7 @@ class AuthFeatureTest extends TestCase
         $this->artisan('passport:install', ['-vvv' => true]);
     }
 
-    public function test_signUp()
+    public function test_signUp_new_tenant()
     {
         $response = $this->post('/api/oauth/signup', [
             'name' => 'test',
@@ -38,6 +38,22 @@ class AuthFeatureTest extends TestCase
         $user = User::where('email', 'emailtest@test.com')->first();
         $tenant = Tenant::find($user->tenant_id);
         $this->assertEquals($user->tenant_id, $tenant->id);
+    }
+    public function test_signUp_new_customer()
+    {
+        $response = $this->post('/api/oauth/signup', [
+            'name' => 'test',
+            'email' => 'emailtest@test.com',
+            'password' => '123454678',
+            'nif_number' => '123456789',
+            'person_type' => 'PERSONAL',
+            'create_tenant' => false,
+        ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
+
+        $this->assertNotNull($response['access_token']);
+
+        $user = User::where('email', 'emailtest@test.com')->first();
+        $this->assertEquals($user->tenant_id, config('terajus.default_tenant.id'));
     }
 
     public function test_login()
