@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'marital_status' => $this->marital_status,
             'registration_number' => $this->registration_number,
             'occupation' => $this->occupation,
-            'addresses' => AddressResource::collection($this->address),
+            'addresses' => AddressResource::collection($this->addresses),
             'roles' => RoleResource::collection($this->roles),
             'gender' => $this->gender,
             'person_type' => $this->person_type,

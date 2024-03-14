@@ -70,8 +70,10 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
 
     protected function addAdditionalFilters(QueryBuilder $query, $user)
     {
-        $query->whereHas('customer', function (Builder $customerQuery) use ($user) {
-            $customerQuery->where('nif_number', $user->nif_number);
+        $query->whereHas('participants', function (Builder $participantsSubQuery) use ($user) {
+            $participantsSubQuery->whereHas('customer', function (Builder $participantsUserSubQuery) use ($user) {
+                $participantsUserSubQuery->where('nif_number', $user->nif_number);
+            });
         });
     }
 
@@ -81,9 +83,9 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
             $query->whereHas('participants', function (Builder $participantsSubQuery) use ($value) {
                 $participantsSubQuery->whereHas('user', function (Builder $participantsUserSubQuery) use ($value) {
                     $participantsUserSubQuery->where(function (Builder $userQuery) use ($value) {
-                        $userQuery->where('name', 'LIKE', '%'.$value.'%')
-                            ->orWhere('email', 'LIKE', '%'.$value.'%')
-                            ->orWhere('nif_number', 'LIKE', '%'.$value.'%');
+                        $userQuery->where('name', 'LIKE', '%' . $value . '%')
+                            ->orWhere('email', 'LIKE', '%' . $value . '%')
+                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
                     })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
                         $participantsUserRoleSubQuery->where('name', 'customer');
                     });
@@ -97,9 +99,9 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return AllowedFilter::callback('professional', function (Builder $query, $value) {
             $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
                 $userSubQuery->where(function (Builder $userQuery) use ($value) {
-                    $userQuery->where('name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('email', 'LIKE', '%'.$value.'%')
-                        ->orWhere('nif_number', 'LIKE', '%'.$value.'%');
+                    $userQuery->where('name', 'LIKE', '%' . $value . '%')
+                        ->orWhere('email', 'LIKE', '%' . $value . '%')
+                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
                 })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
                     $participantsUserRoleSubQuery->where('name', 'lawyer');
                 });

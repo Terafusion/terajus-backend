@@ -2,6 +2,7 @@
 
 namespace App\Models\Customer;
 
+use App\Models\Address\Address;
 use App\Models\Tenant\Tenant;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,5 +39,10 @@ class Customer extends Model implements Transformable
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
     }
 }

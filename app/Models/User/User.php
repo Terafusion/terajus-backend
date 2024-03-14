@@ -67,7 +67,7 @@ class User extends Model implements AuthAuthenticatable, Authorizable
         $this->attributes['password'] = Hash::make($attribute);
     }
 
-    public function address()
+    public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');
     }

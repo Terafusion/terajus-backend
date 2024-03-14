@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Customer;
 
+use App\Http\Resources\Address\AddressResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
@@ -26,7 +27,7 @@ class CustomerResource extends JsonResource
             'person_type' => $this->person_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'access_token' => isset($this->getAppends()['access_token']) ? $this->getAppends()['access_token'] : null,
+            'addresses' => AddressResource::collection($this->addresses),
         ];
     }
 }

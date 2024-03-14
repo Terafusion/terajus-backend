@@ -4,6 +4,7 @@ namespace App\Repositories\Document;
 
 use App\Models\Document\Document;
 use App\Models\User\User;
+use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -16,6 +17,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepository
 {
+    use TenantScopeTrait;
     /**
      * Specify Model class name
      *
@@ -70,18 +72,14 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepos
         return $this->queryBuilder($this->model(), $user);
     }
 
-    private function getAdditionalFilters(User $user): array
+    protected function addAdditionalFilters(User $user): array
     {
         return [
-            AllowedFilter::callback('user_id', function (Builder $query, $value) use ($user) {
-                $query->where('user_id', $user->id);
-            }),
-
             AllowedFilter::callback('document_request', function (Builder $query) use ($user) {
                 $query->where('model_type', 'App\Models\DocumentRequest\DocumentRequest')
                     ->whereHas('documentRequest', function (Builder $documentRequestQuery) use ($user) {
                         $documentRequestQuery->where(function (Builder $subQuery) use ($user) {
-                            $subQuery->where('client_id', $user->id)
+                            $subQuery->where('customer', $user->id)
                                 ->orWhere('user_id', $user->id);
                         });
                     });
