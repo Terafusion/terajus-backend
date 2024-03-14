@@ -9,11 +9,11 @@ use OpenApi\Annotations as OA;
  *  required={
  *      "name",
  *      "email",
+ *      "password",
  *      "nif_number",
  *      "person_type",
  *      "marital_status",
- *      "password",
- *      "password_confirmation"
+ *      "is_customer"
  *  }
  * )
  */
@@ -45,12 +45,7 @@ class CustomerCreate
     public string $marital_status;
 
     /**
-     * @OA\Property(minimum="8", maximum="25", contains="[A-Z],[#?!@$%&*=_]")
+     * @OA\Property(type="boolean")
      */
-    public string $password;
-
-    /**
-     * @OA\Property(minimum="8", maximum="25", contains="[A-Z],[#?!@$%&*=_]")
-     */
-    public string $password_confirmation;
+    public bool $is_customer;
 }

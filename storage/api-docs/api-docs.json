@@ -2311,11 +2311,11 @@
                 "required": [
                     "name",
                     "email",
+                    "password",
                     "nif_number",
                     "person_type",
                     "marital_status",
-                    "password",
-                    "password_confirmation"
+                    "is_customer"
                 ],
                 "properties": {
                     "name": {
@@ -2337,17 +2337,8 @@
                         "type": "string",
                         "example": "CASADO"
                     },
-                    "password": {
-                        "type": "string",
-                        "maximum": "25",
-                        "minimum": "8",
-                        "contains": "[A-Z],[#?!@$%&*=_]"
-                    },
-                    "password_confirmation": {
-                        "type": "string",
-                        "maximum": "25",
-                        "minimum": "8",
-                        "contains": "[A-Z],[#?!@$%&*=_]"
+                    "is_customer": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
