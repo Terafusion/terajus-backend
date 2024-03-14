@@ -35,6 +35,10 @@ trait ApiExceptionHandlerTrait
             return $this->handleValidationException($exception);
         } elseif ($exception instanceof OAuthServerException) {
             return $this->handleOAuthServerException($exception);
+        } elseif ($this->isUniqueConstraintViolationException($exception)) {
+            $errorMessage = $exception->getMessage();
+            $constraintKey = $this->extractConstraintKey($errorMessage);
+            return $this->generateResponse("Unique constraint violation for key '$constraintKey'", Response::HTTP_CONFLICT);
         }
 
         return $this->generateResponse($exception->getMessage() ?? 'Server error', $exception->getCode() ?? Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -59,10 +63,16 @@ trait ApiExceptionHandlerTrait
         ], $statusCode);
     }
 
-    private function getHttpStatusCode(Throwable $exception)
+    private function isUniqueConstraintViolationException(Throwable $exception)
     {
-        $statusCode = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
+        // Verifica se a exceção é devido a uma violação de chave única (SQLSTATE[23000])
+        return $exception instanceof \Illuminate\Database\QueryException && $exception->getCode() == '23000';
+    }
 
-        return $statusCode;
+    private function extractConstraintKey(string $errorMessage)
+    {
+        // Extrai a chave da restrição única da mensagem de erro usando expressão regular
+        preg_match("/key '(.+?)'/", $errorMessage, $matches);
+        return $matches[1] ?? 'Unknown';
     }
 }
