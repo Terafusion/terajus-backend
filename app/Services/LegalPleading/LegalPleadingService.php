@@ -2,7 +2,6 @@
 
 namespace App\Services\LegalPleading;
 
-use App\Enums\LegalPleadingStatusEnum;
 use App\Models\LegalPleading\LegalPleading;
 use App\Models\User\User;
 use App\Repositories\LegalPleading\LegalPleadingRepository;

@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(required={
- * "case_type", 
+ * "case_type",
  * "case_matter",
  * "case_description"
  * }))
@@ -46,7 +46,9 @@ class LegalCaseCreate
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(
+     *
      *         @OA\Property(
      *             property="participant_type_id",
      *             type="integer",
@@ -56,6 +58,4 @@ class LegalCaseCreate
      * )
      */
     public array $participants;
-
-
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignUpRequest;
-use App\Http\Resources\User\UserCentralResource;
 use App\Http\Resources\User\UserResource;
 use App\Services\Auth\AuthService;
 use Illuminate\Http\Response;

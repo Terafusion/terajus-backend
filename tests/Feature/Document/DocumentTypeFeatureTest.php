@@ -4,10 +4,8 @@ namespace Tests\Feature\Document;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class DocumentTypeFeatureTest extends TestCase
@@ -16,7 +14,7 @@ class DocumentTypeFeatureTest extends TestCase
 
     /**
      * Test retrieve all documents and filters
-     * 
+     *
      * @return void
      */
     public function test_index_document_types()

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\DocumentRequest;
 
-use Tests\TestCase;
 use App\Models\Customer\Customer;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\DocumentRequestDoc\DocumentRequestDoc;
@@ -10,7 +9,7 @@ use App\Models\Tenant\Tenant;
 use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
+use Tests\TestCase;
 
 class DocumentRequestFeatureTest extends TestCase
 {
@@ -30,7 +29,7 @@ class DocumentRequestFeatureTest extends TestCase
             'documents' => [
                 ['document_type_id' => 1, 'description' => 'teste'],
                 ['document_type_id' => 4, 'description' => 'enviar docs'],
-            ]
+            ],
         ]);
 
         $response->assertStatus(Response::HTTP_CREATED)
@@ -45,9 +44,9 @@ class DocumentRequestFeatureTest extends TestCase
                 'created_at',
                 'updated_at',
             ]);
-    }    
+    }
 
-        /**
+    /**
      * Test store a document request when user is associated with a tenant
      *
      * @return void
@@ -56,10 +55,10 @@ class DocumentRequestFeatureTest extends TestCase
     {
         $tenant = Tenant::find(config('terajus.default_tenant.id'));
         $user = User::factory()->create(['tenant_id' => $tenant->id]);
-        
+
         $customer = Customer::factory()->create(['tenant_id' => $this->user->tenant_id]);
         $documentRequest = DocumentRequest::factory()->create(['user_id' => $this->user->id, 'tenant_id' => $this->user->tenant_id, 'customer_id' => $customer->id]);
-        
+
         $this->get('api/document-requests')->assertStatus(Response::HTTP_OK)->assertJsonFragment($documentRequest->toArray());
     }
 
@@ -77,13 +76,13 @@ class DocumentRequestFeatureTest extends TestCase
             'documents' => [
                 [
                     'document_type_id' => 1,
-                    'description' => 'teste'
+                    'description' => 'teste',
                 ],
                 [
                     'document_type_id' => 4,
-                    'description' => 'enviar docs'
-                ]
-            ]
+                    'description' => 'enviar docs',
+                ],
+            ],
         ]);
         $response->assertStatus(422);
     }
@@ -97,11 +96,11 @@ class DocumentRequestFeatureTest extends TestCase
     {
         $documentRequest = DocumentRequest::factory()->create(['tenant_id' => $this->user->tenant_id]);
         $documentRequestDoc = DocumentRequestDoc::factory()->create(['document_request_id' => $documentRequest->id]);
-        $response = $this->put('api/document-requests/' . $documentRequest->id, [
+        $response = $this->put('api/document-requests/'.$documentRequest->id, [
             'status' => 'COMPLETED',
             'document_request_docs' => [
-                ['id' => $documentRequestDoc->id, 'status' => 'COMPLETED']
-            ]
+                ['id' => $documentRequestDoc->id, 'status' => 'COMPLETED'],
+            ],
         ]);
 
         $response->assertStatus(Response::HTTP_OK)

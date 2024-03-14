@@ -2,9 +2,9 @@
 
 namespace Database\Factories\LegalPleading;
 
+use App\Models\LegalCase\LegalCase;
 use App\Models\LegalPleading\LegalPleading;
 use App\Models\LegalPleadingType\LegalPleadingType;
-use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

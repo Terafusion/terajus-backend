@@ -4,7 +4,6 @@ namespace App\Http\Controllers\LegalPleading;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LegalPleading\LegalPleadingStoreRequest;
-use App\Http\Requests\LegalPleading\LegalPleadingUpdateRequest;
 use App\Http\Resources\LegalPleading\LegalPleadingResource;
 use App\Models\LegalPleading\LegalPleading;
 use App\Services\LegalPleading\LegalPleadingService;

@@ -31,10 +31,11 @@ class CustomerService
      */
     public function store(array $data, User $user)
     {
-        if (!$data['is_customer']) {
+        if (! $data['is_customer']) {
             $data['tenant_id'] = config('terajus.default_tenant.id');
         }
         $data['user_id'] = $user->id;
+
         return $this->customerRepository->create($data);
     }
 

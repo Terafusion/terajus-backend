@@ -2,6 +2,6 @@
 
 return [
     'default_tenant' => [
-        'id' => env('APP_TENANT_DEFAULT_ID', 1)
+        'id' => env('APP_TENANT_DEFAULT_ID', 1),
     ],
 ];

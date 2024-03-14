@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Customer;
 
-use Tests\TestCase;
 use App\Models\Customer\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Tests\TestCase;
 
 class CustomerFeatureTest extends TestCase
 {
@@ -37,7 +37,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer2', 'tenant_id' => $this->user->tenant_id]);
-        $this->get('api/customers/' . $customer->id)
+        $this->get('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => $customer->name]);
     }
@@ -59,7 +59,7 @@ class CustomerFeatureTest extends TestCase
             'role' => 'customer',
             'person_type' => 'PERSONAL',
             'marital_status' => 'CASADO',
-            'is_customer' => true
+            'is_customer' => true,
         ])
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'Gabriel']);
@@ -84,7 +84,7 @@ class CustomerFeatureTest extends TestCase
             'role' => 'customer',
             'person_type' => 'PERSONAL',
             'marital_status' => 'CASADO',
-            'is_customer' => false
+            'is_customer' => false,
         ])
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'Gabriel']);
@@ -94,7 +94,7 @@ class CustomerFeatureTest extends TestCase
             [
                 'tenant_id' => config('terajus.default_tenant.id'),
                 'nif_number' => '5496668777',
-                'user_id' => $this->user->id
+                'user_id' => $this->user->id,
             ]
         );
     }
@@ -109,7 +109,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer3', 'tenant_id' => $this->user->tenant_id]);
-        $this->put('api/customers/' . $customer->id, ['name' => 'UpdatedName'])
+        $this->put('api/customers/'.$customer->id, ['name' => 'UpdatedName'])
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => 'UpdatedName']);
     }
@@ -124,7 +124,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer4']);
-        $this->delete('api/customers/' . $customer->id)
+        $this->delete('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['message' => 'Success']);
     }

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Laravel\Passport\ClientRepository;
 
-
 class PassportSeeder extends Seeder
 {
     /**

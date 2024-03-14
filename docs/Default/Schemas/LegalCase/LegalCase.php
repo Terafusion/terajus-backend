@@ -14,23 +14,26 @@ class LegalCase
      */
     public int $user_id;
 
-
     /**
      * @OA\Property()
      */
     public string $court;
+
     /**
      * @OA\Property()
      */
     public string $status;
+
     /**
      * @OA\Property()
      */
     public string $complaint;
+
     /**
      * @OA\Property()
      */
     public string $fields_of_law;
+
     /**
      * @OA\Property()
      */

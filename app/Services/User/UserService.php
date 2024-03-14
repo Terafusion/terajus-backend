@@ -71,7 +71,20 @@ class UserService
      */
     public function update(array $data, User $user)
     {
-        return $this->userRepository->update($data, $user->id);
+        DB::beginTransaction();
+        try {
+            if (isset($data['role']) && ! empty($data['role'])) {
+                $user->syncRoles($data['role']);
+            }
+            $user = $this->userRepository->update($data, $user->id);
+            DB::commit();
+
+            return $user;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            report($th);
+            throw $th;
+        }
     }
 
     public function getAllAccessibleUsers(User $user)

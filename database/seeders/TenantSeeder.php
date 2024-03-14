@@ -4,10 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Tenant\Tenant;
 use App\Models\User\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class TenantSeeder extends Seeder
 {
@@ -23,9 +21,9 @@ class TenantSeeder extends Seeder
             'email' => 'contato@terajus.com.br',
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
-            'person_type' => 'BUSINESS'
+            'person_type' => 'BUSINESS',
         ]);
 
-        $tenant = Tenant::create(['name' => $user->name . '\'s Tenant', 'user_id' => $user->id]);
+        $tenant = Tenant::create(['name' => $user->name.'\'s Tenant', 'user_id' => $user->id]);
     }
 }

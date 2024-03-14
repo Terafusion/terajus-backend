@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
         ]);
 
         $trainee = User::factory()->create([
@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
 
         ]);
 
@@ -40,7 +40,7 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
         ]);
 
         $plaintiff = User::factory()->create([
@@ -49,7 +49,7 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
 
         ]);
         $defendant = User::factory()->create([
@@ -58,7 +58,7 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
         ]);
 
         $lawyer->syncRoles('lawyer');

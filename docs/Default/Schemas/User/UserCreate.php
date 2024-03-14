@@ -2,7 +2,6 @@
 
 namespace Docs\Default\Schemas\User;
 
-use Docs\Default\Schemas\Address\AddressCreate;
 use OpenApi\Annotations as OA;
 
 /**
@@ -12,7 +11,6 @@ use OpenApi\Annotations as OA;
  *  "person_type",
  *  "nif_number",
  *  "registration_number"}))
- * 
  */
 class UserCreate
 {

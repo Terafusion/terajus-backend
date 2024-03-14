@@ -20,11 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('document_type_id')->nullable();
             $table->string('status')->nullable();
             $table->string('description')->nullable();
-            
+
             $table->foreign('document_request_id')->references('id')->on('document_requests');
             $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('document_type_id')->references('id')->on('document_types');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-
 use App\Models\Customer\Customer;
 use App\Models\LegalCase\LegalCase;
 use App\Policies\CustomerPolicy;

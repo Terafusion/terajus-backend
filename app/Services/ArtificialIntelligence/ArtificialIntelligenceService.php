@@ -24,7 +24,7 @@ class ArtificialIntelligenceService
 
     public function getComplaint(LegalCase $legalCase)
     {
-        if (!in_array(App::environment(), ['local', 'testing'])) {
+        if (! in_array(App::environment(), ['local', 'testing'])) {
             $response = $this->client->chat()->create([
                 'model' => 'gpt-4-turbo-preview',
                 'messages' => [

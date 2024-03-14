@@ -4,7 +4,6 @@ namespace App\Services\DocumentType;
 
 use App\Repositories\DocumentType\DocumentTypeRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class DocumentTypeService
 {

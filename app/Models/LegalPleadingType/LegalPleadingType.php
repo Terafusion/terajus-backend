@@ -9,12 +9,10 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class LegalPleadingType.
- *
- * @package namespace App\Models\LegalPleadingType;
  */
 class LegalPleadingType extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory;
+    use HasFactory, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -26,5 +24,4 @@ class LegalPleadingType extends Model implements Transformable
         'name',
         'description',
     ];
-
 }

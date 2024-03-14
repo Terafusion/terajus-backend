@@ -13,9 +13,6 @@ class AddressFeatureTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -23,7 +20,7 @@ class AddressFeatureTest extends TestCase
 
     /**
      * Test retrieve all addresses
-     * 
+     *
      * @return void
      */
     public function test_index_addresses()
@@ -34,14 +31,14 @@ class AddressFeatureTest extends TestCase
 
     /**
      * Test retrieve specific address
-     * 
+     *
      * @return void
      */
     public function test_show_address()
     {
         $user = User::factory()->create(['name' => 'test']);
         $address = Address::factory()->create(['addressable_type' => User::class, 'addressable_id' => $user->id, 'user_id' => $user->id]);
-        $this->get('api/addresses/' . $address->id)->assertStatus(Response::HTTP_OK)->assertJsonFragment(['street' => $address->street]);
+        $this->get('api/addresses/'.$address->id)->assertStatus(Response::HTTP_OK)->assertJsonFragment(['street' => $address->street]);
     }
 
     /**

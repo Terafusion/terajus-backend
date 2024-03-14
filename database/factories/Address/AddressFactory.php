@@ -2,7 +2,6 @@
 
 namespace Database\Factories\Address;
 
-use App\Models\Address\Address;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

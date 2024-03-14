@@ -2,20 +2,16 @@
 
 namespace App\Repositories\LegalPleadingType;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\LegalPleadingType\LegalPleadingTypeRepository;
 use App\Models\LegalPleadingType\LegalPleadingType;
-use App\Validators\LegalPleadingType\LegalPleadingTypeValidator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class LegalPleadingTypeRepositoryEloquent.
- *
- * @package namespace App\Repositories\LegalPleadingType;
  */
 class LegalPleadingTypeRepositoryEloquent extends BaseRepository implements LegalPleadingTypeRepository
 {
@@ -49,15 +45,12 @@ class LegalPleadingTypeRepositoryEloquent extends BaseRepository implements Lega
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%' . $value . '%');
-                    $query->orWhere('description', 'LIKE', '%' . $value . '%');
+                    $query->where('name', 'LIKE', '%'.$value.'%');
+                    $query->orWhere('description', 'LIKE', '%'.$value.'%');
                 }),
             ])->jsonPaginate();
     }
 
-    /**
-     * @return LengthAwarePaginator
-     */
     public function getAll(): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model());

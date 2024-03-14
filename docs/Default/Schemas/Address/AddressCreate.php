@@ -21,7 +21,7 @@ class AddressCreate
      * @OA\Property()
      */
     public string $addressable_type;
-    
+
     /**
      * @OA\Property()
      */

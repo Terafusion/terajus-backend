@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User\User;
 use App\Models\Tenant\Tenant;
+use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Laravel\Passport\Passport;
@@ -13,9 +13,6 @@ class AuthFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +28,7 @@ class AuthFeatureTest extends TestCase
             'nif_number' => '123456789',
             'person_type' => 'PERSONAL',
             'create_tenant' => true,
-            'role' => 'lawyer'
+            'role' => 'lawyer',
         ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
 
         $this->assertNotNull($response['access_token']);
@@ -40,6 +37,7 @@ class AuthFeatureTest extends TestCase
         $tenant = Tenant::find($user->tenant_id);
         $this->assertEquals($user->tenant_id, $tenant->id);
     }
+
     public function test_signUp_new_customer()
     {
         $response = $this->post('/api/oauth/signup', [
@@ -49,7 +47,7 @@ class AuthFeatureTest extends TestCase
             'nif_number' => '123456789',
             'person_type' => 'PERSONAL',
             'create_tenant' => false,
-            'role' => 'customer'
+            'role' => 'customer',
         ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
 
         $this->assertNotNull($response['access_token']);
@@ -67,10 +65,9 @@ class AuthFeatureTest extends TestCase
             'password' => '12345678',
             'grant_type' => 'password',
             'client_id' => $client->id,
-            'client_secret' => $client->secret
+            'client_secret' => $client->secret,
         ])->assertStatus(Response::HTTP_OK);
 
         $this->assertNotNull($response['refresh_token']);
     }
 }
-

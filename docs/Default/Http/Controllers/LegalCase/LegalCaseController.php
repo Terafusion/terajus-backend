@@ -11,41 +11,56 @@ class LegalCaseController
      *      tags={"Legal Cases"},
      *      path="/legal-cases",
      *      summary="Add a new Legal Case register",
+     *
      *      @OA\RequestBody(
      *          description="",
      *          required=true,
+     *
      *          @OA\JsonContent(ref="#/components/schemas/LegalCaseCreate"),
      *      ),
+     *
      *      @OA\Response(
      *          response=201,
      *          description="Success",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/LegalCaseResource")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=409,
      *          description="Conflict",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/RequestException")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=422,
      *          description="Invalid input",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/Unprocessable")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=500,
      *          description="Internal Error",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(
+     *
      *                  @OA\Property(
      *                      property="message",
      *                      type="string"
@@ -65,50 +80,66 @@ class LegalCaseController
      *      tags={"Legal Cases"},
      *      path="/legal-cases/{legal_case_id}",
      *      summary="Update a Legal Case",
+     *
      *      @OA\RequestBody(
      *          description="",
+     *
      *          @OA\JsonContent(ref="#/components/schemas/LegalCaseUpdate"),
      *      ),
+     *
      *      @OA\Parameter(
      *          in="header",
      *          name="Authorization",
      *          description="Bearer Token",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="string"
      *          )
      *      ),
+     *
      *      @OA\Parameter(
      *          in="path",
      *          name="legal_case_id",
      *          description="",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="integer"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/LegalCaseResource")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=422,
      *          description="Unprocessable Entity",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/Unprocessable")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=500,
      *          description="Internal Error",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(
+     *
      *                  @OA\Property(
      *                      property="message",
      *                      type="string"
@@ -128,29 +159,38 @@ class LegalCaseController
      *      tags={"Legal Cases"},
      *      path="/legal-cases",
      *      summary="Get all Legal Cases",
+     *
      *      @OA\Parameter(
      *          in="header",
      *          name="Authorization",
      *          description="Bearer Token",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="string"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/LegalCaseResource")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=500,
      *          description="Internal Error",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(
+     *
      *                  @OA\Property(
      *                      property="message",
      *                      type="string"
@@ -170,38 +210,49 @@ class LegalCaseController
      *      tags={"Legal Cases"},
      *      path="/legal-cases/{legal_case_id}",
      *      summary="Get a Legal Case",
+     *
      *      @OA\Parameter(
      *          in="header",
      *          name="Authorization",
      *          description="Bearer Token",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="string"
      *          )
      *      ),
+     *
      *      @OA\Parameter(
      *          in="path",
      *          name="legal_case_id",
      *          description="",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="integer"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(ref="#/components/schemas/LegalCase")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=500,
      *          description="Internal Error",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(
+     *
      *                  @OA\Property(
      *                      property="message",
      *                      type="string"

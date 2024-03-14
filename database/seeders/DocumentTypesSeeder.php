@@ -10,7 +10,7 @@ class DocumentTypesSeeder extends Seeder
 {
     public function run()
     {
-        $tenantId = Tenancy::getTenant()->id;
+        $tenantId = Tenancy::getTenant()->id ?? config('terajus.default_tenant.id');
         DB::table('document_types')->insert([
             ['tenant_id' => $tenantId, 'name' => 'CPF', 'description' => 'Cadastro de Pessoa Física'],
             ['tenant_id' => $tenantId, 'name' => 'RG', 'description' => 'Registro Geral'],

@@ -4,7 +4,6 @@ namespace Database\Factories\LegalCase;
 
 use App\Enums\LegalCaseParticipantTypeEnum;
 use App\Models\Customer\Customer;
-use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,7 @@ class LegalCaseParticipantFactory extends Factory
         return [
             'customer_id' => Customer::factory()->create()->id,
             'legal_case_id' => 1,
-            'participant_type_id' => 1
+            'participant_type_id' => 1,
         ];
     }
 
@@ -35,7 +34,7 @@ class LegalCaseParticipantFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'customer_id' => Customer::factory()->create(['name' => 'Parte Ativa Teste de Britto'])->id,
-            'participant_type_id' => LegalCaseParticipantTypeEnum::PLAINTIFF_ID
+            'participant_type_id' => LegalCaseParticipantTypeEnum::PLAINTIFF_ID,
         ]);
     }
 
@@ -48,7 +47,7 @@ class LegalCaseParticipantFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'customer_id' => Customer::factory()->create(['name' => 'Parte Passiva Teste da Silva'])->id,
-            'participant_type_id' => LegalCaseParticipantTypeEnum::DEFENDANT_ID
+            'participant_type_id' => LegalCaseParticipantTypeEnum::DEFENDANT_ID,
         ]);
     }
 }

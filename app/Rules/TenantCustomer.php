@@ -22,7 +22,7 @@ class TenantCustomer implements Rule
 
         $customer = Customer::find($value);
 
-        if (!$customer) {
+        if (! $customer) {
             return false;
         }
 

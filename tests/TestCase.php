@@ -7,7 +7,6 @@ use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Passport\Passport;
-use Tests\CreatesApplication;
 
 abstract class TestCase extends BaseTestCase
 {

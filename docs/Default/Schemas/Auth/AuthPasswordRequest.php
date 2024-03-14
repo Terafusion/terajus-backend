@@ -47,4 +47,3 @@ class AuthPasswordRequest
      */
     public string $refresh_token;
 }
-

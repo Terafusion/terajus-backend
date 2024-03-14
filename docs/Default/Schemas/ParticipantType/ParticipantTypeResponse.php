@@ -8,6 +8,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     title="ParticipantTypeResponse",
  *     description="ParticipantType resource representation",
+ *
  *     @OA\Xml(
  *         name="ParticipantTypeResponse"
  *     )

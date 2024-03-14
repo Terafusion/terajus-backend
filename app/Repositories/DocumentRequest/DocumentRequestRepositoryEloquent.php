@@ -46,6 +46,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
                 AllowedFilter::exact('customer_id'),
             ]);
         $this->applyTenantScope($query, $user);
+
         return $query->jsonPaginate();
     }
 

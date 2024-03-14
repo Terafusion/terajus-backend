@@ -1,0 +1,9 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        ".docker",
+        "storage",
+        "coverage-report",
+        "public"
+    ]
+}

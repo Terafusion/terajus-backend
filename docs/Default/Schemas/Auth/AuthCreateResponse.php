@@ -6,14 +6,14 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()
-*/
+ */
 class AuthCreateResponse
 {
     /**
      * @OA\Property()
      */
     public int $id;
-    
+
     /**
      * @OA\Property()
      */
@@ -29,4 +29,3 @@ class AuthCreateResponse
      */
     public string $email;
 }
-

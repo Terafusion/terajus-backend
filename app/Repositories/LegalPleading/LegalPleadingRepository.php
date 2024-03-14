@@ -7,8 +7,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface LegalPleadingRepository.
- *
- * @package namespace App\Repositories\LegalPleading;
  */
 interface LegalPleadingRepository extends RepositoryInterface
 {

@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'nif_number' => uniqid(),
             'gender' => 'MALE',
-            'person_type' => 'PERSONAL'
+            'person_type' => 'PERSONAL',
         ];
     }
 
@@ -38,7 +38,7 @@ class UserFactory extends Factory
      */
     public function unverified()
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

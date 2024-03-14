@@ -12,7 +12,7 @@ class LegalPleadingTypeFeatureTest extends TestCase
 
     /**
      * Test retrieve all legal_pleadings_types and filters
-     * 
+     *
      * @return void
      */
     public function test_index_legal_pleading_types()

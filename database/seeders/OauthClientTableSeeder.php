@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +24,7 @@ class OauthClientTableSeeder extends Seeder
                 'http://localhost',
                 1,
                 0,
-                0
+                0,
             ]
         );
 
@@ -40,7 +39,7 @@ class OauthClientTableSeeder extends Seeder
                 'http://localhost',
                 0,
                 1,
-                0
+                0,
             ]
         );
 

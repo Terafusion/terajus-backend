@@ -2,20 +2,16 @@
 
 namespace App\Repositories\LegalPleading;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\LegalPleading\LegalPleadingRepository;
 use App\Models\LegalPleading\LegalPleading;
-use App\Validators\LegalPleading\LegalPleadingValidator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class LegalPleadingRepositoryEloquent.
- *
- * @package namespace App\Repositories\LegalPleading;
  */
 class LegalPleadingRepositoryEloquent extends BaseRepository implements LegalPleadingRepository
 {
@@ -49,15 +45,12 @@ class LegalPleadingRepositoryEloquent extends BaseRepository implements LegalPle
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('search', function (Builder $query, $value) {
-                    $query->where('content', 'LIKE', '%' . $value . '%');
-                    $query->orWhere('context', 'LIKE', '%' . $value . '%');
+                    $query->where('content', 'LIKE', '%'.$value.'%');
+                    $query->orWhere('context', 'LIKE', '%'.$value.'%');
                 }),
             ])->jsonPaginate();
     }
 
-    /**
-     * @return LengthAwarePaginator
-     */
     public function getAll(): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model());

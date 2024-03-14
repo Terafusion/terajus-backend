@@ -3,7 +3,6 @@
 namespace Database\Factories\Customer;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer\Customer>
@@ -26,7 +25,7 @@ class CustomerFactory extends Factory
             'occupation' => 'Advogado',
             'gender' => 'MALE',
             'person_type' => 'PERSONAL',
-            'tenant_id' => 1
+            'tenant_id' => 1,
         ];
     }
 }
