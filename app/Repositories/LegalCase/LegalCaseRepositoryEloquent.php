@@ -52,9 +52,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('court'),
                 AllowedFilter::exact('case_type'),
-                AllowedFilter::exact('case_matter'),
-                $this->customerFilter(),
-                $this->professionalFilter(),
+                AllowedFilter::exact('case_matter')
             ])
             ->allowedSorts(['created_at']);
 
@@ -68,44 +66,10 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return $this->queryBuilder($this->model(), $user);
     }
 
-    protected function addAdditionalFilters(QueryBuilder $query, $user)
+    protected function addAdditionalFilters($query, $user)
     {
-        $query->whereHas('participants', function (Builder $participantsSubQuery) use ($user) {
-            $participantsSubQuery->whereHas('customer', function (Builder $participantsUserSubQuery) use ($user) {
-                $participantsUserSubQuery->where('nif_number', $user->nif_number);
-            });
-        });
-    }
-
-    protected function customerFilter()
-    {
-        return AllowedFilter::callback('customer', function (Builder $query, $value) {
-            $query->whereHas('participants', function (Builder $participantsSubQuery) use ($value) {
-                $participantsSubQuery->whereHas('user', function (Builder $participantsUserSubQuery) use ($value) {
-                    $participantsUserSubQuery->where(function (Builder $userQuery) use ($value) {
-                        $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
-                    })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
-                        $participantsUserRoleSubQuery->where('name', 'customer');
-                    });
-                });
-            });
-        });
-    }
-
-    protected function professionalFilter()
-    {
-        return AllowedFilter::callback('professional', function (Builder $query, $value) {
-            $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
-                $userSubQuery->where(function (Builder $userQuery) use ($value) {
-                    $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                        ->orWhere('email', 'LIKE', '%' . $value . '%')
-                        ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
-                })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
-                    $participantsUserRoleSubQuery->where('name', 'lawyer');
-                });
-            });
+        $query->orWhereHas('participants.customer', function (Builder $participantsUserSubQuery) use ($user) {
+            $participantsUserSubQuery->where('nif_number', $user->nif_number);
         });
     }
 }

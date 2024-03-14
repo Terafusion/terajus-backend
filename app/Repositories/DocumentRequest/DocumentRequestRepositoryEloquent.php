@@ -55,7 +55,7 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
         return $this->queryBuilder($this->model(), $user);
     }
 
-    protected function addAdditionalFilters(QueryBuilder $query, $user)
+    protected function addAdditionalFilters($query, $user)
     {
         $query->orWhereHas('customer', function (Builder $customerQuery) use ($user) {
             $customerQuery->where('nif_number', $user->nif_number);

@@ -2,9 +2,11 @@
 
 namespace App\Repositories\DocumentType;
 
+
 use App\Models\DocumentType\DocumentType;
+use App\Models\User\User;
+use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -15,6 +17,8 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentTypeRepository
 {
+    use TenantScopeTrait;
+
     /**
      * Specify Model class name
      *
@@ -37,25 +41,36 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
      * Return build Eloquent query
      *
      * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
+     * @param User
      * @return LengthAwarePaginator
      */
-    private function queryBuilder($queryBuilder)
+    private function queryBuilder($queryBuilder, User $user)
     {
-        return QueryBuilder::for($queryBuilder)
+        $query = QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
-                AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%'.$value.'%');
-                    $query->orWhere('description', 'LIKE', '%'.$value.'%');
+                AllowedFilter::callback('name', function ($query, $value) {
+                    $query->where(function ($query) use ($value) {
+                        $query->where('name', 'LIKE', '%' . $value . '%')
+                            ->orWhere('description', 'LIKE', '%' . $value . '%');
+                    });
                 }),
-            ])->jsonPaginate();
+            ]);
+
+        $this->applyTenantScope($query, $user);
+
+        return $query->jsonPaginate();
     }
 
     /**
      * @return LengthAwarePaginator
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->queryBuilder($this->model());
+        return $this->queryBuilder($this->model(), $user);
+    }
+
+    protected function addAdditionalFilters($query, $user)
+    {
     }
 }

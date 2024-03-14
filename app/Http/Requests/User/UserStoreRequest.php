@@ -35,15 +35,15 @@ class UserStoreRequest extends FormRequest
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'role' => ['required', new ValidRole],
-            'address' => ['required', 'array'],
-            'address.street' => ['required', 'string', 'max:255'],
-            'address.number' => ['required', 'string', 'max:20'],
-            'address.district' => ['required', 'string', 'max:255'],
-            'address.city' => ['required', 'string', 'max:255'],
-            'address.state' => ['required', 'string', 'max:2', new ValidStateUF()],
-            'address.country' => ['required', 'string', 'max:255'],
+            'address' => ['nullable', 'array'],
+            'address.number' => ['required_with:address,!=,null', 'string', 'max:20'],
+            'address.street' => ['required_with:address,!=,null', 'string', 'max:255'],
+            'address.district' => ['required_with:address,!=,null', 'string', 'max:255'],
+            'address.city' => ['required_with:address,!=,null', 'string', 'max:255'],
+            'address.state' => ['required_with:address,!=,null', 'string', 'max:2', new ValidStateUF()],
+            'address.country' => ['required_with:address,!=,null', 'string', 'max:255'],
             'address.complement' => ['nullable', 'string', 'max:255'],
-            'address.zip_code' => ['required', 'string', 'max:10'],
+            'address.zip_code' => ['required_with:address,!=,null', 'string', 'max:10'],
         ];
     }
 }
