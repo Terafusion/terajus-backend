@@ -35,7 +35,7 @@ class SignUpRequest extends FormRequest
             'create_tenant' => ['required', 'boolean'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
-            'registration_number' => ['nullable', 'unique:users,registration_number'],
+            'registration_number' => ['nullable'],
         ];
     }
 }

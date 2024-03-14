@@ -32,7 +32,6 @@ class UserStoreRequest extends FormRequest
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'occupation' => ['nullable'],
             'nif_number' => ['required', 'unique:users,nif_number'],
-            'registration_number' => ['nullable', 'unique:users,registration_number'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
             'role' => ['required', new ValidRole],
