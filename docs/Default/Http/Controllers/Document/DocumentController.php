@@ -202,7 +202,7 @@ class DocumentController
     /**
      * @OA\Get(
      *      tags={"Documents"},
-     *      path="/documents/download/{document_id}",
+     *      path="/documents/{document_id}/download",
      *      summary="Download a document",
      *
      *      @OA\Parameter(

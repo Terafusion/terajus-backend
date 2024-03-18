@@ -50,6 +50,6 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('documents', DocumentController::class);
         Route::apiResource('document-types', DocumentTypeController::class);
-        Route::get('/documents/download/{document}', [DocumentController::class, 'download'])->name('documents.download');
+        Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
     });
 });

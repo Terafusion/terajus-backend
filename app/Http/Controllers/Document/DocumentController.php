@@ -46,23 +46,14 @@ class DocumentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(DocumentUpdateRequest $request, Document $document)
-    {
-        //return $this->showOne($this->documentService->update($request->validated(), $document->id), Response::HTTP_OK);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Document $document)
     {
-        //
+        $document->delete();
+        return $this->showMessage('Success');
     }
 
     public function download(Document $document)

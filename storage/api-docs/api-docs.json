@@ -960,13 +960,13 @@
                 }
             }
         },
-        "/documents/download/{document_id}": {
+        "/documents/{document_id}/download": {
             "get": {
                 "tags": [
                     "Documents"
                 ],
                 "summary": "Download a document",
-                "operationId": "8032991101c70a96474879624b9d4e80",
+                "operationId": "9e2665c6d4d9ceb5c79532faa60322ff",
                 "parameters": [
                     {
                         "name": "document_id",
