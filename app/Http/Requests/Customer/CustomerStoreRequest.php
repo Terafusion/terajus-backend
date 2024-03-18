@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Customer;
 
+use App\Rules\UniqueTenantNifNumber;
 use App\Rules\ValidStateUF;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +31,7 @@ class CustomerStoreRequest extends FormRequest
             'password' => ['required'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'occupation' => ['nullable'],
-            'nif_number' => ['required'],
+            'nif_number' => ['required', new UniqueTenantNifNumber],
             'registration_number' => ['nullable'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],

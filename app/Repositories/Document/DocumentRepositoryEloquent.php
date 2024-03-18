@@ -2,12 +2,11 @@
 
 namespace App\Repositories\Document;
 
+use App\Models\Document\Document;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\User\User;
-use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -16,7 +15,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 /**
  * Class DocumentRepositoryEloquent.
  */
-class DocumentRepositoryEloquent extends BaseRepository implements DocumentRequestRepository
+class DocumentRepositoryEloquent extends BaseRepository implements DocumentRepository
 {
     use TenantScopeTrait;
 
@@ -27,7 +26,7 @@ class DocumentRepositoryEloquent extends BaseRepository implements DocumentReque
      */
     public function model()
     {
-        return DocumentRequest::class;
+        return Document::class;
     }
 
     /**

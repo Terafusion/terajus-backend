@@ -19,10 +19,6 @@ return new class extends Migration {
         Schema::table('role_has_permissions', function (Blueprint $table) {
             $table->unique(['tenant_id', 'role_id', 'permission_id']);
         });
-
-        Schema::table('customers', function (Blueprint $table) {
-            $table->unique(['tenant_id', 'nif_number']);
-        });
     }
 
     /**
@@ -38,10 +34,6 @@ return new class extends Migration {
 
         Schema::table('role_has_permissions', function (Blueprint $table) {
             $table->dropUnique(['tenant_id', 'role_id', 'permission_id']);
-        });
-
-        Schema::table('customers', function (Blueprint $table) {
-            $table->dropUnique(['tenant_id', 'nif_number']);
         });
     }
 };
