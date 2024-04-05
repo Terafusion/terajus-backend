@@ -45,7 +45,7 @@ class ParticipantTypeRepositoryEloquent extends BaseRepository implements Partic
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('type', function (Builder $query, $value) {
-                    $query->where('type', 'LIKE', '%'.$value.'%');
+                    $query->where('type', 'ILIKE', '%'.$value.'%');
                 }),
             ])->jsonPaginate();
     }

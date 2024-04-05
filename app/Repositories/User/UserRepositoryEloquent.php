@@ -51,9 +51,9 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                 AllowedFilter::exact('email'),
                 AllowedFilter::callback('search', function (Builder $query, $value) {
                     $query->where(function (Builder $subquery) use ($value) {
-                        $subquery->where('name', 'LIKE', '%'.$value.'%')
-                            ->orWhere('email', 'LIKE', '%'.$value.'%')
-                            ->orWhere('nif_number', 'LIKE', '%'.$value.'%');
+                        $subquery->where('name', 'ILIKE', '%'.$value.'%')
+                            ->orWhere('email', 'ILIKE', '%'.$value.'%')
+                            ->orWhere('nif_number', 'ILIKE', '%'.$value.'%');
                     });
                 }),
                 AllowedFilter::callback('role', function (Builder $query, $value) {

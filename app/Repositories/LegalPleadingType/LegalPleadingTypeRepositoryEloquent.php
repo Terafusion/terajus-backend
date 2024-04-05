@@ -45,8 +45,8 @@ class LegalPleadingTypeRepositoryEloquent extends BaseRepository implements Lega
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('name', function (Builder $query, $value) {
-                    $query->where('name', 'LIKE', '%'.$value.'%');
-                    $query->orWhere('description', 'LIKE', '%'.$value.'%');
+                    $query->where('name', 'ILIKE', '%'.$value.'%');
+                    $query->orWhere('description', 'ILIKE', '%'.$value.'%');
                 }),
             ])->jsonPaginate();
     }

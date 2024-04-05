@@ -51,8 +51,8 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
                 'id',
                 AllowedFilter::callback('name', function ($query, $value) {
                     $query->where(function ($query) use ($value) {
-                        $query->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('description', 'LIKE', '%' . $value . '%');
+                        $query->where('name', 'ILIKE', '%' . $value . '%')
+                            ->orWhere('description', 'ILIKE', '%' . $value . '%');
                     });
                 }),
             ]);
