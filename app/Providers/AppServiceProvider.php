@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\UrlGenerator;
 use App\Models\Address\Address;
 use App\Models\Customer\Customer;
 use App\Models\Document\Document;

@@ -16,7 +16,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-.docker/mysql
+.docker
 /coverage-report/*
 /public/coverage-report/*
 
