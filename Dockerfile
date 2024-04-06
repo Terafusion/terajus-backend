@@ -16,14 +16,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY docker/nginx/laravel.conf /etc/nginx/nginx.conf
 
-# RUN cat /oauth-private.key > storage/oauth-private.key
-# RUN cat /oauth-public.key > storage/oauth-public.key
-
-# RUN --mount=type=secret,id=_env,dst=/etc/secrets/oauth-public.key cat /etc/secrets/oauth-public.key
-# RUN --mount=type=secret,id=_env,dst=/etc/secrets/oauth-public.key cat /etc/secrets/oauth-public.key
-
 RUN composer install
 RUN php artisan l5-swagger:generate
-
 
 EXPOSE 10000
