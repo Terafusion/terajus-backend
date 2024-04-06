@@ -22,4 +22,5 @@ COPY /etc/secrets/oauth-public.key storage/oauth-public.key
 RUN composer install
 RUN php artisan l5-swagger:generate
 
+
 EXPOSE 10000
