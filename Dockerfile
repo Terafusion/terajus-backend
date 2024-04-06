@@ -23,6 +23,6 @@ COPY . .
 RUN composer install --no-dev
 
 ## CONTAINER STARTUP SETTINGS
-EXPOSE 9001
+EXPOSE 10000
 
 CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
