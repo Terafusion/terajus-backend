@@ -17,7 +17,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 COPY docker/nginx/laravel.conf /etc/nginx/nginx.conf
 
 COPY /etc/secrets/oauth-private.key storage/oauth-private.key
-COPY /etc/secrets/oauth-public.key storage/oauth-public.key
 
 RUN composer install
 RUN php artisan l5-swagger:generate
