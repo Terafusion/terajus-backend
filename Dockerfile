@@ -16,7 +16,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY docker/nginx/laravel.conf /etc/nginx/nginx.conf
 
-RUN composer install --no-dev
+RUN composer install
 RUN php artisan l5-swagger:generate
 
 EXPOSE 10000
