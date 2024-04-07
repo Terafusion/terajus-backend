@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/tests-report', function () {
-    return redirect('coverage-report/index.html');
+    return redirect('/coverage-report/index.html');
+});
+Route::get('/', function () {
+
+    return view('welcome');
 });

@@ -20,6 +20,266 @@
         }
     ],
     "paths": {
+        "/addresses/{address_id}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get a address",
+                "operationId": "d38202733cba43beb13d908401e5d282",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Address"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Update a address",
+                "operationId": "3a3fc275921316149b50a1dbb2a8b4de",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddressUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get all addresses",
+                "operationId": "0e5fa5101f48745d2ddeb847fb288689",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "addressable_type",
+                                    "addressable_id"
+                                ]
+                            },
+                            "example": "filter[addressable_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Create a new address",
+                "operationId": "05a453bf0cc58d470d0aad1cb8d4ec26",
+                "requestBody": {
+                    "description": "Address data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddressCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/oauth/token": {
             "post": {
                 "tags": [
@@ -100,7 +360,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User successfully authenticated",
+                        "description": "User successfully registered",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -174,6 +434,814 @@
                             "application/json": {
                                 "schema": {
                                     "example": []
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get all customers",
+                "operationId": "6be9b58625d057f8c50f2d9026c4c3b9",
+                "responses": {
+                    "200": {
+                        "description": "List of customers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomerResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Create a new customer",
+                "operationId": "3e94190c5255c53c7d77b95190eb2dde",
+                "requestBody": {
+                    "description": "Customer data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get a specific customer",
+                "operationId": "b0c81e9029f4906666697c599bd23733",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Update a customer",
+                "operationId": "6febbaac65daa2d90e99c3b4f9d822ae",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Customer data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Delete a customer",
+                "operationId": "06f5a2d23c46f5c95f0ac47668338d4e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthenticatedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get all documents",
+                "operationId": "3bb6692c870998d655997d2dce5e7258",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DocumentResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Create a new document",
+                "operationId": "ba17331ed8379eba8df472d9253f7c52",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{document_id}": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get a document",
+                "operationId": "b03f3d06d04fa8d435868ba8e8aef069",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Delete a document",
+                "operationId": "3b93985ffc1cc1dcd03a9a2301cba4d7",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{document_id}/download": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Download a document",
+                "operationId": "9e2665c6d4d9ceb5c79532faa60322ff",
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "description": "ID of the document",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success - File download"
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/document-requests": {
+            "post": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Add a new document request register",
+                "operationId": "63abf5f49277aa0231385f4570087706",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentRequestCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResource"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/document-requests/{document_request_id}": {
+            "get": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Get a document request",
+                "operationId": "74dcfbdc634d1872679d0908dc88810e",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "document_request_id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Document Requests"
+                ],
+                "summary": "Update a document request",
+                "operationId": "5d74165bfdf920a0e8f142aab71daa3d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "DocumentRequest ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentRequestUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentRequestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/document-types": {
+            "get": {
+                "tags": [
+                    "DocumentTypes"
+                ],
+                "summary": "Get all document types",
+                "operationId": "bd80cd5d9c0a1ece1d73f4a0a9834c7b",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "id",
+                                    "legal_case_id",
+                                    "description"
+                                ]
+                            },
+                            "example": "filter[legal_case_id]=2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentTypeResource"
                                 }
                             }
                         }
@@ -646,6 +1714,56 @@
                 }
             }
         },
+        "/participant-types": {
+            "get": {
+                "tags": [
+                    "ParticipantTypes"
+                ],
+                "summary": "Get all participant types",
+                "operationId": "685ab0e8da2206f83c7ba64224a36ae2",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by participant type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ParticipantTypeResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -903,14 +2021,147 @@
     },
     "components": {
         "schemas": {
+            "Address": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "addressable_id": {
+                        "type": "integer"
+                    },
+                    "addressable_type": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressCreate": {
+                "required": [
+                    "street",
+                    "number",
+                    "district",
+                    "city",
+                    "country",
+                    "zip_code"
+                ],
+                "properties": {
+                    "addressable_type": {
+                        "type": "string"
+                    },
+                    "addressable_id": {
+                        "type": "integer"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "BA"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "AddressUpdate": {
+                "required": [
+                    "street",
+                    "number",
+                    "district",
+                    "city",
+                    "country",
+                    "zip_code"
+                ],
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "complement": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "AuthCreate": {
                 "required": [
                     "name",
                     "email",
                     "nif_number",
                     "person_type",
+                    "role",
                     "password",
-                    "password_confirmation"
+                    "password_confirmation",
+                    "create_tenant"
                 ],
                 "properties": {
                     "name": {
@@ -928,6 +2179,10 @@
                         "type": "string",
                         "example": "PERSONAL || BUSINESS"
                     },
+                    "role": {
+                        "type": "string",
+                        "example": "lawyer || customer"
+                    },
                     "password": {
                         "type": "string",
                         "maximum": "25",
@@ -939,6 +2194,9 @@
                         "maximum": "25",
                         "minimum": "8",
                         "contains": "[A-Z],[#?!@$%&*=_]"
+                    },
+                    "create_tenant": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -1049,6 +2307,408 @@
                 },
                 "type": "object"
             },
+            "CustomerCreate": {
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "nif_number",
+                    "person_type",
+                    "marital_status",
+                    "is_customer"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF or CNPJ"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL"
+                    },
+                    "marital_status": {
+                        "type": "string",
+                        "example": "CASADO"
+                    },
+                    "is_customer": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/CustomerResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "occupation": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "nif_number": {
+                        "type": "string"
+                    },
+                    "registration_number": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "marital_status": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "gender": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "person_type": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerUpdate": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentCreate": {
+                "title": "Document Create",
+                "description": "Document creation schema",
+                "required": [
+                    "file",
+                    "model_type",
+                    "model_id"
+                ],
+                "properties": {
+                    "file": {
+                        "description": "File to be attached",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "description": {
+                        "description": "Description",
+                        "type": "string"
+                    },
+                    "model_type": {
+                        "description": "Model type associated with the document",
+                        "type": "string"
+                    },
+                    "model_id": {
+                        "description": "Model ID associated with the document",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentResource": {
+                "title": "Document Resource",
+                "description": "Document resource representation",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentResponse"
+                    },
+                    "statusCode": {
+                        "title": "Status Code",
+                        "description": "HTTP status code",
+                        "type": "integer",
+                        "example": 200
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentResponse": {
+                "title": "Document",
+                "description": "Document resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Document ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User ID associated with the document",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResource"
+                    },
+                    "document_type": {
+                        "$ref": "#/components/schemas/DocumentTypeResource"
+                    },
+                    "document_type_id": {
+                        "title": "Document Type ID",
+                        "description": "Document Type ID associated with the document",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "Document creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-24T22:40:33.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "Document update timestamp",
+                        "type": "string",
+                        "example": "2024-02-24T22:40:33.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequest": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "client_id": {
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestCreate": {
+                "required": [
+                    "user_id",
+                    "documents"
+                ],
+                "properties": {
+                    "customer_id": {
+                        "type": "integer"
+                    },
+                    "documents": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "document_type_id": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentRequestResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentRequestResponse": {
+                "title": "DocumentRequest",
+                "description": "DocumentRequest resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "DocumentRequest ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "description": "DocumentRequest status",
+                        "type": "string",
+                        "example": "PENDING"
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "User ID associated with the DocumentRequest",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "client_id": {
+                        "title": "Client ID",
+                        "description": "Client ID associated with the DocumentRequest",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    },
+                    "client": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    },
+                    "requested_documents": {
+                        "$ref": "#/components/schemas/DocumentRequestDoc"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "DocumentRequest creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-20T23:39:20.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "DocumentRequest update timestamp",
+                        "type": "string",
+                        "example": "2024-02-20T23:39:20.000000Z"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "DocumentRequest"
+                }
+            },
+            "DocumentRequestUpdate": {
+                "title": "DocumentRequestUpdate",
+                "description": "DocumentRequest update request representation",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "description": "DocumentRequest status",
+                        "type": "string",
+                        "example": "APPROVED",
+                        "nullable": true
+                    },
+                    "document_request_docs": {
+                        "title": "Document Request Docs",
+                        "description": "Array of document_request_docs with status",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 3
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "example": "COMPLETED"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "DocumentRequestUpdate"
+                }
+            },
+            "DocumentRequestDoc": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "document_id": {
+                        "type": "integer"
+                    },
+                    "document_request_id": {
+                        "type": "integer"
+                    },
+                    "document_type_id": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    },
+                    "document_type": {
+                        "$ref": "#/components/schemas/DocumentType"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentType": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "DocumentTypeResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DocumentType"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "Evidence": {
                 "properties": {
                     "id": {
@@ -1099,6 +2759,14 @@
                         "type": "integer"
                     },
                     "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ForbiddenError": {
+                "properties": {
+                    "message": {
                         "type": "string"
                     }
                 },
@@ -1165,8 +2833,16 @@
                         "type": "string"
                     },
                     "participants": {
-                        "type": "object",
-                        "example": "['participant_type_id' => '1 para parte ativa, 2 para parte passiva']"
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "participant_type_id": {
+                                    "type": "integer",
+                                    "example": "1 para parte ativa, 2 para parte passiva"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"
@@ -1275,6 +2951,55 @@
                 },
                 "type": "object"
             },
+            "NotFoundError": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ParticipantTypeResource": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/ParticipantTypeResponse"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "example": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ParticipantTypeResponse": {
+                "title": "ParticipantTypeResponse",
+                "description": "ParticipantType resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ParticipantType ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "ParticipantType type",
+                        "type": "string",
+                        "example": "Polo Ativo"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "ParticipantType creation timestamp",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ParticipantTypeResponse"
+                }
+            },
             "RequestException": {
                 "properties": {
                     "message": {
@@ -1285,6 +3010,14 @@
                         "example": []
                     },
                     "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UnauthenticatedError": {
+                "properties": {
+                    "message": {
                         "type": "string"
                     }
                 },
@@ -1321,7 +3054,10 @@
             "UserCreate": {
                 "required": [
                     "name",
-                    "email"
+                    "email",
+                    "person_type",
+                    "nif_number",
+                    "registration_number"
                 ],
                 "properties": {
                     "name": {
@@ -1331,6 +3067,27 @@
                     "email": {
                         "type": "string",
                         "maximum": "255"
+                    },
+                    "customer": {
+                        "type": "boolean"
+                    },
+                    "nif_number": {
+                        "type": "string",
+                        "example": "CPF or CNPJ"
+                    },
+                    "person_type": {
+                        "type": "string",
+                        "example": "PERSONAL || BUSINESS"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "lawyer || customer"
+                    },
+                    "password": {
+                        "type": "string",
+                        "maximum": "25",
+                        "minimum": "8",
+                        "contains": "[A-Z],[#?!@$%&*=_]"
                     }
                 },
                 "type": "object"
@@ -1338,7 +3095,7 @@
             "UserResource": {
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/UserResponse"
                     },
                     "statusCode": {
                         "type": "integer",
@@ -1347,11 +3104,144 @@
                 },
                 "type": "object"
             },
+            "UserResponse": {
+                "title": "User",
+                "description": "User resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "User ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "User's name",
+                        "type": "string",
+                        "example": "Casado"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "casado@terafusion.com.br"
+                    },
+                    "roles": {
+                        "title": "Roles",
+                        "description": "User roles",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": "3"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "customer"
+                                },
+                                "guard_name": {
+                                    "type": "string",
+                                    "example": "api"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "occupation": {
+                        "title": "Occupation",
+                        "description": "User's occupation",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "nif_number": {
+                        "title": "NIF Number",
+                        "description": "User's NIF number",
+                        "type": "string",
+                        "example": "54966687112"
+                    },
+                    "registration_number": {
+                        "title": "Registration Number",
+                        "description": "User's registration number",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "marital_status": {
+                        "title": "Marital Status",
+                        "description": "User's marital status",
+                        "type": "string",
+                        "example": "CASADO"
+                    },
+                    "gender": {
+                        "title": "Gender",
+                        "description": "User's gender",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "person_type": {
+                        "title": "Person Type",
+                        "description": "User's person type",
+                        "type": "string",
+                        "example": "PERSONAL"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "User creation timestamp",
+                        "type": "string",
+                        "example": "2024-02-18T19:53:30.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "User update timestamp",
+                        "type": "string",
+                        "example": "2024-02-18T19:53:30.000000Z"
+                    },
+                    "access_token": {
+                        "title": "Access Token",
+                        "description": "User access token",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "addresses": {
+                        "title": "Addresses",
+                        "description": "User addresses",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Address"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
             "UserUpdate": {
                 "properties": {
                     "name": {
                         "type": "string",
                         "maximum": "255"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidationError": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "object",
+                        "example": {
+                            "field_name": [
+                                "The 'field name' field is required.",
+                                "..."
+                            ]
+                        }
                     }
                 },
                 "type": "object"

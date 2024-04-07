@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\LegalCase;
 
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LegalCaseResource extends JsonResource
@@ -22,7 +23,12 @@ class LegalCaseResource extends JsonResource
             'pending_protocol' => $this->pending_protocol,
             'case_description' => $this->case_description,
             'case_requests' => $this->case_requests,
-            'complaint' => $this->complaint
+            'complaint' => $this->complaint,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'user_id' => $this->user_id,
+            'user' => new UserResource($this->user),
+            'participants' => LegalCaseParticipantResource::collection($this->participants),
         ];
     }
 }

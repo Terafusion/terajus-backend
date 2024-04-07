@@ -25,6 +25,7 @@ class Meta
     /**
      * @OA\Property(
      *  type="array",
+     *
      *  @OA\Items(
      *      type="object",
      *      ref="#/components/schemas/MetaLinks"

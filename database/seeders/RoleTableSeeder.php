@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role\Role;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Tenancy\Facades\Tenancy;
 
 class RoleTableSeeder extends Seeder
 {
@@ -16,23 +16,30 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $lawyer = Role::create([
+        $tenantId = Tenancy::getTenant()->id ?? config('terajus.default_tenant.id');
+
+        $lawyer = Role::firstOrCreate([
             'name' => 'lawyer',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId,
         ]);
 
-        $trainee = Role::create([
+        $trainee = Role::firstOrCreate([
             'name' => 'trainee',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId,
         ]);
 
-        $customer = Role::create([
+        $customer = Role::firstOrCreate([
             'name' => 'customer',
-            'guard_name' => 'api'
+            'guard_name' => 'api',
+            'tenant_id' => $tenantId,
         ]);
 
-        $lawyer->syncPermissions(Permission::all());
-        $trainee->givePermissionTo('legalCase.store');
+        $lawyer->givePermissionTo(Permission::all());
+
+        $trainee->givePermissionTo(['legal_case.store', 'legal_case.update', 'legal_case.protocol', 'user.store', 'user.update']);
+
         $customer->givePermissionTo('document.store');
     }
 }

@@ -4,22 +4,20 @@ namespace App\Services\User;
 
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
-use Illuminate\Support\Collection;
+use App\Services\Address\AddressService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private UserRepository $userRepository, private AddressService $addressService)
     {
-        $this->userRepository = $userRepository;
     }
 
     /**
      * Get an user instance by ID
-     * 
-     * @param User $user
+     *
+     * @param  User  $user
      * @return User
      */
     public function getById($user)
@@ -29,34 +27,68 @@ class UserService
 
     /**
      * Get all registers
-     * 
-     * @return Collection
+     *
+     * @return LengthAwarePaginator
      */
-    public function getAll()
+    public function getAll(User $user)
     {
-        return $this->userRepository->all();
+        return $this->userRepository->getAll($user);
     }
 
     /**
      * Store a new User resource
-     * 
-     * @param array $data
+     *
+     * @param  User|null  $user
      * @return User
      */
-    public function store(array $data)
+    public function store(array $data, ?User $authUser = null)
     {
-        return $this->userRepository->create($data);
+        DB::beginTransaction();
+        try {
+            $user = $this->userRepository->create($data);
+            if (isset($data['role']) && ! empty($data['role'])) {
+                $user->assignRole($data['role']);
+            }
+            if (isset($data['address']) && ! empty($data['address'])) {
+                $data['address']['addressable_type'] = User::class;
+                $data['address']['addressable_id'] = $user->id;
+                $this->addressService->store($data['address'], $authUser);
+            }
+            DB::commit();
+
+            return $user;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            report($th);
+            throw $th;
+        }
     }
 
     /**
      * Update a User resource
-     * 
-     * @param array $data
-     * @param User $user
+     *
      * @return User
      */
     public function update(array $data, User $user)
     {
-        return $this->userRepository->update($data, $user->id);
+        DB::beginTransaction();
+        try {
+            if (isset($data['role']) && ! empty($data['role'])) {
+                $user->syncRoles($data['role']);
+            }
+            $user = $this->userRepository->update($data, $user->id);
+            DB::commit();
+
+            return $user;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            report($th);
+            throw $th;
+        }
+    }
+
+    public function getAllAccessibleUsers(User $user)
+    {
+        return $this->userRepository->getAll($user);
     }
 }

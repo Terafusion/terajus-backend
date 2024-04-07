@@ -26,14 +26,14 @@ class EvidenceStoreRequest extends FormRequest
         return [
             'description' => ['required'],
             'legal_case_id' => ['required', 'exists:legal_cases,id'],
-            'legal_case_reference' => ['nullable']
+            'legal_case_reference' => ['nullable'],
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            'legal_case_reference' => uniqid()
+            'legal_case_reference' => uniqid(),
         ]);
     }
 }

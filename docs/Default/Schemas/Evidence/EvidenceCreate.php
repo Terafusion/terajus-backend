@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(required={
- * "legal_case_id", 
+ * "legal_case_id",
  * "description"
  * }))
  */

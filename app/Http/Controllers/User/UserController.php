@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User\User;
 use App\Services\User\UserService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
-
     public function __construct(private UserService $userService)
     {
+        $this->middleware('can:user.store')->only('store');
     }
 
     /**
@@ -21,9 +22,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->showAll($this->userService->getAll());
+        return $this->showAll($this->userService->getAll($request->user()));
     }
 
     /**
@@ -34,13 +35,12 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        return $this->showOne($this->userService->store($request->validated()), Response::HTTP_CREATED);
+        return $this->showOne($this->userService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -51,8 +51,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -61,9 +59,6 @@ class UserController extends Controller
     }
 
     /**
-     * ***-PUT YOUR LOGIC TO DELETE-*** 
-     *
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

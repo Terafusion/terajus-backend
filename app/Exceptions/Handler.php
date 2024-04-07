@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ApiExceptionHandlerTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ApiExceptionHandlerTrait;
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -46,5 +50,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->reportable(function (\League\OAuth2\Server\Exception\OAuthServerException $e) {
+            if ($e->getCode() == 9) {
+                return false;
+            }
+        });
+    }
+
+    // Restante do código do Handler.php...
+
+    public function render($request, Throwable $exception)
+    {
+        Log::info($exception);
+        return $this->handleApiExceptions($exception) ?: parent::render($request, $exception);
     }
 }

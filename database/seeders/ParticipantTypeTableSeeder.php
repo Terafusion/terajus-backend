@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Tenancy\Facades\Tenancy;
 
 class ParticipantTypeTableSeeder extends Seeder
 {
@@ -15,6 +15,8 @@ class ParticipantTypeTableSeeder extends Seeder
      */
     public function run()
     {
+        $tenantId = Tenancy::getTenant()->id ?? config('terajus.default_tenant.id');
+
         $participants = [
             'Polo Ativo',
             'Polo Passivo',
@@ -36,6 +38,7 @@ class ParticipantTypeTableSeeder extends Seeder
         foreach ($participants as $participant) {
             DB::table('participant_types')->insert([
                 'type' => $participant,
+                'tenant_id' => $tenantId,
             ]);
         }
     }

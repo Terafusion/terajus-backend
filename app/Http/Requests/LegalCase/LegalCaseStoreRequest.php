@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\LegalCase;
 
+use App\Rules\TenantCustomer;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class LegalCaseStoreRequest extends FormRequest
 {
@@ -35,7 +35,7 @@ class LegalCaseStoreRequest extends FormRequest
             'complaint' => ['nullable'],
             'participants' => ['array', 'nullable'],
             'participants.*.participant_type_id' => ['required'],
-            'participants.*.user_id' => ['required', 'exists:users,id'],
+            'participants.*.customer_id' => ['required', 'exists:customers,id', new TenantCustomer],
         ];
     }
 }

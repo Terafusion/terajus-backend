@@ -17,7 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('file_name');
             $table->string('file_path');
+            $table->string('description')->nullable();
             $table->morphs('model');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
             $table->softDeletes();
         });

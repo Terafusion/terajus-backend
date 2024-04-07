@@ -2,19 +2,23 @@
 
 namespace App\Repositories\DocumentRequest;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Models\DocumentRequest\DocumentRequest;
-use App\Validators\DocumentRequest\DocumentRequestValidator;
+use App\Models\User\User;
+use App\Traits\TenantScopeTrait;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class DocumentRequestRepositoryEloquent.
- *
- * @package namespace App\Repositories\DocumentRequest;
  */
 class DocumentRequestRepositoryEloquent extends BaseRepository implements DocumentRequestRepository
 {
+    use TenantScopeTrait;
+
     /**
      * Specify Model class name
      *
@@ -25,8 +29,6 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
         return DocumentRequest::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -34,5 +36,29 @@ class DocumentRequestRepositoryEloquent extends BaseRepository implements Docume
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    private function queryBuilder($queryBuilder, User $user)
+    {
+        $query = QueryBuilder::for($queryBuilder)
+            ->allowedFilters([
+                'id',
+                AllowedFilter::exact('user_id'),
+                AllowedFilter::exact('customer_id'),
+            ]);
+        $this->applyTenantScope($query, $user);
+
+        return $query->jsonPaginate();
+    }
+
+    public function getAll(User $user): LengthAwarePaginator
+    {
+        return $this->queryBuilder($this->model(), $user);
+    }
+
+    protected function addAdditionalFilters($query, $user)
+    {
+        $query->orWhereHas('customer', function (Builder $customerQuery) use ($user) {
+            $customerQuery->where('nif_number', $user->nif_number);
+        });
+    }
 }

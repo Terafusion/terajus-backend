@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Tenant\Tenant;
 use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -12,21 +13,47 @@ class AuthFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
         $this->artisan('passport:install', ['-vvv' => true]);
     }
 
-    public function test_signUp()
+    public function test_signUp_new_tenant()
     {
-        $response = $this->post('/api/oauth/signup', ['name' => 'test', 'email' => 'emailtest@test.com', 'password' => '12345678', 'nif_number' => '123456789', 'person_type' => 'PERSONAL'])
-            ->assertStatus(Response::HTTP_OK)
-            ->decodeResponseJson();
+        $response = $this->post('/api/oauth/signup', [
+            'name' => 'test',
+            'email' => 'emailtest@test.com',
+            'password' => '123454678',
+            'nif_number' => '123456789',
+            'person_type' => 'PERSONAL',
+            'create_tenant' => true,
+            'role' => 'lawyer',
+        ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
+
         $this->assertNotNull($response['access_token']);
+
+        $user = User::where('email', 'emailtest@test.com')->first();
+        $tenant = Tenant::find($user->tenant_id);
+        $this->assertEquals($user->tenant_id, $tenant->id);
+    }
+
+    public function test_signUp_new_customer()
+    {
+        $response = $this->post('/api/oauth/signup', [
+            'name' => 'test',
+            'email' => 'emailtest@test.com',
+            'password' => '123454678',
+            'nif_number' => '123456789',
+            'person_type' => 'PERSONAL',
+            'create_tenant' => false,
+            'role' => 'customer',
+        ])->assertStatus(Response::HTTP_OK)->decodeResponseJson();
+
+        $this->assertNotNull($response['access_token']);
+
+        $user = User::where('email', 'emailtest@test.com')->first();
+        $this->assertEquals($user->tenant_id, config('terajus.default_tenant.id'));
     }
 
     public function test_login()
@@ -38,9 +65,9 @@ class AuthFeatureTest extends TestCase
             'password' => '12345678',
             'grant_type' => 'password',
             'client_id' => $client->id,
-            'client_secret' => $client->secret
-        ])
-            ->assertStatus(Response::HTTP_OK);
+            'client_secret' => $client->secret,
+        ])->assertStatus(Response::HTTP_OK);
+
         $this->assertNotNull($response['refresh_token']);
     }
 }

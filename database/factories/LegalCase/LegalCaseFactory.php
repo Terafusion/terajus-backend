@@ -3,11 +3,8 @@
 namespace Database\Factories\LegalCase;
 
 use App\Enums\LegalCaseStatusEnum;
-use App\Models\Document\Document;
-use App\Models\Evidence\Evidence;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>

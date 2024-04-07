@@ -2,21 +2,16 @@
 
 namespace App\Repositories\Evidence;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Evidence\EvidenceRepository;
 use App\Models\Evidence\Evidence;
-use App\Validators\Evidence\EvidenceValidator;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class EvidenceRepositoryEloquent.
- *
- * @package namespace App\Repositories\Evidence;
  */
 class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepository
 {
@@ -41,8 +36,8 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @return Querybuilder
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
+     * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder)
     {
@@ -50,15 +45,14 @@ class EvidenceRepositoryEloquent extends BaseRepository implements EvidenceRepos
             ->allowedFilters([
                 'id',
                 AllowedFilter::callback('description', function (Builder $query, $value) {
-                    $query->where('description', 'ILIKE', '%' . $value . '%');
+                    $query->where('description', 'ILIKE', '%'.$value.'%');
                 }),
-                AllowedFilter::exact('legal_case_id')
-            ])->get();
+                AllowedFilter::exact('legal_case_id'),
+            ])->jsonPaginate();
     }
 
-
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getAll()
     {

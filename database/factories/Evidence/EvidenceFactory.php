@@ -18,6 +18,7 @@ class EvidenceFactory extends Factory
     public function definition()
     {
         $legalCase = LegalCase::first();
+
         return [
             'description' => fake()->text,
             'legal_case_reference' => uniqid(),

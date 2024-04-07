@@ -13,15 +13,18 @@
         "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "^3.24",
         "openai-php/laravel": "^0.6.3",
         "phpunit/php-code-coverage": "*",
         "prettus/l5-repository": "^2.9",
+        "spatie/laravel-json-api-paginate": "^1.13",
         "spatie/laravel-permission": "^5.10",
-        "spatie/laravel-query-builder": "^5.5"
+        "spatie/laravel-query-builder": "^5.5",
+        "tenancy/framework": "^2.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.0",
+        "laravel/pint": "^1.14",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
@@ -54,7 +57,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "lint": "./vendor/bin/pint",
+        "test": "php artisan test --coverage-html=./coverage-report"
     },
     "extra": {
         "laravel": {

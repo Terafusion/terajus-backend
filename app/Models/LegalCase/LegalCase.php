@@ -5,21 +5,21 @@ namespace App\Models\LegalCase;
 use App\Enums\LegalCaseParticipantTypeEnum;
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\Evidence\Evidence;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class LegalCase.
- *
- * @package namespace App\Models\LegalCase;
  */
 class LegalCase extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +36,7 @@ class LegalCase extends Model implements Transformable
         'court',
         'fields_of_law',
         'complaint',
-        'status'
+        'status',
     ];
 
     protected $attributes = [
@@ -44,9 +44,15 @@ class LegalCase extends Model implements Transformable
     ];
 
     /**
+     * Get all of the user for the LegalCase
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
      * Get all of the evidences for the LegalCase
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function evidences(): HasMany
     {
@@ -60,7 +66,7 @@ class LegalCase extends Model implements Transformable
      */
     public function participants()
     {
-        return $this->hasMany(LegalCaseParticipant::class);
+        return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id', 'id');
     }
 
     /**
@@ -71,7 +77,7 @@ class LegalCase extends Model implements Transformable
     public function plaintiff()
     {
         return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id')
-            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID); // 1 pode ser o ID do desafiante na sua tabela de tipos de participantes
+            ->where('participant_type_id', LegalCaseParticipantTypeEnum::PLAINTIFF_ID);
     }
 
     /**
@@ -82,6 +88,6 @@ class LegalCase extends Model implements Transformable
     public function defendant()
     {
         return $this->hasMany(LegalCaseParticipant::class, 'legal_case_id')
-            ->where('participant_type_id', LegalCaseParticipantTypeEnum::DEFENDANT_ID); // 2 pode ser o ID do desafiado na sua tabela de tipos de participantes
+            ->where('participant_type_id', LegalCaseParticipantTypeEnum::DEFENDANT_ID);
     }
 }

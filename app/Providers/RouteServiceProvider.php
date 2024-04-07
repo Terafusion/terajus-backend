@@ -36,6 +36,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        Route::pattern('index', 'index');
+
+        Route::middleware(['json.paginate'])->group(base_path('routes/api.php'))->name('*.index');
     }
 
     /**
