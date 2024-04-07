@@ -17,15 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('person_type', ['PERSONAL', 'BUSINESS']);
             $table->string('nif_number')->unique();
-            $table->string('registration_number')->nullable();
-            $table->string('marital_status')->nullable();
-            $table->string('occupation')->nullable();
-            $table->string('address')->nullable();
-            $table->enum('gender', ['MALE', 'FEMALE'])->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->enum('person_type', ['PERSONAL', 'BUSINESS']);
+            $table->enum('gender', ['MALE', 'FEMALE'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

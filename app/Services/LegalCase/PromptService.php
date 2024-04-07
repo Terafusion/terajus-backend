@@ -13,57 +13,70 @@ class PromptService
     public function setCaseType(string $value)
     {
         $this->data['case_type'] = $value;
+
         return $this;
     }
+
     public function setCaseMatter(string $value)
     {
         $this->data['case_matter'] = $value;
+
         return $this;
     }
 
     public function setDescription(string $value)
     {
         $this->data['case_description'] = $value;
+
         return $this;
     }
 
     public function setCourt(string $value)
     {
         $this->data['court'] = $value;
+
         return $this;
     }
 
     public function setFieldsOfLaw(string $value)
     {
         $this->data['fields_of_law'] = $value;
+
         return $this;
     }
 
     public function setEvidences(mixed $value)
     {
         $this->data['evidences'] = $value;
+
         return $this;
     }
 
     public function setPlaintiff(LegalCaseParticipant $value)
     {
-        $this->data['plaintiff'] = $value->user;
+        $this->data['plaintiff'] = $value->customer;
+
         return $this;
     }
 
     public function setDefendant(LegalCaseParticipant $value)
     {
-        $this->data['defendant'] = $value->user;
+        $this->data['defendant'] = $value->customer;
+
         return $this;
     }
+
     public function setProfessional(User $value)
     {
         $this->data['professional'] = $value;
+
         return $this;
     }
+
     public function setCaseRequests(string $value)
     {
         $this->data['case_requests'] = $value;
+
         return $this;
     }
 
@@ -99,7 +112,6 @@ class PromptService
         ATENÇÃO: Tribunal: {$this->data['court']}
         ATENÇÃO: Área do direito: {$this->data['fields_of_law']}\n";
 
-
         $text .= "Classes (Para que você possa se respaldar juridicamente e se basear) : {$this->data['case_type']}.\n";
         $text .= "Assuntos (Para que você possa se respaldar juridicamente e se basear) : {$this->data['case_matter']}.\n";
         $text .= "Descrição dos fatos (Argumente de maneira detalhada e robusta): {$this->data['case_description']}.\n";
@@ -109,15 +121,17 @@ class PromptService
             $text .= "ID#{$evidence['legal_case_reference']} - {$evidence['description']}";
         }
 
-        $text.= "\n";
+        $text .= "\n";
 
         $text .= "Estes são os pedidos que você irá fazer ao juiz: {$this->data['case_requests']}.\nArgumente da melhor maneira possível. \n";
 
-        $text .= "Data da petição: " . Carbon::now()->format('d/m/Y'); $text.= "\n";
+        $text .= 'Data da petição: '.Carbon::now()->format('d/m/Y');
+        $text .= "\n";
 
-        $text .= "Advogado que está fazendo a petição: " . $this->data['professional']->name; $text.= "\n";
+        $text .= 'Advogado que está fazendo a petição: '.$this->data['professional']->name;
+        $text .= "\n";
 
-        $text .="ATENÇÃO: não repita os textos acima, utilize eles para criar uma petição inicial de alta qualidade acrescentando o máximo possível de conteúdo relevante.";
+        $text .= 'ATENÇÃO: não repita os textos acima, utilize eles para criar uma petição inicial de alta qualidade acrescentando o máximo possível de conteúdo relevante.';
 
         return $text;
     }

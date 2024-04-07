@@ -8,6 +8,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     title="User",
  *     description="User resource representation",
+ *
  *     @OA\Xml(
  *         name="User"
  *     )
@@ -47,8 +48,10 @@ class UserResponse
      *     title="Roles",
      *     description="User roles",
      *     type="array",
+     *
      *     @OA\Items(
      *         type="object",
+     *
      *         @OA\Property(
      *             property="id",
      *             type="integer",
@@ -64,7 +67,6 @@ class UserResponse
      *             type="string",
      *             example="api"
      *         )
-     *      
      *     )
      * )
      **/
@@ -148,7 +150,17 @@ class UserResponse
      *     description="User access token",
      *     example=null
      * )
-     * 
-     * */
+     */
     public ?string $access_token;
+
+    /**
+     * @OA\Property(
+     *     title="Addresses",
+     *     description="User addresses",
+     *     type="array",
+     *
+     *     @OA\Items(ref="#/components/schemas/Address")
+     * )
+     */
+    public array $addresses;
 }

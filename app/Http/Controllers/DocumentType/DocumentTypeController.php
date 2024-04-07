@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\DocumentType;
 
 use App\Http\Controllers\Controller;
-use App\Models\DocumentType\DocumentType;
 use App\Services\DocumentType\DocumentTypeService;
 use Illuminate\Http\Request;
 
@@ -18,8 +17,8 @@ class DocumentTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->showAll($this->documentTypeService->getAll());
+        return $this->showAll($this->documentTypeService->getAll($request->user()));
     }
 }

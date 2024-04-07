@@ -13,7 +13,7 @@ class ParticipantTypeService
 
     /**
      * Get all registers
-     * 
+     *
      * @return Collection
      */
     public function getAll()

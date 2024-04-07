@@ -14,18 +14,22 @@ use OpenApi\Annotations as OA;
  *     version="1.0.0",
  *     title="Terajus API Documentation",
  *     termsOfService="http://swagger.io/terms/",
+ *
  *     @OA\Contact(
  *         email="contato@terafusion.com.br"
  *     ),
+ *
  *     @OA\License(
  *         name="Terafusion Tecnologia",
  *         url="https://terafusion.com.br"
  *     )
  * )
+ *
  * @OA\Server(
  *     description="Terajus API",
  *     url="https://baseurl/api"
  * )
+ *
  * @OA\ExternalDocumentation(
  *     description="Find out more about Swagger",
  *     url="http://swagger.io"

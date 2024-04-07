@@ -2,11 +2,8 @@
 
 namespace App\Services\Evidence;
 
-use App\Enums\EvidenceStatusEnum;
 use App\Models\Evidence\Evidence;
-use App\Models\User\User;
 use App\Repositories\Evidence\EvidenceRepository;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class EvidenceService
@@ -17,8 +14,8 @@ class EvidenceService
 
     /**
      * Get an evidence instance by ID
-     * 
-     * @param int $id
+     *
+     * @param  int  $id
      * @return Evidence
      */
     public function getById($id)
@@ -28,7 +25,7 @@ class EvidenceService
 
     /**
      * Get all registers
-     * 
+     *
      * @return Collection
      */
     public function getAll()
@@ -38,8 +35,7 @@ class EvidenceService
 
     /**
      * Store a new Evidence resource
-     * 
-     * @param array $data
+     *
      * @return Evidence
      */
     public function store(array $data)
@@ -49,13 +45,14 @@ class EvidenceService
 
     /**
      * Delete an evidence register
-     * 
-     * @param int $id
+     *
+     * @param  int  $id
      * @return mixed
      */
     public function delete($id)
     {
         $evidence = $this->getById($id);
+
         return $this->evidenceRepository->delete($evidence->id);
     }
 }

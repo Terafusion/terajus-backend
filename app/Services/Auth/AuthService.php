@@ -2,39 +2,51 @@
 
 namespace App\Services\Auth;
 
+use App\Models\Tenant\Tenant;
 use App\Models\User\User;
-use App\Repositories\User\UserRepository;
 use App\Services\User\UserService;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
+use Tenancy\Facades\Tenancy;
 
 class AuthService
 {
-    /** @var UserService */
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
-        $this->userService = $userService;
     }
 
     /**
      * Register and login user
-     * 
-     * @param array $data
+     *
      * @return User
      */
     public function signUp(array $data)
     {
         try {
             $user = $this->userService->store($data);
-            $user->assignRole($data['role']);
+
+            if (isset($data['create_tenant']) && $data['create_tenant'] === true) {
+                $this->createTenantForUser($user);
+            } else {
+                $this->userService->update(['tenant_id' => config('terajus.default_tenant.id'), 'role' => $data['role']], $user);
+            }
+
             $token = $user->createToken(env('PASSPORT_GRANT_PASSWORD'))->accessToken;
             $user->setAppends(['access_token' => $token, 'role' => $user->roles()->first()]);
+
             return $user;
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    /**
+     * Cria um novo tenant para advogado
+     *
+     * @return void
+     */
+    private function createTenantForUser(User $user)
+    {
+        $tenant = Tenant::create(['name' => $user->name.'\'s Tenant', 'user_id' => $user->id]);
+        $this->userService->update(['is_tenant' => true, 'tenant_id' => $tenant->id], $user);
+        Tenancy::setTenant($tenant);
     }
 }

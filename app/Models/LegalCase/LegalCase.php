@@ -16,12 +16,10 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class LegalCase.
- *
- * @package namespace App\Models\LegalCase;
  */
 class LegalCase extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -38,7 +36,7 @@ class LegalCase extends Model implements Transformable
         'court',
         'fields_of_law',
         'complaint',
-        'status'
+        'status',
     ];
 
     protected $attributes = [
@@ -47,8 +45,6 @@ class LegalCase extends Model implements Transformable
 
     /**
      * Get all of the user for the LegalCase
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function user(): HasOne
     {
@@ -57,8 +53,6 @@ class LegalCase extends Model implements Transformable
 
     /**
      * Get all of the evidences for the LegalCase
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function evidences(): HasMany
     {

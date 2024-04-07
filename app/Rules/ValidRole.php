@@ -9,12 +9,10 @@ class ValidRole implements Rule
 {
     public function __construct()
     {
-        //
     }
 
     public function passes($attribute, $value)
     {
-        // Verifique se a Role existe na tabela de roles
         return Role::where('name', $value)->exists();
     }
 

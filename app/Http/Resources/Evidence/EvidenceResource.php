@@ -20,7 +20,7 @@ class EvidenceResource extends JsonResource
             'legal_case_id' => $this->legal_case_id,
             'legal_case_reference' => $this->legal_case_reference,
             'description' => $this->description,
-            'documents' => DocumentResource::collection($this->documents)
+            'documents' => DocumentResource::collection($this->documents),
         ];
     }
 }

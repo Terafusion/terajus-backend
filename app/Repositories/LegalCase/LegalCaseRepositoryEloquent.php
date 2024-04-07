@@ -2,24 +2,23 @@
 
 namespace App\Repositories\LegalCase;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
+use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class LegalCaseRepositoryEloquent.
- *
- * @package namespace App\Repositories\LegalCase;
  */
 class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRepository
 {
+    use TenantScopeTrait;
+
     /**
      * Specify Model class name
      *
@@ -41,30 +40,25 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @param User $user
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
+     * @param  User  $user
      * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder, $user)
     {
-        return QueryBuilder::for($queryBuilder)
+        $query = QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('court'),
                 AllowedFilter::exact('case_type'),
-                AllowedFilter::exact('case_matter'),
-                $this->customerFilter(),
-                $this->professionalFilter()
+                AllowedFilter::exact('case_matter')
             ])
-            ->when($user, function (Builder $query, $user) {
-                $query->where('user_id', $user->id)
-                    ->orWhereHas('participants', function (Builder $subquery) use ($user) {
-                        $subquery->where('user_id', $user->id);
-                    });
-            })->allowedSorts([
-                    'created_at',
-                ])->jsonPaginate();
+            ->allowedSorts(['created_at']);
+
+        $this->applyTenantScope($query, $user);
+
+        return $query->jsonPaginate();
     }
 
     public function getAll(User $user): LengthAwarePaginator
@@ -72,34 +66,10 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
         return $this->queryBuilder($this->model(), $user);
     }
 
-    protected function customerFilter()
+    protected function addAdditionalFilters($query, $user)
     {
-        return AllowedFilter::callback('customer', function (Builder $query, $value) {
-            $query->whereHas('participants', function (Builder $participantsSubQuery) use ($value) {
-                $participantsSubQuery->whereHas('user', function (Builder $participantsUserSubQuery) use ($value) {
-                    $participantsUserSubQuery->where(function (Builder $userQuery) use ($value) {
-                        $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
-                    })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
-                        $participantsUserRoleSubQuery->where('name', 'customer');
-                    });
-                });
-            });
-        });
-    }
-    protected function professionalFilter()
-    {
-        return AllowedFilter::callback('professional', function (Builder $query, $value) {
-                $query->whereHas('user', function (Builder $userSubQuery) use ($value) {
-                    $userSubQuery->where(function (Builder $userQuery) use ($value) {
-                        $userQuery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
-                    })->whereHas('roles', function (Builder $participantsUserRoleSubQuery) {
-                        $participantsUserRoleSubQuery->where('name', 'lawyer');
-                    });
-                });
+        $query->orWhereHas('participants.customer', function (Builder $participantsUserSubQuery) use ($user) {
+            $participantsUserSubQuery->where('nif_number', $user->nif_number);
         });
     }
 }

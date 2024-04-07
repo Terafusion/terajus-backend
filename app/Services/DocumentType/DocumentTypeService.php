@@ -2,8 +2,9 @@
 
 namespace App\Services\DocumentType;
 
+use App\Models\User\User;
 use App\Repositories\DocumentType\DocumentTypeRepository;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class DocumentTypeService
 {
@@ -13,11 +14,11 @@ class DocumentTypeService
 
     /**
      * Get all registers
-     * 
-     * @return Collection
+     *
+     * @return LengthAwarePaginator
      */
-    public function getAll()
+    public function getAll(User $user): LengthAwarePaginator
     {
-        return $this->documentTypeRepository->getAll();
+        return $this->documentTypeRepository->getAll($user);
     }
 }

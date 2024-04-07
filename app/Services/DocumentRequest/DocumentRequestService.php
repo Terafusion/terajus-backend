@@ -3,13 +3,11 @@
 namespace App\Services\DocumentRequest;
 
 use App\Enums\DocumentRequestStatusEnum;
-use App\Exceptions\DocumentRequestPendingDocsException;
 use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\User\User;
 use App\Repositories\DocumentRequest\DocumentRequestRepository;
 use App\Services\DocumentRequestDoc\DocumentRequestDocService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DocumentRequestService
@@ -22,10 +20,8 @@ class DocumentRequestService
 
     /**
      * Create a new Document Request register
-     * 
-     * @param array $data
-     * @param User $user
-     * 
+     *
+     *
      * @return DocumentRequest
      */
     public function store(array $data, User $user)
@@ -36,6 +32,7 @@ class DocumentRequestService
             $this->documentRequestDocService->store($data, $documentRequest->id);
 
             DB::commit();
+
             return $documentRequest;
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -53,13 +50,14 @@ class DocumentRequestService
                 $this->documentRequestDocService->updateAllByDocumentRequest($id, ['status' => DocumentRequestStatusEnum::COMPLETED]);
             }
 
-            if (!isset($data['status']) && isset($data['document_request_docs'])) {
+            if (! isset($data['status']) && isset($data['document_request_docs'])) {
                 foreach ($data['document_request_docs'] as $key => $documentRequestDoc) {
                     $this->documentRequestDocService->update($documentRequestDoc, $documentRequestDoc['id']);
                 }
             }
 
             DB::commit();
+
             return $documentRequest;
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -69,7 +67,7 @@ class DocumentRequestService
 
     /**
      * Get all registers
-     * 
+     *
      * @return LengthAwarePaginator
      */
     public function getAll(User $user)

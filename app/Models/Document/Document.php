@@ -13,14 +13,12 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Document.
- *
- * @package namespace App\Models\Document;
  */
 class Document extends Model implements Transformable
 {
-    use TransformableTrait;
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
+    use TransformableTrait;
 
     protected $fillable = ['file_name', 'file_path', 'model_type', 'model_id', 'user_id', 'document_type_id', 'description'];
 
@@ -31,8 +29,6 @@ class Document extends Model implements Transformable
 
     /**
      * Get the user associated with the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function user(): HasOne
     {

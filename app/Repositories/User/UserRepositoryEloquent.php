@@ -2,22 +2,17 @@
 
 namespace App\Repositories\User;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\User\UserRepository;
+use App\Filters\OnlyCustomersFilter;
 use App\Models\User\User;
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Filters\OnlyCustomersFilter;
 
 /**
  * Class UserRepositoryEloquent.
- *
- * @package namespace App\Repositories\User;
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
@@ -42,8 +37,8 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     /**
      * Return build Eloquent query
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string $queryBuilder
-     * @param User $user
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|string  $queryBuilder
+     * @param  User  $user
      * @return LengthAwarePaginator
      */
     private function queryBuilder($queryBuilder, $user)
@@ -54,15 +49,15 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                 AllowedFilter::exact('name'),
                 AllowedFilter::exact('nif_number'),
                 AllowedFilter::exact('email'),
-                AllowedFilter::callback('search', function (Builder $query, $value) use ($user) {
-                    $query->where(function (Builder $subquery) use ($value, $user) {
-                        $subquery->where('name', 'LIKE', '%' . $value . '%')
-                            ->orWhere('email', 'LIKE', '%' . $value . '%')
-                            ->orWhere('nif_number', 'LIKE', '%' . $value . '%');
+                AllowedFilter::callback('search', function (Builder $query, $value) {
+                    $query->where(function (Builder $subquery) use ($value) {
+                        $subquery->where('name', 'ILIKE', '%'.$value.'%')
+                            ->orWhere('email', 'ILIKE', '%'.$value.'%')
+                            ->orWhere('nif_number', 'ILIKE', '%'.$value.'%');
                     });
                 }),
-                AllowedFilter::callback('role', function (Builder $query, $value) use ($user) {
-                    $query->where(function (Builder $subquery) use ($value, $user) {
+                AllowedFilter::callback('role', function (Builder $query, $value) {
+                    $query->where(function (Builder $subquery) use ($value) {
                         $subquery->whereHas('roles', function (Builder $rolesSubquery) use ($value) {
                             $rolesSubquery->where('name', $value);
                         });
@@ -86,15 +81,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return $this->queryBuilder($this->model(), $user);
     }
 
-    /**
-     * @param User $user
-     * @return AllowedFilter
-     */
     private function onlyCustomersFilter(User $user): AllowedFilter
     {
         return AllowedFilter::custom('only_customers', new OnlyCustomersFilter($user));
     }
-
 
     private function applyUserRelationshipFilters(Builder $query, $user)
     {

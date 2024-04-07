@@ -9,7 +9,7 @@ use OpenApi\Annotations as OA;
  */
 class LegalCaseUpdate
 {
-     /**
+    /**
      * @OA\Property()
      */
     public string $court;

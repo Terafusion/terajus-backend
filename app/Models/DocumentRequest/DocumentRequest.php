@@ -3,6 +3,7 @@
 namespace App\Models\DocumentRequest;
 
 use App\Enums\DocumentRequestStatusEnum;
+use App\Models\Customer\Customer;
 use App\Models\DocumentRequestDoc\DocumentRequestDoc;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,12 +16,10 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class DocumentRequest.
- *
- * @package namespace App\Models\DocumentRequest;
  */
 class DocumentRequest extends Model implements Transformable
 {
-    use TransformableTrait, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +28,7 @@ class DocumentRequest extends Model implements Transformable
      */
     protected $fillable = [
         'user_id',
-        'client_id'
+        'customer_id',
     ];
 
     /**
@@ -44,8 +43,6 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Get the user associated with the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function user(): HasOne
     {
@@ -54,18 +51,14 @@ class DocumentRequest extends Model implements Transformable
 
     /**
      * Get the user associated with the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function client(): HasOne
+    public function customer(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'client_id');
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
     /**
      * Get all of the requestedDocuments for the DocumentRequest
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function requestedDocuments(): HasMany
     {

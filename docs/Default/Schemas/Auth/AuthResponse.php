@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()
-*/
+ */
 class AuthResponse
 {
     /**
@@ -34,4 +34,3 @@ class AuthResponse
      */
     public string $email;
 }
-

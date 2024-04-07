@@ -36,4 +36,3 @@ class AuthRefreshRequest
      */
     public string $refresh_token;
 }
-

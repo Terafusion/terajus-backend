@@ -5,15 +5,14 @@ namespace App\Services\LegalCase;
 use App\Enums\LegalCaseStatusEnum;
 use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
-use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Repositories\LegalCase\LegalCaseParticipantRepository;
+use App\Repositories\LegalCase\LegalCaseRepository;
 use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LegalCaseService
 {
-
     public function __construct(
         private ArtificialIntelligenceService $artificialIntelligenceService,
         private UserService $userService,
@@ -24,8 +23,8 @@ class LegalCaseService
 
     /**
      * Get an legalCase instance by ID
-     * 
-     * @param LegalCase $legalCase
+     *
+     * @param  LegalCase  $legalCase
      * @return LegalCase
      */
     public function getById($legalCase)
@@ -35,7 +34,7 @@ class LegalCaseService
 
     /**
      * Get all registers
-     * 
+     *
      * @return LengthAwarePaginator
      */
     public function getAll(User $user)
@@ -45,9 +44,7 @@ class LegalCaseService
 
     /**
      * Store a new LegalCase resource
-     * 
-     * @param array $data
-     * @param User $user
+     *
      * @return LegalCase
      */
     public function store(array $data, User $user)
@@ -55,22 +52,21 @@ class LegalCaseService
         $data['user_id'] = $user->id;
         $data['status'] ?? LegalCaseStatusEnum::DRAFT;
         $legalCase = $this->legalCaseRepository->create($data);
-        if (isset($data['participants']) && !empty($data['participants'])) {
+        if (isset($data['participants']) && ! empty($data['participants'])) {
             $this->syncParticipants($legalCase, $data['participants']);
         }
+
         return $legalCase;
     }
 
     /**
      * Update a LegalCase resource
-     * 
-     * @param array $data
-     * @param LegalCase $legalCase
+     *
      * @return LegalCase
      */
     public function update(array $data, LegalCase $legalCase)
     {
-        if (isset($data['participants']) && !empty($data['participants'])) {
+        if (isset($data['participants']) && ! empty($data['participants'])) {
             $this->syncParticipants($legalCase, $data['participants']);
         }
 
@@ -83,10 +79,8 @@ class LegalCaseService
 
     /**
      * Sync legal case participants
-     * 
-     * @param LegalCase $legalCase
-     * @param array $data
-     * 
+     *
+     *
      * @return void
      */
     public function syncParticipants(LegalCase $legalCase, array $data)
@@ -96,7 +90,7 @@ class LegalCaseService
         foreach ($data as $participant) {
             $this->LegalCaseParticipantRepository->create([
                 'legal_case_id' => $legalCase->id,
-                'user_id' => $participant['user_id'],
+                'customer_id' => $participant['customer_id'],
                 'participant_type_id' => $participant['participant_type_id'],
             ]);
         }

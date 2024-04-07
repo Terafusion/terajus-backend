@@ -30,12 +30,12 @@ class SignUpRequest extends FormRequest
             'password' => ['required'],
             'nif_number' => ['required', 'unique:users,nif_number'],
             'occupation' => ['nullable'],
-            'address' => ['nullable'],
             'person_type' => ['required', 'in:BUSINESS,PERSONAL'],
             'role' => ['required', new ValidRole],
+            'create_tenant' => ['required', 'boolean'],
             'marital_status' => ['nullable'],
             'gender' => ['nullable', 'in:MALE,FEMALE'],
-            'registration_number' => ['nullable', 'unique:users,registration_number'],
+            'registration_number' => ['nullable'],
         ];
     }
 }

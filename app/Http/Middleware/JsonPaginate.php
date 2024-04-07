@@ -13,13 +13,12 @@ class JsonPaginate
         $response = $next($request);
 
         if (
-            !$response->exception
+            ! $response->exception
             && $response instanceof JsonResponse
             && $response->original instanceof LengthAwarePaginator
         ) {
             $paginator = $response->original;
 
-            // Adiciona informações adicionais à resposta de paginação
             $paginationInfo = [
                 'current_page' => $paginator->currentPage(),
                 'prev_page_url' => $paginator->previousPageUrl(),
@@ -30,14 +29,12 @@ class JsonPaginate
                 'links' => $paginator->getUrlRange(1, $paginator->lastPage()),
             ];
 
-            // Cria um novo array com a estrutura desejada
             $modifiedContent = [
                 'data' => $paginator->items(),
                 'statusCode' => $response->getStatusCode(),
                 'metadata' => $paginationInfo,
             ];
 
-            // Atualiza a resposta original com a nova estrutura
             $response->setData($modifiedContent);
         }
 

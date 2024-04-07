@@ -2,16 +2,12 @@
 
 namespace App\Repositories\LegalCase;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\LegalCase\LegalCaseParticipantRepository;
 use App\Models\LegalCase\LegalCaseParticipant;
-use App\Validators\LegalCase\LegalCaseParticipantValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class LegalCaseParticipantRepositoryEloquent.
- *
- * @package namespace App\Repositories\LegalCase;
  */
 class LegalCaseParticipantRepositoryEloquent extends BaseRepository implements LegalCaseParticipantRepository
 {
@@ -23,7 +19,7 @@ class LegalCaseParticipantRepositoryEloquent extends BaseRepository implements L
     public function model()
     {
         return LegalCaseParticipant::class;
-    }    
+    }
 
     /**
      * Boot up the repository, pushing criteria
@@ -31,5 +27,5 @@ class LegalCaseParticipantRepositoryEloquent extends BaseRepository implements L
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
-    }   
+    }
 }

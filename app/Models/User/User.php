@@ -2,34 +2,34 @@
 
 namespace App\Models\User;
 
+use App\Models\Address\Address;
 use App\Models\LegalCase\LegalCase;
 use App\Models\LegalCase\LegalCaseParticipant;
+use App\Models\Tenant\Tenant as TenantModel;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\Access\Authorizable as AccessAuthorizable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
-use Prettus\Repository\Traits\TransformableTrait;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
- * @package namespace App\Models\User;
  */
 class User extends Model implements AuthAuthenticatable, Authorizable
 {
-    use Authenticatable;
     use AccessAuthorizable;
-    use TransformableTrait;
-    use HasFactory;
+    use Authenticatable;
     use HasApiTokens;
+    use HasFactory;
     use HasRoles;
+
+    protected $with = ['tenant'];
 
     /**
      * The attributes that are mass assignable.
@@ -39,34 +39,42 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     protected $fillable = [
         'name',
         'email',
-        'password',
         'nif_number',
-        'registration_number',
-        'marital_status',
-        'occupation',
-        'gender',
-        'address',
+        'password',
         'person_type',
+        'gender',
+        'is_tenant',
+        'tenant_id',
     ];
+
+    public function isTenant(): bool
+    {
+        return $this->is_tenant;
+    }
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(TenantModel::class, 'tenant_id');
+    }
+
+    public function managedTenant(): BelongsTo
+    {
+        return $this->belongsTo(TenantModel::class, 'user_id');
+    }
 
     public function setPasswordAttribute($attribute)
     {
         $this->attributes['password'] = Hash::make($attribute);
     }
 
-    public function professionals()
+    public function addresses()
     {
-        return $this->belongsToMany(User::class, 'customer_professionals', 'customer_id', 'professional_id');
+        return $this->morphMany(Address::class, 'addressable');
     }
 
-    public function customers()
+    public function checkHasPermission(string $name): bool
     {
-        return $this->belongsToMany(User::class, 'customer_professionals', 'professional_id', 'customer_id');
-    }
-    
-    public function checkHasPermission(string $name) : bool
-    {
-        return $this->roles->pluck('permissions')->flatten()->contains('name', $name);  
+        return $this->roles->pluck('permissions')->flatten()->contains('name', $name);
     }
 
     public function legalCases(): HasMany
@@ -78,5 +86,4 @@ class User extends Model implements AuthAuthenticatable, Authorizable
     {
         return $this->hasMany(LegalCaseParticipant::class);
     }
-
 }

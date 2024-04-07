@@ -10,6 +10,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     title="DocumentRequest",
  *     description="DocumentRequest resource representation",
+ *
  *     @OA\Xml(
  *         name="DocumentRequest"
  *     )
@@ -41,7 +42,6 @@ class DocumentRequestResponse
      *     description="User ID associated with the DocumentRequest",
      *     format="int64"
      * )
-     * 
      */
     public int $user_id;
 

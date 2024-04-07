@@ -2,17 +2,17 @@
 
 namespace App\Traits;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Exceptions\AuthenticationException as ExceptionsAuthenticationException;
+use Laravel\Passport\Exceptions\OAuthServerException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException;
-use Laravel\Passport\Exceptions\OAuthServerException;
-use Laravel\Passport\Exceptions\AuthenticationException as ExceptionsAuthenticationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 trait ApiExceptionHandlerTrait
@@ -35,6 +35,10 @@ trait ApiExceptionHandlerTrait
             return $this->handleValidationException($exception);
         } elseif ($exception instanceof OAuthServerException) {
             return $this->handleOAuthServerException($exception);
+        } elseif ($this->isUniqueConstraintViolationException($exception)) {
+            $errorMessage = $exception->getMessage();
+            $constraintKey = $this->extractConstraintKey($errorMessage);
+            return $this->generateResponse("Unique constraint violation for key '$constraintKey'", Response::HTTP_CONFLICT);
         }
 
         return $this->generateResponse($exception->getMessage() ?? 'Server error', $exception->getCode() ?? Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -52,18 +56,23 @@ trait ApiExceptionHandlerTrait
         return $this->generateResponse($exception->getMessage() ?? 'OAuth Server error', $exception->statusCode() ?? Response::HTTP_BAD_REQUEST);
     }
 
-
     private function generateResponse($message, $statusCode)
     {
         return response()->json([
-            'error' => $message
+            'error' => $message,
         ], $statusCode);
     }
 
-    private function getHttpStatusCode(Throwable $exception)
+    private function isUniqueConstraintViolationException(Throwable $exception)
     {
-        $statusCode = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
+        // Verifica se a exceção é devido a uma violação de chave única (SQLSTATE[23000])
+        return $exception instanceof \Illuminate\Database\QueryException && $exception->getCode() == '23000';
+    }
 
-        return $statusCode;
+    private function extractConstraintKey(string $errorMessage)
+    {
+        // Extrai a chave da restrição única da mensagem de erro usando expressão regular
+        preg_match("/key '(.+?)'/", $errorMessage, $matches);
+        return $matches[1] ?? 'Unknown';
     }
 }

@@ -14,5 +14,6 @@ use BenSampo\Enum\Enum;
 final class LegalCaseParticipantTypeEnum extends Enum
 {
     const PLAINTIFF_ID = 1;
+
     const DEFENDANT_ID = 2;
 }

@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User\User;
 use App\Services\User\UserService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
-
     public function __construct(private UserService $userService)
     {
         $this->middleware('can:user.store')->only('store');
     }
-
 
     /**
      * Display a listing of the resource.
@@ -43,7 +41,6 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -54,8 +51,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -64,8 +59,6 @@ class UserController extends Controller
     }
 
     /**
-     *
-     * @param  \App\Models\User\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

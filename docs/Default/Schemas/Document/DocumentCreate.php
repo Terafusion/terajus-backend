@@ -7,6 +7,7 @@ namespace Docs\Default\Schemas\Document;
  *     title="Document Create",
  *     description="Document creation schema",
  *     required={"file", "model_type", "model_id"},
+ *
  *     @OA\Property(
  *         property="file",
  *         type="string",
@@ -34,7 +35,9 @@ namespace Docs\Default\Schemas\Document;
 class DocumentCreate
 {
     public string $file;
+
     public string $model_type;
+
     public int $model_id;
 
     public string $description;

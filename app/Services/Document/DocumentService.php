@@ -19,10 +19,8 @@ class DocumentService
 
     /**
      * Create a new Document Request register
-     * 
-     * @param array $data
-     * @param User $user
-     * 
+     *
+     *
      * @return Document
      */
     public function store(array $data, User $user)
@@ -36,11 +34,12 @@ class DocumentService
                     [
                         'user_id' => $user->id,
                         'file_path' => $uploadedDocument['file_path'],
-                        'file_name' => $uploadedDocument['file_name']
+                        'file_name' => $uploadedDocument['file_name'],
                     ]
                 )
             );
             DB::commit();
+
             return $document;
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -55,8 +54,8 @@ class DocumentService
 
     public function upload($file, $model)
     {
-        $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $filePath = 'documents/' . $model->getTable() . '/' . $model->id . '/' . $fileName;
+        $fileName = Str::uuid().'.'.$file->getClientOriginalExtension();
+        $filePath = 'documents/'.$model->getTable().'/'.$model->id.'/'.$fileName;
 
         Storage::disk('s3')->put($filePath, file_get_contents($file));
 
@@ -70,8 +69,9 @@ class DocumentService
     {
         $headers = [
             'Content-Type' => Storage::disk('s3')->mimeType($document->file_path),
-            'Content-Disposition' => 'attachment; filename="' . $document->file_name . '"',
+            'Content-Disposition' => 'attachment; filename="'.$document->file_name.'"',
         ];
+
         return Storage::disk('s3')->response($document->file_path, null, $headers);
     }
 }

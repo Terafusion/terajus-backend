@@ -5,17 +5,12 @@ namespace Docs\Default\Schemas\User;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Schema(
- *  required={
- *      "name",
- *      "email",
- *      "nif_number",
- *      "person_type",
- *      "role",
- *      "password",
- *      "customer"
- *  }
- * )
+ * @OA\Schema(required={
+ *  "name",
+ *  "email",
+ *  "person_type",
+ *  "nif_number",
+ *  "registration_number"}))
  */
 class UserCreate
 {

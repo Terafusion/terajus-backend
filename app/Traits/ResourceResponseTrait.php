@@ -2,9 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ResourceResponseTrait
@@ -17,12 +14,13 @@ trait ResourceResponseTrait
     protected function showOne($model, $statusCode = 200, $resource = null)
     {
         $resource = $resource ?? $this->getResource();
+
         return response()->json(new $resource($model), $statusCode);
     }
 
     protected function showAll(LengthAwarePaginator $paginator, $statusCode = 200, $resource = null)
     {
-        $resource = $resource ?? $this->getResource(true);
+        $resource = $resource ?? $this->getResource();
 
         $modifiedContent = [
             'data' => $resource::collection($paginator->items()),
@@ -41,14 +39,12 @@ trait ResourceResponseTrait
             ],
         ];
 
-        // Se a coleção estiver vazia, retorna uma resposta vazia com as informações de paginação
         if ($paginator->isEmpty()) {
             return response()->json($modifiedContent, $statusCode);
         }
 
         return response()->json($modifiedContent, $statusCode);
     }
-
 
     protected function getResource()
     {
@@ -62,7 +58,7 @@ trait ResourceResponseTrait
             $modelName .= ucfirst($segment);
         }
 
-        $resourceName = 'App\\Http\\Resources\\' . $modelName . '\\' . $modelName . 'Resource';
+        $resourceName = 'App\\Http\\Resources\\'.$modelName.'\\'.$modelName.'Resource';
 
         return $resourceName;
     }
