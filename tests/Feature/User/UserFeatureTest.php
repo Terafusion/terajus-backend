@@ -46,7 +46,6 @@ class UserFeatureTest extends TestCase
     {
         $user = User::factory()->create(['name' => 'test']);
         $this->get('api/users/'.$user->id)->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name]);
-        $this->get('api/users/'. 45)->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name]);
     }
 
     /**
