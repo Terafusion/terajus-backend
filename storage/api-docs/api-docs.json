@@ -1764,6 +1764,63 @@
                 }
             }
         },
+        "/roles": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Store new role",
+                "description": "Returns role data",
+                "operationId": "storeRole",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -3000,6 +3057,28 @@
                     "name": "ParticipantTypeResponse"
                 }
             },
+            "PermissionResponse": {
+                "title": "Permission",
+                "description": "Permission resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Permission ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Permission's name",
+                        "type": "string",
+                        "example": "Read"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Permission"
+                }
+            },
             "RequestException": {
                 "properties": {
                     "message": {
@@ -3014,6 +3093,55 @@
                     }
                 },
                 "type": "object"
+            },
+            "RoleCreate": {
+                "required": [
+                    "name",
+                    "permissions"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RoleResponse": {
+                "title": "Role",
+                "description": "Role response representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Role ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Role's name",
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "permissions": {
+                        "title": "Permissions",
+                        "description": "Role's permissions",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PermissionResponse"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
             },
             "UnauthenticatedError": {
                 "properties": {

@@ -10,6 +10,7 @@ use App\Models\LegalCase\LegalCase;
 use App\Models\LegalPleading\LegalPleading;
 use App\Models\LegalPleadingType\LegalPleadingType;
 use App\Models\Permission\RoleHasPermission;
+use App\Models\Role\Role;
 use App\Models\Tenant\Tenant;
 use App\Observers\TenantObserver;
 use Illuminate\Support\ServiceProvider;
@@ -49,5 +50,6 @@ class AppServiceProvider extends ServiceProvider
         Address::observe(TenantObserver::class);
         RoleHasPermission::observe(TenantObserver::class);
         Document::observe(TenantObserver::class);
+        Role::observe(TenantObserver::class);
     }
 }
