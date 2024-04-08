@@ -52,10 +52,11 @@ class RoleService
     /**
      * Update an role register
      *
+     * @param  array  $data
      * @param  int  $id
      * @return Role
      */
-    public function update($id, array $data)
+    public function update($data, $id)
     {
         $role = $this->getById($id);
         $this->roleRepository->update($data, $role->id);

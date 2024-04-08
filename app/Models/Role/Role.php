@@ -3,6 +3,7 @@
 namespace App\Models\Role;
 
 use App\Models\Permission\RoleHasPermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
@@ -10,6 +11,7 @@ use Spatie\Permission\Traits\HasPermissions;
 
 class Role extends SpatieRole
 {
+    use HasFactory;
     use HasPermissions {
         givePermissionTo as protected parentGivePermissionTo;
     }

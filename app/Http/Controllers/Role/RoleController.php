@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
+use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Services\Role\RoleService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,6 +33,11 @@ class RoleController extends Controller
     public function store(RoleStoreRequest $request)
     {
         return $this->showOne($this->roleService->store($request->validated()), Response::HTTP_CREATED);
+    }
+
+    public function update(RoleUpdateRequest $request, $id)
+    {
+        return $this->showOne($this->roleService->update($request->validated(), $id));
     }
 
     /**
