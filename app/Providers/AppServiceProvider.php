@@ -12,6 +12,7 @@ use App\Models\LegalPleadingType\LegalPleadingType;
 use App\Models\Permission\RoleHasPermission;
 use App\Models\Role\Role;
 use App\Models\Tenant\Tenant;
+use App\Models\User\User;
 use App\Observers\TenantObserver;
 use Illuminate\Support\ServiceProvider;
 use Tenancy\Identification\Contracts\ResolvesTenants;
@@ -51,5 +52,6 @@ class AppServiceProvider extends ServiceProvider
         RoleHasPermission::observe(TenantObserver::class);
         Document::observe(TenantObserver::class);
         Role::observe(TenantObserver::class);
+        User::observe(TenantObserver::class);
     }
 }

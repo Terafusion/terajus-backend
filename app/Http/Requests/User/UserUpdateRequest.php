@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\ValidRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -30,6 +31,7 @@ class UserUpdateRequest extends FormRequest
             'occupation' => ['nullable'],
             'marital_status' => ['nullable'],
             'registration_number' => ['nullable'],
+            'role' => ['nullable', new ValidRole],
         ];
     }
 }

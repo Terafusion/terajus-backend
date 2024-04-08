@@ -6,6 +6,7 @@ use App\Models\Role\Role;
 use App\Models\User\User;
 use App\Repositories\Role\RoleRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Tenancy\Facades\Tenancy;
 
 class RoleService
 {
@@ -43,7 +44,7 @@ class RoleService
     {
         $role = $this->roleRepository->create($data);
         if (isset($data['permissions'])) {
-            $role->permissions()->sync($data['permissions']);
+            $this->syncPermissions($role, $data);
         }
 
         return $role;
@@ -62,7 +63,7 @@ class RoleService
         $this->roleRepository->update($data, $role->id);
 
         if (isset($data['permissions'])) {
-            $role->permissions()->sync($data['permissions']);
+            $this->syncPermissions($role, $data);
         }
 
         return $role;
@@ -78,5 +79,13 @@ class RoleService
     {
         $role = $this->getById($id);
         return $this->roleRepository->delete($role->id);
+    }
+
+    public function syncPermissions(Role $role, array $data)
+    {
+        $tenantId = Tenancy::getTenant()->id ?? config('terajus_default_tenant.id');
+        $pivotData = array_fill(0, count($data['permissions']), ['tenant_id' => $tenantId]);
+        $syncData = array_combine($data['permissions'], $pivotData);
+        $role->permissions()->sync($syncData);
     }
 }
