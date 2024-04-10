@@ -14,7 +14,7 @@ ENV LOG_CHANNEL stderr
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-COPY docker/nginx/laravel.conf /etc/nginx/nginx.conf
+COPY docker/nginx/production/laravel.conf /etc/nginx/nginx.conf
 
 RUN composer install
 RUN php artisan l5-swagger:generate
