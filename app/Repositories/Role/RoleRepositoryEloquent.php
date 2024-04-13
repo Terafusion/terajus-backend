@@ -8,7 +8,7 @@ use App\Repositories\Role\RoleRepository;
 use App\Models\Role\Role;
 use App\Models\User\User;
 use App\Traits\TenantScopeTrait;
-use App\Validators\RoleValidator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -30,7 +30,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
     public function model()
     {
         return Role::class;
-    }    
+    }
 
     /**
      * Boot up the repository, pushing criteria
@@ -45,9 +45,13 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
         $query = QueryBuilder::for($queryBuilder)
             ->allowedFilters([
                 'id',
-                AllowedFilter::exact('user_id'),
-                AllowedFilter::exact('customer_id'),
-            ]);
+                AllowedFilter::callback('search', function (Builder $query, $value) {
+                    $query->where(function (Builder $subquery) use ($value) {
+                        $subquery->where('name', 'ILIKE', '%' . $value . '%');
+                    });
+                }),
+            ])
+            ->allowedSorts(['created_at']);
         $this->applyTenantScope($query, $user);
 
         return $query->jsonPaginate();
@@ -63,5 +67,5 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
     protected function addAdditionalFilters($query, $user)
     {
     }
-    
+
 }
