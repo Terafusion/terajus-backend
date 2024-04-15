@@ -14,7 +14,6 @@ class UserController extends Controller
 {
     public function __construct(private UserService $userService)
     {
-        $this->middleware('can:user.store')->only('store');
     }
 
     /**
@@ -35,6 +34,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $this->authorize('create', User::class);
         return $this->showOne($this->userService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 

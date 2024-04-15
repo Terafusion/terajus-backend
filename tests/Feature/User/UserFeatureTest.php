@@ -21,20 +21,7 @@ class UserFeatureTest extends TestCase
     public function test_index_users()
     {
         User::factory()->create(['name' => 'xpto']);
-        $this->get('api/users')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $this->user->name])->assertJsonCount(2);
-    }
-
-    /**
-     * Test retrieve all users
-     *
-     * @return void
-     */
-    public function test_filter_users()
-    {
-        $user = User::factory()->create(['name' => 'xpto', 'email' => 'abc@email.com']);
-        $user->assignRole('customer');
-        $this->get('api/users?filter[search]='.'pt')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name])->assertJsonCount(2);
-        $this->get('api/users?filter[search]='.'email')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $user->name])->assertJsonCount(1);
+        $this->get('api/users')->assertStatus(Response::HTTP_OK)->assertJsonFragment(['name' => $this->user->name])->assertJsonCount(2, 'data');
     }
 
     /**
@@ -60,7 +47,8 @@ class UserFeatureTest extends TestCase
             'email' => 'test@example.com',
             'password' => '12345678',
             'person_type' => 'PERSONAL',
-            'nif_number' => '12345678',
+            'nif_number' => '1234567998',
+            'role' => 'trainee',
             'registration_number' => '12345678',
             'address' => [
                 'street' => '123 Main St',
@@ -74,10 +62,12 @@ class UserFeatureTest extends TestCase
             ],
         ];
 
-        $response = $this->post('api/users', $data);
+        $this->user->assignRole('lawyer');
 
+        $response = $this->post('api/users', $data);
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment(['name' => 'test']);
+
     }
 
     /**

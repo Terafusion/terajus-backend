@@ -50,6 +50,7 @@ Route::middleware(['auth:api', 'identify.tenant'])->group(function () {
         Route::apiResource('document-requests', DocumentRequestController::class);
 
         Route::apiResource('documents', DocumentController::class);
+        Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
         Route::apiResource('document-types', DocumentTypeController::class);
 
         Route::apiResource('roles', RoleController::class);
