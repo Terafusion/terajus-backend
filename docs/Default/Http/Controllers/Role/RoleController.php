@@ -4,16 +4,6 @@ namespace Docs\Default\Http\Controllers\Role;
 
 use OpenApi\Annotations as OA;
 
-/**
- * @OA\SecurityScheme(
- *     securityScheme="bearerAuth",
- *     type="http",
- *     description="Bearer token authentication",
- *     name="Bearer",
- *     in="header",
- *     scheme="bearer"
- * )
- */
 class RoleController
 {
     /**
