@@ -1764,6 +1764,228 @@
                 }
             }
         },
+        "/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get list of roles",
+                "description": "Returns list of roles",
+                "operationId": "getRoles",
+                "parameters": [
+                    {
+                        "name": "filter[search]",
+                        "in": "query",
+                        "description": "Filter roles by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort roles by created_at. Use -created_at for descending order",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Store new role",
+                "description": "Returns role data",
+                "operationId": "storeRole",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get role information",
+                "description": "Returns role data",
+                "operationId": "getRoleById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of role that needs to be fetched",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update an existing role",
+                "description": "Returns updated role data",
+                "operationId": "updateRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of role that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Delete a role",
+                "description": "Deletes and returns deleted role data",
+                "operationId": "deleteRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of role that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -3000,6 +3222,28 @@
                     "name": "ParticipantTypeResponse"
                 }
             },
+            "PermissionResponse": {
+                "title": "Permission",
+                "description": "Permission resource representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Permission ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Permission's name",
+                        "type": "string",
+                        "example": "Read"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Permission"
+                }
+            },
             "RequestException": {
                 "properties": {
                     "message": {
@@ -3014,6 +3258,55 @@
                     }
                 },
                 "type": "object"
+            },
+            "RoleCreate": {
+                "required": [
+                    "name",
+                    "permissions"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RoleResponse": {
+                "title": "Role",
+                "description": "Role response representation",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Role ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Role's name",
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "permissions": {
+                        "title": "Permissions",
+                        "description": "Role's permissions",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PermissionResponse"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
             },
             "UnauthenticatedError": {
                 "properties": {
@@ -3245,6 +3538,15 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Bearer token authentication",
+                "name": "Bearer",
+                "in": "header",
+                "scheme": "bearer"
             }
         }
     },

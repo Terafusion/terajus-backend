@@ -3,12 +3,15 @@
 namespace App\Models\Role;
 
 use App\Models\Permission\RoleHasPermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
 use Spatie\Permission\Traits\HasPermissions;
 
 class Role extends SpatieRole
 {
+    use HasFactory;
     use HasPermissions {
         givePermissionTo as protected parentGivePermissionTo;
     }
@@ -18,6 +21,7 @@ class Role extends SpatieRole
         'guard_name',
         'tenant_id',
     ];
+
 
     /**
      * Grant the given permission(s) to a role.
@@ -56,5 +60,10 @@ class Role extends SpatieRole
             $permission instanceof Permission => $permission,
             default => null,
         };
+    }
+
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'role_has_permissions');
     }
 }
