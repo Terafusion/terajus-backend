@@ -11,6 +11,7 @@ use App\Http\Controllers\LegalCase\LegalCaseController;
 use App\Http\Controllers\LegalPleading\LegalPleadingController;
 use App\Http\Controllers\LegalPleadingType\LegalPleadingTypeController;
 use App\Http\Controllers\ParticipantType\ParticipantTypeController;
+use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,6 @@ Route::middleware(['auth:api', 'identify.tenant'])->group(function () {
         Route::apiResource('document-types', DocumentTypeController::class);
 
         Route::apiResource('roles', RoleController::class);
+
+        Route::apiResource('permissions', PermissionController::class);
 });
