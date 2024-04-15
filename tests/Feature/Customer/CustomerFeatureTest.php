@@ -4,10 +4,8 @@ namespace Tests\Feature\Customer;
 
 use App\Models\Customer\Customer;
 use App\Models\Tenant\Tenant;
-use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class CustomerFeatureTest extends TestCase
@@ -40,7 +38,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer2', 'tenant_id' => $this->user->tenant_id]);
-        $this->get('api/customers/' . $customer->id)
+        $this->get('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => $customer->name]);
     }
@@ -112,7 +110,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer3', 'tenant_id' => $this->user->tenant_id]);
-        $this->put('api/customers/' . $customer->id, ['name' => 'UpdatedName'])
+        $this->put('api/customers/'.$customer->id, ['name' => 'UpdatedName'])
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => 'UpdatedName']);
     }
@@ -127,7 +125,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer4']);
-        $this->delete('api/customers/' . $customer->id)
+        $this->delete('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['message' => 'Success']);
     }

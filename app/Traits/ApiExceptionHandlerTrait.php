@@ -38,6 +38,7 @@ trait ApiExceptionHandlerTrait
         } elseif ($this->isUniqueConstraintViolationException($exception)) {
             $errorMessage = $exception->getMessage();
             $constraintKey = $this->extractConstraintKey($errorMessage);
+
             return $this->generateResponse("Unique constraint violation for key '$constraintKey'", Response::HTTP_CONFLICT);
         }
 
@@ -73,6 +74,7 @@ trait ApiExceptionHandlerTrait
     {
         // Extrai a chave da restrição única da mensagem de erro usando expressão regular
         preg_match("/key '(.+?)'/", $errorMessage, $matches);
+
         return $matches[1] ?? 'Unknown';
     }
 }

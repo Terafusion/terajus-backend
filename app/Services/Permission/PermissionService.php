@@ -3,10 +3,8 @@
 namespace App\Services\Permission;
 
 use App\Models\Permission\Permission;
-use App\Models\User\User;
 use App\Repositories\Permission\PermissionRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Tenancy\Facades\Tenancy;
 
 class PermissionService
 {

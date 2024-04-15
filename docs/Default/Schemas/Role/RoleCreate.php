@@ -17,6 +17,7 @@ class RoleCreate
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(type="integer")
      * )
      */

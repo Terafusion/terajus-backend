@@ -3,8 +3,8 @@
 namespace Tests\Feature\Role;
 
 use App\Models\Permission\Permission;
-use Tests\TestCase;
 use App\Models\Role\Role;
+use Tests\TestCase;
 
 class RoleFeatureTest extends TestCase
 {
@@ -20,7 +20,6 @@ class RoleFeatureTest extends TestCase
             Permission::factory()->create()->id,
             Permission::factory()->create()->id,
         ];
-
 
         $this->post('/api/roles', [
             'name' => 'role_name',

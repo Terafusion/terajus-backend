@@ -3,9 +3,7 @@
 namespace Database\Factories\Role;
 
 use App\Models\Role\Role;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker;
 
 class RoleFactory extends Factory
 {
@@ -14,7 +12,7 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => strtolower(fake()->unique()->word . fake()->unique()->word),
+            'name' => strtolower(fake()->unique()->word.fake()->unique()->word),
             'guard_name' => 'web',
             'tenant_id' => 1,
         ];

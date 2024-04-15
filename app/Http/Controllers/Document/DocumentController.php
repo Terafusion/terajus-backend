@@ -53,6 +53,7 @@ class DocumentController extends Controller
     public function destroy(Document $document)
     {
         $document->delete();
+
         return $this->showMessage('Success');
     }
 

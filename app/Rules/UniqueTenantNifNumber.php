@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Customer\Customer;
+use Illuminate\Contracts\Validation\Rule;
 use Tenancy\Facades\Tenancy;
 
 class UniqueTenantNifNumber implements Rule
