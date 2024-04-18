@@ -38,8 +38,20 @@ class RoleTableSeeder extends Seeder
 
         $lawyer->givePermissionTo(Permission::all());
 
-        $trainee->givePermissionTo(['legal_case.store', 'legal_case.update', 'legal_case.protocol', 'user.store', 'user.update']);
+        $trainee->givePermissionTo([
+            'legal_case.view',
+            'legal_case.list',
+            'legal_pleading.create',
+            'legal_pleading.view',
+            'legal_pleading.list',
+            'legal_pleading.update',
+            'legal_pleading.download',
+            'document_request.create',
+            'document_request.view',
+            'document_request.list',
+            'document.download'
+        ]);
 
-        $customer->givePermissionTo('document.store');
+        $customer->givePermissionTo('document.create', 'document.download', 'document_request.update', 'document_request.view', 'legal_case.view', 'legal_case.list');
     }
 }

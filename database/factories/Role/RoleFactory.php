@@ -13,7 +13,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' => strtolower(fake()->unique()->word.fake()->unique()->word),
-            'guard_name' => 'web',
+            'guard_name' => 'api',
             'tenant_id' => 1,
         ];
     }

@@ -56,6 +56,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
+        $this->authorize('update', User::class);
         return $this->showOne($this->userService->update($request->validated(), $user), Response::HTTP_OK);
     }
 

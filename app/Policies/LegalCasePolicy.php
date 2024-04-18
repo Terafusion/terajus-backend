@@ -21,11 +21,6 @@ class LegalCasePolicy
 
     public function create(User $user)
     {
-        return $user->checkHasPermission('legal_case.store');
-    }
-
-    public function update(User $user, LegalCase $legalCase)
-    {
-        return $user->checkHasPermission('legal_case.update') && $legalCase->tenant_id === $user->tenant_id;
+        return $user->checkHasPermission('legal_case.create');
     }
 }

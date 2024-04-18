@@ -11,11 +11,15 @@ class UserPolicy
 
     public function create(User $authUser)
     {
-        return $authUser->checkHasPermission('user.store');
+        return $authUser->checkHasPermission('user.create');
     }
 
     public function update(User $authUser, User $user)
     {
         return $authUser->id === $user->id || $authUser->tenant_id === $user->tenant_id && $user->checkHasPermission('user.update');
+    }
+    public function view(User $authUser, User $user)
+    {
+        return $authUser->id === $user->id || $authUser->tenant_id === $user->tenant_id && $user->checkHasPermission('user.view');
     }
 }
