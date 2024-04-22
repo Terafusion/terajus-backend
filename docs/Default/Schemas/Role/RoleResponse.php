@@ -39,6 +39,7 @@ class RoleResponse
      *     title="Permissions",
      *     description="Role's permissions",
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/PermissionResponse")
      * )
      */

@@ -14,8 +14,6 @@ class DocumentTypeService
 
     /**
      * Get all registers
-     *
-     * @return LengthAwarePaginator
      */
     public function getAll(User $user): LengthAwarePaginator
     {

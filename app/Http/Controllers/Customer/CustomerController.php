@@ -14,7 +14,6 @@ class CustomerController extends Controller
 {
     public function __construct(private CustomerService $customerService)
     {
-        //$this->middleware('can:user.store')->only('store');
     }
 
     /**
@@ -24,6 +23,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('list', Customer::class);
         return $this->showAll($this->customerService->getAll());
     }
 
@@ -35,6 +35,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
+        $this->authorize('create', Customer::class);
         return $this->showOne($this->customerService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
     }
 
@@ -67,11 +68,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        return $this->showMessage('Success');
-    }
+        $this->authorize('delete', $customer);
 
-    public function me()
-    {
-        return $this->showOne(auth()->user());
+        return $this->showMessage('Success');
     }
 }

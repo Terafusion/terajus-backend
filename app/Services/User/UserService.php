@@ -86,9 +86,4 @@ class UserService
             throw $th;
         }
     }
-
-    public function getAllAccessibleUsers(User $user)
-    {
-        return $this->userRepository->getAll($user);
-    }
 }

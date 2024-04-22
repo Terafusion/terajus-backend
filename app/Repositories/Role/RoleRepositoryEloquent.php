@@ -2,21 +2,18 @@
 
 namespace App\Repositories\Role;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Role\RoleRepository;
 use App\Models\Role\Role;
 use App\Models\User\User;
 use App\Traits\TenantScopeTrait;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class RoleRepositoryEloquent.
- *
- * @package namespace App\Repositories\Role;
  */
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
@@ -47,7 +44,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
                 'id',
                 AllowedFilter::callback('search', function (Builder $query, $value) {
                     $query->where(function (Builder $subquery) use ($value) {
-                        $subquery->where('name', 'ILIKE', '%' . $value . '%');
+                        $subquery->where('name', 'ILIKE', '%'.$value.'%');
                     });
                 }),
             ])
@@ -57,15 +54,12 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
         return $query->jsonPaginate();
     }
 
-
     public function getAll(User $user): LengthAwarePaginator
     {
         return $this->queryBuilder($this->model(), $user);
     }
 
-
     protected function addAdditionalFilters($query, $user)
     {
     }
-
 }

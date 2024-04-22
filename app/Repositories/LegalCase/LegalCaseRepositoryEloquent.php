@@ -52,7 +52,7 @@ class LegalCaseRepositoryEloquent extends BaseRepository implements LegalCaseRep
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('court'),
                 AllowedFilter::exact('case_type'),
-                AllowedFilter::exact('case_matter')
+                AllowedFilter::exact('case_matter'),
             ])
             ->allowedSorts(['created_at']);
 

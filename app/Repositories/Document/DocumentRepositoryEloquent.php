@@ -3,7 +3,6 @@
 namespace App\Repositories\Document;
 
 use App\Models\Document\Document;
-use App\Models\DocumentRequest\DocumentRequest;
 use App\Models\User\User;
 use App\Traits\TenantScopeTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
