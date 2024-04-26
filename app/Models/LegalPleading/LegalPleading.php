@@ -3,7 +3,7 @@
 namespace App\Models\LegalPleading;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
@@ -13,6 +13,8 @@ use Prettus\Repository\Traits\TransformableTrait;
 class LegalPleading extends Model implements Transformable
 {
     use HasFactory, TransformableTrait;
+    protected $connection = 'mongodb';
+    protected $collection = 'legal_pleadings';
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +22,20 @@ class LegalPleading extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'fields_of_law',
-        'legal_case_id',
-        'legal_case_id',
-        'legal_pleading_type_id',
         'tenant_id',
-        'context',
+        'uuid',
+        'slug',
+        'court',
+        'fields_of_law',
         'content',
-        'status',
+        'lawyers',
+        'plaintiffs',
+        'defendants',
+        'legal_pleading_word_count',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 }

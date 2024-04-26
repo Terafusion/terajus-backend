@@ -93,6 +93,20 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGODB_DSN'),
+            'host' => env('MONGODB_HOST', ''),
+            'port' => env('MONGODB_PORT', 27017),
+            'database' => env('MONGODB_DATABASE', ''),
+            'username' => env('MONGODB_USERNAME', ''),
+            'password' => env('MONGODB_PASSWORD', ''),
+            'options' => [
+                'appname' => env('MONGODB_APPNAME', 'legal-pleadings'),
+            ],
+        ],
+
     ],
 
     /*

@@ -2,60 +2,38 @@
 
 namespace App\Services\LegalPleading;
 
-use App\Models\LegalPleading\LegalPleading;
-use App\Models\User\User;
 use App\Repositories\LegalPleading\LegalPleadingRepository;
-use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
-use App\Services\User\UserService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Strategies\LegalPleadingStrategy;
 
 class LegalPleadingService
 {
     public function __construct(
-        private ArtificialIntelligenceService $artificialIntelligenceService,
-        private UserService $userService,
+        protected LegalPleadingStrategy $strategy,
         private LegalPleadingRepository $legalPleadingRepository,
     ) {
     }
 
-    /**
-     * Get an LegalPleading instance by ID
-     *
-     * @param  LegalPleading  $legalPleading
-     * @return LegalPleading
-     */
-    public function getById($legalPleading)
+    public function store($data)
     {
-        return $this->legalPleadingRepository->find($legalPleading->id);
+        $this->strategy->resolve($data['slug'], $data);
+        return $this->strategy->handle();
     }
 
-    /**
-     * Get all registers
-     *
-     * @return LengthAwarePaginator
-     */
-    public function getAll(User $user)
+
+    public function show($uuid)
     {
-        return $this->legalPleadingRepository->getAll($user);
+        return $this->legalPleadingRepository->findByUuid($uuid);
     }
 
-    /**
-     * Store a new LegalPleading resource
-     *
-     * @return LegalPleading
-     */
-    public function store(array $data, User $user)
+    public function getAll()
     {
-        //
+        return $this->legalPleadingRepository->getAll();
     }
 
-    /**
-     * Update a LegalPleading resource
-     *
-     * @return LegalPleading
-     */
-    public function update(array $data, LegalPleading $legalPleading)
+    public function update($data, $uuid)
     {
-        //
+        $legalPleading = $this->legalPleadingRepository->where('uuid', $uuid)->firstOrFail();
+        $legalPleading->update($data);
+        return $legalPleading;
     }
 }

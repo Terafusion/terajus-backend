@@ -34,9 +34,9 @@ class LegalPleadingController extends Controller
      */
     public function store(LegalPleadingStoreRequest $request)
     {
-        $this->authorize('create', LegalPleading::class);
+        //$this->authorize('create', LegalPleading::class);
 
-        return $this->showOne($this->legalPleadingService->store($request->validated(), $request->user()), Response::HTTP_CREATED);
+        return $this->showOne($this->legalPleadingService->store($request->all(), $request->user()), Response::HTTP_CREATED);
     }
 
     /**
@@ -56,11 +56,11 @@ class LegalPleadingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(LegalPleadingStoreRequest $request, LegalPleading $legalPleading)
+    public function update(LegalPleadingStoreRequest $request, string $uuid)
     {
-        $this->authorize('update', $legalPleading);
+        //$this->authorize('update', $legalPleading);
 
-        return $this->showOne($this->legalPleadingService->update($request->validated(), $legalPleading), Response::HTTP_OK, LegalPleadingResource::class);
+        return $this->showOne($this->legalPleadingService->update($request->validated(), $uuid), Response::HTTP_OK, LegalPleadingResource::class);
     }
 
     /**
