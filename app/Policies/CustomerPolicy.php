@@ -12,17 +12,26 @@ class CustomerPolicy
 
     public function view(User $user, Customer $customer)
     {
-        return $customer->tenant_id === $user->tenant_id;
+        return $customer->tenant_id === $user->tenant_id && $user->checkHasPermission('customer.view');
+    }
+
+    public function list(User $user)
+    {
+        return $user->checkHasPermission('customer.list');
     }
 
     public function update(User $user, Customer $customer)
     {
-        return $customer->tenant_id === $user->tenant_id;
+        return $customer->tenant_id === $user->tenant_id && $user->checkHasPermission('customer.update');
     }
 
-    public function attachOnLegalCases(User $user, Customer $customer)
+    public function create(User $user)
     {
-        return $customer->tenant_id == $user->tenant_id
-            || ($customer->user_id == $user->id && $customer->tenant_id == config('terajus.default_tenant.id'));
+        return $user->checkHasPermission('customer.create');
+    }
+
+    public function delete(User $user, Customer $customer)
+    {
+        return $customer->tenant_id === $user->tenant_id && $user->checkHasPermission('customer.delete');
     }
 }

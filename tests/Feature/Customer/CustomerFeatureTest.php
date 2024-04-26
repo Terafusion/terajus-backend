@@ -3,11 +3,9 @@
 namespace Tests\Feature\Customer;
 
 use App\Models\Customer\Customer;
-use App\Models\Tenant\Tenant;
-use App\Models\User\User;
+use App\Models\Role\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class CustomerFeatureTest extends TestCase
@@ -40,7 +38,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer2', 'tenant_id' => $this->user->tenant_id]);
-        $this->get('api/customers/' . $customer->id)
+        $this->get('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => $customer->name]);
     }
@@ -112,7 +110,7 @@ class CustomerFeatureTest extends TestCase
         $this->assignRoles('lawyer', $this->user);
 
         $customer = Customer::factory()->create(['name' => 'Customer3', 'tenant_id' => $this->user->tenant_id]);
-        $this->put('api/customers/' . $customer->id, ['name' => 'UpdatedName'])
+        $this->put('api/customers/'.$customer->id, ['name' => 'UpdatedName'])
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['name' => 'UpdatedName']);
     }
@@ -126,8 +124,8 @@ class CustomerFeatureTest extends TestCase
     {
         $this->assignRoles('lawyer', $this->user);
 
-        $customer = Customer::factory()->create(['name' => 'Customer4']);
-        $this->delete('api/customers/' . $customer->id)
+        $customer = Customer::factory()->create(['name' => 'Customer4', 'tenant_id' => $this->user->tenant_id]);
+        $this->delete('api/customers/'.$customer->id)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['message' => 'Success']);
     }
@@ -149,5 +147,48 @@ class CustomerFeatureTest extends TestCase
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+        /**
+     * Test unauthorized user cannot perform any actions
+     *
+     * @return void
+     */
+    public function test_unauthorized_user_cannot_perform_any_actions_in_customers()
+    {
+        $role = Role::factory()->create(['tenant_id' => $this->user->tenant_id]);
+        $this->assignRoles($role->name, $this->user);
+
+        $customer = Customer::factory()->create(['name' => 'Customer1', 'tenant_id' => $this->user->tenant_id]);
+
+        // Test index
+        $this->get('api/customers')
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+           
+
+        // Test show
+        $this->get('api/customers/'.$customer->id)
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        // Test store
+        $this->post('api/customers', [
+            'name' => 'Gabriel',
+            'email' => 'tst@terajus.com.br',
+            'password' => '12345678',
+            'nif_number' => '5496668777',
+            'role' => 'customer',
+            'person_type' => 'PERSONAL',
+            'marital_status' => 'CASADO',
+            'is_customer' => true,
+        ])
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        // Test update
+        $this->put('api/customers/'.$customer->id, ['name' => 'UpdatedName'])
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        // Test delete
+        $this->delete('api/customers/'.$customer->id)
+            ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }

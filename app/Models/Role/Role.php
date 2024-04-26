@@ -22,7 +22,6 @@ class Role extends SpatieRole
         'tenant_id',
     ];
 
-
     /**
      * Grant the given permission(s) to a role.
      *

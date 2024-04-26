@@ -11,6 +11,7 @@ use App\Http\Controllers\LegalCase\LegalCaseController;
 use App\Http\Controllers\LegalPleading\LegalPleadingController;
 use App\Http\Controllers\LegalPleadingType\LegalPleadingTypeController;
 use App\Http\Controllers\ParticipantType\ParticipantTypeController;
+use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,25 +32,28 @@ Route::post('/oauth/signup', [AuthController::class, 'signUp']);
 Route::post('/oauth/token', [AccessTokenController::class, 'issueToken']);
 
 Route::middleware(['auth:api', 'identify.tenant'])->group(function () {
-        Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
-        Route::apiResource('users', UserController::class);
-        Route::apiResource('customers', CustomerController::class);
+    Route::get('/users/me', [UserController::class, 'me'])->name('users.me');
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('customers', CustomerController::class);
 
-        Route::apiResource('addresses', AddressController::class);
+    Route::apiResource('addresses', AddressController::class);
 
-        Route::apiResource('legal-pleadings', LegalPleadingController::class);
-        Route::apiResource('legal-pleading-types', LegalPleadingTypeController::class);
+    Route::apiResource('legal-pleadings', LegalPleadingController::class);
+    Route::apiResource('legal-pleading-types', LegalPleadingTypeController::class);
 
-        Route::apiResource('legal-cases', LegalCaseController::class);
+    Route::apiResource('legal-cases', LegalCaseController::class);
 
-        Route::apiResource('participant-types', ParticipantTypeController::class);
+    Route::apiResource('participant-types', ParticipantTypeController::class);
 
-        Route::apiResource('evidences', EvidenceController::class);
+    Route::apiResource('evidences', EvidenceController::class);
 
-        Route::apiResource('document-requests', DocumentRequestController::class);
+    Route::apiResource('document-requests', DocumentRequestController::class);
 
-        Route::apiResource('documents', DocumentController::class);
-        Route::apiResource('document-types', DocumentTypeController::class);
+    Route::apiResource('documents', DocumentController::class);
+    Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::apiResource('document-types', DocumentTypeController::class);
 
-        Route::apiResource('roles', RoleController::class);
+    Route::apiResource('roles', RoleController::class);
+
+    Route::apiResource('permissions', PermissionController::class);
 });

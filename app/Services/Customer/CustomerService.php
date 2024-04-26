@@ -16,6 +16,17 @@ class CustomerService
     ) {
     }
 
+        /**
+     * Get an user instance by ID
+     *
+     * @param  int  $id
+     * @return Customer
+     */
+    public function getById($id)
+    {
+        return $this->customerRepository->find($id);
+    }
+
     /**
      * Get all registers
      *
@@ -33,14 +44,14 @@ class CustomerService
      */
     public function store(array $data, User $user)
     {
-        if (!$data['is_customer']) {
+        if (! $data['is_customer']) {
             $data['tenant_id'] = config('terajus.default_tenant.id');
         }
         $data['user_id'] = $user->id;
 
         $customer = $this->customerRepository->create($data);
 
-        if (isset($data['address']) && !empty($data['address'])) {
+        if (isset($data['address']) && ! empty($data['address'])) {
             $data['address']['addressable_type'] = Customer::class;
             $data['address']['addressable_id'] = $customer->id;
             $this->addressService->store($data['address'], $user);

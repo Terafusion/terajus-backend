@@ -39,6 +39,22 @@ services:
         networks:
             - laravel
 
+    mongodb:
+        container_name: mongodb
+        image: mongo:latest
+        restart: always
+        ports:
+            - '${MONGODB_PORT:-27017}:27017'
+        volumes:
+            - ./mongodb-data:/data/db
+        networks:
+            - laravel
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: '${MONGODB_USERNAME}'
+            MONGO_INITDB_ROOT_PASSWORD: '${MONGODB_PASSWORD}'
+            MONGO_INITDB_DATABASE: '${MONGODB_DATABASE}'
+        command: mongod --auth
+
     queue:
         image: especializati/laravel9-app
         restart: unless-stopped

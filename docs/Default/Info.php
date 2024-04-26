@@ -34,6 +34,15 @@ use OpenApi\Annotations as OA;
  *     description="Find out more about Swagger",
  *     url="http://swagger.io"
  * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     description="Bearer token authentication",
+ *     name="Bearer",
+ *     in="header",
+ *     scheme="bearer"
+ * )
  */
 class Info
 {

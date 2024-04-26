@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Document;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,27 +36,27 @@ class DocumentFeatureTest extends TestCase
         Storage::disk('s3')->assertExists($filePath);
     }
 
-        /** @test */
-        public function test_can_download_a_document()
-        {
-            Storage::fake('s3');
-    
-            $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
-    
-            $documentData = [
-                'file' => $file,
-                'model_type' => 'App\Models\Customer\Customer',
-                'model_id' => '1',
-                'document_type_id' => '1',
-                'description' => 'eae',
-            ];
-    
-            $response = $this->postJson('/api/documents', $documentData);
-            $response->assertStatus(201);
-    
-            $documentId = $response->json('id');
+    /** @test */
+    public function test_can_download_a_document()
+    {
+        Storage::fake('s3');
 
-            $downloadResponse = $this->getJson("/api/documents/{$documentId}/download");
-            $downloadResponse->assertStatus(200);
-        }
+        $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
+
+        $documentData = [
+            'file' => $file,
+            'model_type' => 'App\Models\Customer\Customer',
+            'model_id' => '1',
+            'document_type_id' => '1',
+            'description' => 'eae',
+        ];
+
+        $response = $this->postJson('/api/documents', $documentData);
+        $response->assertStatus(201);
+
+        $documentId = $response->json('id');
+
+        $downloadResponse = $this->getJson("/api/documents/{$documentId}/download");
+        $downloadResponse->assertStatus(200);
+    }
 }

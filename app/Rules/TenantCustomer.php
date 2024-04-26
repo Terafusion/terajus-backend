@@ -26,7 +26,8 @@ class TenantCustomer implements Rule
             return false;
         }
 
-        return $customerPolicy->attachOnLegalCases($user, $customer);
+        return true;
+        // return $customerPolicy->attachOnLegalCases($user, $customer);
     }
 
     /**

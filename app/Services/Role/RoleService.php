@@ -78,6 +78,7 @@ class RoleService
     public function delete($id)
     {
         $role = $this->getById($id);
+
         return $this->roleRepository->delete($role->id);
     }
 

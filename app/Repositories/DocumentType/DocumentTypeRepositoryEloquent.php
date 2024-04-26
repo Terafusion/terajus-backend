@@ -2,7 +2,6 @@
 
 namespace App\Repositories\DocumentType;
 
-
 use App\Models\DocumentType\DocumentType;
 use App\Models\User\User;
 use App\Traits\TenantScopeTrait;
@@ -51,8 +50,8 @@ class DocumentTypeRepositoryEloquent extends BaseRepository implements DocumentT
                 'id',
                 AllowedFilter::callback('name', function ($query, $value) {
                     $query->where(function ($query) use ($value) {
-                        $query->where('name', 'ILIKE', '%' . $value . '%')
-                            ->orWhere('description', 'ILIKE', '%' . $value . '%');
+                        $query->where('name', 'ILIKE', '%'.$value.'%')
+                            ->orWhere('description', 'ILIKE', '%'.$value.'%');
                     });
                 }),
             ]);
