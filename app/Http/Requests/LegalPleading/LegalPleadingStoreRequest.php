@@ -24,11 +24,7 @@ class LegalPleadingStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'fields_of_law' => ['required', 'string'],
-            'legal_case_id' => ['nullable', 'numeric', 'exists,legal_cases,id'],
-            'legal_pleading_type_id' => ['nullable', 'numeric', 'exists,legal_pleading_types,id'],
-            'status' => ['nullable', 'string'],
-            'context' => ['nullable'],
+            'content' => ['nullable', 'string'],
         ];
     }
 }

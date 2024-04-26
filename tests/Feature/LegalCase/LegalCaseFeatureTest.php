@@ -8,7 +8,7 @@ use App\Models\Document\Document;
 use App\Models\Evidence\Evidence;
 use App\Models\LegalCase\LegalCase;
 use App\Models\LegalCase\LegalCaseParticipant;
-use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
+use App\Services\ArtificialIntelligence\OpenAiService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
@@ -73,7 +73,7 @@ class LegalCaseFeatureTest extends TestCase
         LegalCaseParticipant::factory()->plaintiff()->create(['legal_case_id' => $legalCase->id]);
         LegalCaseParticipant::factory()->defendant()->create(['legal_case_id' => $legalCase->id]);
 
-        $artificialIntelligenceService = App::make(ArtificialIntelligenceService::class);
+        $artificialIntelligenceService = App::make(OpenAiService::class);
         $prompt = $artificialIntelligenceService->getPrompt($legalCase);
 
         $client = OpenAI::fake([
