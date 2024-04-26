@@ -8,6 +8,7 @@ use App\Http\Controllers\DocumentRequest\DocumentRequestController;
 use App\Http\Controllers\DocumentType\DocumentTypeController;
 use App\Http\Controllers\Evidence\EvidenceController;
 use App\Http\Controllers\LegalCase\LegalCaseController;
+use App\Http\Controllers\LegalCase\LegalCaseRequestController;
 use App\Http\Controllers\LegalPleading\LegalPleadingController;
 use App\Http\Controllers\LegalPleadingType\LegalPleadingTypeController;
 use App\Http\Controllers\ParticipantType\ParticipantTypeController;
@@ -56,4 +57,6 @@ Route::middleware(['auth:api', 'identify.tenant'])->group(function () {
     Route::apiResource('roles', RoleController::class);
 
     Route::apiResource('permissions', PermissionController::class);
+
+    Route::apiResource('legal-case-requests', LegalCaseRequestController::class);
 });

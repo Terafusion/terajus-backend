@@ -19,4 +19,4 @@ yarn-error.log
 .docker
 /coverage-report/*
 /public/coverage-report/*
-
+/mongodb-data
