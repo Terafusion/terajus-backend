@@ -19,9 +19,5 @@ yarn-error.log
 .docker
 /coverage-report/*
 /public/coverage-report/*
-<<<<<<< HEAD
 /mongodb-data
-=======
-/mongodb-data/*
 
->>>>>>> af97367d2ddf86a504226008d5d2a8fdd7e04367
