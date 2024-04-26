@@ -17,12 +17,12 @@ class UserService
     /**
      * Get an user instance by ID
      *
-     * @param  User  $user
+     * @param  int  $id
      * @return User
      */
-    public function getById($user)
+    public function getById($id)
     {
-        return $this->userRepository->find($user->id);
+        return $this->userRepository->find($id);
     }
 
     /**
@@ -46,10 +46,10 @@ class UserService
         DB::beginTransaction();
         try {
             $user = $this->userRepository->create($data);
-            if (isset($data['role']) && ! empty($data['role'])) {
+            if (isset($data['role']) && !empty($data['role'])) {
                 $user->assignRole($data['role']);
             }
-            if (isset($data['address']) && ! empty($data['address'])) {
+            if (isset($data['address']) && !empty($data['address'])) {
                 $data['address']['addressable_type'] = User::class;
                 $data['address']['addressable_id'] = $user->id;
                 $this->addressService->store($data['address'], $authUser);
@@ -73,7 +73,7 @@ class UserService
     {
         DB::beginTransaction();
         try {
-            if (isset($data['role']) && ! empty($data['role'])) {
+            if (isset($data['role']) && !empty($data['role'])) {
                 $user->syncRoles($data['role']);
             }
             $user = $this->userRepository->update($data, $user->id);

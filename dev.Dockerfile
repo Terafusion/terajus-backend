@@ -2,7 +2,7 @@ FROM php:8.1-fpm
 
 WORKDIR /var/www
 
-ARG user=terajus
+ARG user=terafusion
 ARG uid=1000
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
@@ -14,7 +14,11 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libpq-dev
+    libpq-dev \
+    libssl-dev \
+    autoconf \
+    pkg-config \
+    libbson-1.0
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -39,5 +43,7 @@ RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
 
+# Install MongoDB extension with SSL support
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
 USER $user

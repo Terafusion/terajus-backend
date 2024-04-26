@@ -1714,6 +1714,177 @@
                 }
             }
         },
+        "/legal-pleadings": {
+            "get": {
+                "tags": [
+                    "Legal Pleadings"
+                ],
+                "summary": "List all Legal Pleading registers",
+                "description": "Returns a list of Legal Pleading registers. The list can be filtered by id, slug, search (filters by slug), and lawyer (filters by lawyer's nif_number and name).",
+                "operationId": "179716e1951c4b24e2c5209ec7d70ad9",
+                "parameters": [
+                    {
+                        "name": "filter[slug]",
+                        "in": "query",
+                        "description": "Filter by slug",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[search]",
+                        "in": "query",
+                        "description": "Filter by slug",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[lawyer]",
+                        "in": "query",
+                        "description": "Filter by lawyer's nif_number and name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LegalPleadingResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Legal Pleadings"
+                ],
+                "summary": "Add a new Legal Pleading register",
+                "operationId": "4192fb98bb0fe53d1d739e4441995a08",
+                "requestBody": {
+                    "description": "O body irá variar dependendo do tipo (slug) de peça jurídica que será criada.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LegalPleadingCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalPleadingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Internal Error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/legal-pleadings/{uuid}": {
+            "get": {
+                "tags": [
+                    "Legal Pleadings"
+                ],
+                "summary": "Get a Legal Pleading register by its UUID",
+                "description": "Returns a single Legal Pleading register",
+                "operationId": "22599f00bdc5d3c5bf9d38ac21b75075",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the Legal Pleading register",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LegalPleadingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/participant-types": {
             "get": {
                 "tags": [
@@ -3185,6 +3356,129 @@
                     },
                     "case_description": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplaintCreate": {
+                "required": [
+                    "slug",
+                    "lawyers",
+                    "plaintiffs",
+                    "defendants",
+                    "claim",
+                    "case_type",
+                    "case_matter",
+                    "court",
+                    "fields_of_law"
+                ],
+                "properties": {
+                    "slug": {
+                        "type": "string",
+                        "example": "COMPLAINT"
+                    },
+                    "lawyers": {
+                        "type": "array",
+                        "items": {
+                            "description": "User ID (lawyer)",
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "[1, 2, 3]"
+                    },
+                    "plaintiffs": {
+                        "type": "array",
+                        "items": {
+                            "description": "Customer ID (plaintiff)",
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "[4, 5, 6]"
+                    },
+                    "defendants": {
+                        "type": "array",
+                        "items": {
+                            "description": "Customer ID (defendant)",
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "[7, 8, 9]"
+                    },
+                    "case_type": {
+                        "type": "string",
+                        "example": "Recisão"
+                    },
+                    "case_matter": {
+                        "type": "string",
+                        "example": "Justa Causa/Falta Grave"
+                    },
+                    "court": {
+                        "type": "string",
+                        "example": "TJSP"
+                    },
+                    "fields_of_law": {
+                        "type": "string",
+                        "example": "Direito do Trabalho"
+                    },
+                    "claim": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalPleadingCreate": {
+                "$ref": "#/components/schemas/ComplaintCreate"
+            },
+            "LegalPleadingResponse": {
+                "properties": {
+                    "tenant_id": {
+                        "title": "tenant_id",
+                        "description": "Tenant ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 2
+                    },
+                    "uuid": {
+                        "title": "uuid",
+                        "description": "UUID",
+                        "type": "string",
+                        "format": "string",
+                        "example": "24343523-b08d-4d05-8c95-cef2ef40e6c1"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "lawyer": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "plaintiff": {
+                        "$ref": "#/components/schemas/CustomerResponse"
+                    },
+                    "defendant": {
+                        "$ref": "#/components/schemas/CustomerResponse"
+                    },
+                    "prompt_word_count": {
+                        "type": "integer"
+                    },
+                    "ia_response_word_count": {
+                        "type": "integer"
+                    },
+                    "prompt_text": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-03T21:06:35.119000Z"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-03T21:06:35.119000Z"
                     }
                 },
                 "type": "object"

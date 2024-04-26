@@ -16,6 +16,17 @@ class CustomerService
     ) {
     }
 
+        /**
+     * Get an user instance by ID
+     *
+     * @param  int  $id
+     * @return Customer
+     */
+    public function getById($id)
+    {
+        return $this->customerRepository->find($id);
+    }
+
     /**
      * Get all registers
      *

@@ -7,14 +7,14 @@ use App\Models\LegalCase\LegalCase;
 use App\Models\User\User;
 use App\Repositories\LegalCase\LegalCaseParticipantRepository;
 use App\Repositories\LegalCase\LegalCaseRepository;
-use App\Services\ArtificialIntelligence\ArtificialIntelligenceService;
+use App\Services\ArtificialIntelligence\OpenAiService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LegalCaseService
 {
     public function __construct(
-        private ArtificialIntelligenceService $artificialIntelligenceService,
+        private OpenAiService $artificialIntelligenceService,
         private UserService $userService,
         private LegalCaseRepository $legalCaseRepository,
         private LegalCaseParticipantRepository $LegalCaseParticipantRepository

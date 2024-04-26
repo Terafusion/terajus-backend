@@ -10,18 +10,29 @@ class LegalPleadingResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array
      */
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'status' => $this->status,
-            'fields_of_law' => $this->fields_of_law,
-            'legal_pleading_type_id' => $this->legal_pleading_type_id,
-            'context' => $this->context,
-            'content' => $this->content,
+            'tenant_id' => $this->tenant_id,
+            'uuid' => $this->uuid,
+            'slug' => $this->slug,
+            'legal_pleading' => [
+                'court' => $this->court,
+                'fields_of_law' => $this->fields_of_law,
+                'content' => $this->content,
+                'lawyers' => $this->lawyers,
+                'plaintiffs' => $this->plaintiffs,
+                'defendants' => $this->defendants,
+            ],
+            'meta_data' => [
+                'legal_pleading_word_count' => $this->legal_pleading_word_count,
+                'prompt_word_count' => $this->prompt_word_count,
+                'prompt_text' => $this->prompt_text,
+            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
